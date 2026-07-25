@@ -9,16 +9,12 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
-import { Route as TasksRouteImport } from './routes/tasks'
-import { Route as StudyRouteImport } from './routes/study'
 import { Route as SettingsRouteImport } from './routes/settings'
 import { Route as RoadmapRouteImport } from './routes/roadmap'
 import { Route as ResumeRouteImport } from './routes/resume'
 import { Route as ProjectsRouteImport } from './routes/projects'
 import { Route as MathRouteImport } from './routes/math'
-import { Route as JournalRouteImport } from './routes/journal'
 import { Route as InternshipsRouteImport } from './routes/internships'
-import { Route as HabitsRouteImport } from './routes/habits'
 import { Route as CpRouteImport } from './routes/cp'
 import { Route as CalendarRouteImport } from './routes/calendar'
 import { Route as AnalyticsRouteImport } from './routes/analytics'
@@ -26,16 +22,6 @@ import { Route as AiRouteImport } from './routes/ai'
 import { Route as AchievementsRouteImport } from './routes/achievements'
 import { Route as IndexRouteImport } from './routes/index'
 
-const TasksRoute = TasksRouteImport.update({
-  id: '/tasks',
-  path: '/tasks',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const StudyRoute = StudyRouteImport.update({
-  id: '/study',
-  path: '/study',
-  getParentRoute: () => rootRouteImport,
-} as any)
 const SettingsRoute = SettingsRouteImport.update({
   id: '/settings',
   path: '/settings',
@@ -61,19 +47,9 @@ const MathRoute = MathRouteImport.update({
   path: '/math',
   getParentRoute: () => rootRouteImport,
 } as any)
-const JournalRoute = JournalRouteImport.update({
-  id: '/journal',
-  path: '/journal',
-  getParentRoute: () => rootRouteImport,
-} as any)
 const InternshipsRoute = InternshipsRouteImport.update({
   id: '/internships',
   path: '/internships',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const HabitsRoute = HabitsRouteImport.update({
-  id: '/habits',
-  path: '/habits',
   getParentRoute: () => rootRouteImport,
 } as any)
 const CpRoute = CpRouteImport.update({
@@ -114,16 +90,12 @@ export interface FileRoutesByFullPath {
   '/analytics': typeof AnalyticsRoute
   '/calendar': typeof CalendarRoute
   '/cp': typeof CpRoute
-  '/habits': typeof HabitsRoute
   '/internships': typeof InternshipsRoute
-  '/journal': typeof JournalRoute
   '/math': typeof MathRoute
   '/projects': typeof ProjectsRoute
   '/resume': typeof ResumeRoute
   '/roadmap': typeof RoadmapRoute
   '/settings': typeof SettingsRoute
-  '/study': typeof StudyRoute
-  '/tasks': typeof TasksRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -132,16 +104,12 @@ export interface FileRoutesByTo {
   '/analytics': typeof AnalyticsRoute
   '/calendar': typeof CalendarRoute
   '/cp': typeof CpRoute
-  '/habits': typeof HabitsRoute
   '/internships': typeof InternshipsRoute
-  '/journal': typeof JournalRoute
   '/math': typeof MathRoute
   '/projects': typeof ProjectsRoute
   '/resume': typeof ResumeRoute
   '/roadmap': typeof RoadmapRoute
   '/settings': typeof SettingsRoute
-  '/study': typeof StudyRoute
-  '/tasks': typeof TasksRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -151,16 +119,12 @@ export interface FileRoutesById {
   '/analytics': typeof AnalyticsRoute
   '/calendar': typeof CalendarRoute
   '/cp': typeof CpRoute
-  '/habits': typeof HabitsRoute
   '/internships': typeof InternshipsRoute
-  '/journal': typeof JournalRoute
   '/math': typeof MathRoute
   '/projects': typeof ProjectsRoute
   '/resume': typeof ResumeRoute
   '/roadmap': typeof RoadmapRoute
   '/settings': typeof SettingsRoute
-  '/study': typeof StudyRoute
-  '/tasks': typeof TasksRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -171,16 +135,12 @@ export interface FileRouteTypes {
     | '/analytics'
     | '/calendar'
     | '/cp'
-    | '/habits'
     | '/internships'
-    | '/journal'
     | '/math'
     | '/projects'
     | '/resume'
     | '/roadmap'
     | '/settings'
-    | '/study'
-    | '/tasks'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -189,16 +149,12 @@ export interface FileRouteTypes {
     | '/analytics'
     | '/calendar'
     | '/cp'
-    | '/habits'
     | '/internships'
-    | '/journal'
     | '/math'
     | '/projects'
     | '/resume'
     | '/roadmap'
     | '/settings'
-    | '/study'
-    | '/tasks'
   id:
     | '__root__'
     | '/'
@@ -207,16 +163,12 @@ export interface FileRouteTypes {
     | '/analytics'
     | '/calendar'
     | '/cp'
-    | '/habits'
     | '/internships'
-    | '/journal'
     | '/math'
     | '/projects'
     | '/resume'
     | '/roadmap'
     | '/settings'
-    | '/study'
-    | '/tasks'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -226,34 +178,16 @@ export interface RootRouteChildren {
   AnalyticsRoute: typeof AnalyticsRoute
   CalendarRoute: typeof CalendarRoute
   CpRoute: typeof CpRoute
-  HabitsRoute: typeof HabitsRoute
   InternshipsRoute: typeof InternshipsRoute
-  JournalRoute: typeof JournalRoute
   MathRoute: typeof MathRoute
   ProjectsRoute: typeof ProjectsRoute
   ResumeRoute: typeof ResumeRoute
   RoadmapRoute: typeof RoadmapRoute
   SettingsRoute: typeof SettingsRoute
-  StudyRoute: typeof StudyRoute
-  TasksRoute: typeof TasksRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
-    '/tasks': {
-      id: '/tasks'
-      path: '/tasks'
-      fullPath: '/tasks'
-      preLoaderRoute: typeof TasksRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/study': {
-      id: '/study'
-      path: '/study'
-      fullPath: '/study'
-      preLoaderRoute: typeof StudyRouteImport
-      parentRoute: typeof rootRouteImport
-    }
     '/settings': {
       id: '/settings'
       path: '/settings'
@@ -289,25 +223,11 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof MathRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/journal': {
-      id: '/journal'
-      path: '/journal'
-      fullPath: '/journal'
-      preLoaderRoute: typeof JournalRouteImport
-      parentRoute: typeof rootRouteImport
-    }
     '/internships': {
       id: '/internships'
       path: '/internships'
       fullPath: '/internships'
       preLoaderRoute: typeof InternshipsRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/habits': {
-      id: '/habits'
-      path: '/habits'
-      fullPath: '/habits'
-      preLoaderRoute: typeof HabitsRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/cp': {
@@ -362,16 +282,12 @@ const rootRouteChildren: RootRouteChildren = {
   AnalyticsRoute: AnalyticsRoute,
   CalendarRoute: CalendarRoute,
   CpRoute: CpRoute,
-  HabitsRoute: HabitsRoute,
   InternshipsRoute: InternshipsRoute,
-  JournalRoute: JournalRoute,
   MathRoute: MathRoute,
   ProjectsRoute: ProjectsRoute,
   ResumeRoute: ResumeRoute,
   RoadmapRoute: RoadmapRoute,
   SettingsRoute: SettingsRoute,
-  StudyRoute: StudyRoute,
-  TasksRoute: TasksRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
