@@ -9,33 +9,26 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
-import { Route as TasksRouteImport } from './routes/tasks'
-import { Route as StudyRouteImport } from './routes/study'
 import { Route as SettingsRouteImport } from './routes/settings'
 import { Route as RoadmapRouteImport } from './routes/roadmap'
 import { Route as ResumeRouteImport } from './routes/resume'
 import { Route as ProjectsRouteImport } from './routes/projects'
 import { Route as MathRouteImport } from './routes/math'
-import { Route as JournalRouteImport } from './routes/journal'
 import { Route as InternshipsRouteImport } from './routes/internships'
-import { Route as HabitsRouteImport } from './routes/habits'
 import { Route as CpRouteImport } from './routes/cp'
 import { Route as CalendarRouteImport } from './routes/calendar'
+import { Route as AuthRouteImport } from './routes/auth'
 import { Route as AnalyticsRouteImport } from './routes/analytics'
 import { Route as AiRouteImport } from './routes/ai'
 import { Route as AchievementsRouteImport } from './routes/achievements'
-import { Route as IndexRouteImport } from './routes/index'
+import { Route as AuthenticatedRouteRouteImport } from './routes/_authenticated/route'
+import { Route as AuthenticatedIndexRouteImport } from './routes/_authenticated/index'
+import { Route as AuthenticatedTasksRouteImport } from './routes/_authenticated/tasks'
+import { Route as AuthenticatedStudyRouteImport } from './routes/_authenticated/study'
+import { Route as AuthenticatedJournalRouteImport } from './routes/_authenticated/journal'
+import { Route as AuthenticatedHabitsRouteImport } from './routes/_authenticated/habits'
+import { Route as AuthenticatedGoalsRouteImport } from './routes/_authenticated/goals'
 
-const TasksRoute = TasksRouteImport.update({
-  id: '/tasks',
-  path: '/tasks',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const StudyRoute = StudyRouteImport.update({
-  id: '/study',
-  path: '/study',
-  getParentRoute: () => rootRouteImport,
-} as any)
 const SettingsRoute = SettingsRouteImport.update({
   id: '/settings',
   path: '/settings',
@@ -61,19 +54,9 @@ const MathRoute = MathRouteImport.update({
   path: '/math',
   getParentRoute: () => rootRouteImport,
 } as any)
-const JournalRoute = JournalRouteImport.update({
-  id: '/journal',
-  path: '/journal',
-  getParentRoute: () => rootRouteImport,
-} as any)
 const InternshipsRoute = InternshipsRouteImport.update({
   id: '/internships',
   path: '/internships',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const HabitsRoute = HabitsRouteImport.update({
-  id: '/habits',
-  path: '/habits',
   getParentRoute: () => rootRouteImport,
 } as any)
 const CpRoute = CpRouteImport.update({
@@ -84,6 +67,11 @@ const CpRoute = CpRouteImport.update({
 const CalendarRoute = CalendarRouteImport.update({
   id: '/calendar',
   path: '/calendar',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AuthRoute = AuthRouteImport.update({
+  id: '/auth',
+  path: '/auth',
   getParentRoute: () => rootRouteImport,
 } as any)
 const AnalyticsRoute = AnalyticsRouteImport.update({
@@ -101,66 +89,102 @@ const AchievementsRoute = AchievementsRouteImport.update({
   path: '/achievements',
   getParentRoute: () => rootRouteImport,
 } as any)
-const IndexRoute = IndexRouteImport.update({
+const AuthenticatedRouteRoute = AuthenticatedRouteRouteImport.update({
+  id: '/_authenticated',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AuthenticatedIndexRoute = AuthenticatedIndexRouteImport.update({
   id: '/',
   path: '/',
-  getParentRoute: () => rootRouteImport,
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
+const AuthenticatedTasksRoute = AuthenticatedTasksRouteImport.update({
+  id: '/tasks',
+  path: '/tasks',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
+const AuthenticatedStudyRoute = AuthenticatedStudyRouteImport.update({
+  id: '/study',
+  path: '/study',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
+const AuthenticatedJournalRoute = AuthenticatedJournalRouteImport.update({
+  id: '/journal',
+  path: '/journal',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
+const AuthenticatedHabitsRoute = AuthenticatedHabitsRouteImport.update({
+  id: '/habits',
+  path: '/habits',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
+const AuthenticatedGoalsRoute = AuthenticatedGoalsRouteImport.update({
+  id: '/goals',
+  path: '/goals',
+  getParentRoute: () => AuthenticatedRouteRoute,
 } as any)
 
 export interface FileRoutesByFullPath {
-  '/': typeof IndexRoute
+  '/': typeof AuthenticatedIndexRoute
   '/achievements': typeof AchievementsRoute
   '/ai': typeof AiRoute
   '/analytics': typeof AnalyticsRoute
+  '/auth': typeof AuthRoute
   '/calendar': typeof CalendarRoute
   '/cp': typeof CpRoute
-  '/habits': typeof HabitsRoute
   '/internships': typeof InternshipsRoute
-  '/journal': typeof JournalRoute
   '/math': typeof MathRoute
   '/projects': typeof ProjectsRoute
   '/resume': typeof ResumeRoute
   '/roadmap': typeof RoadmapRoute
   '/settings': typeof SettingsRoute
-  '/study': typeof StudyRoute
-  '/tasks': typeof TasksRoute
+  '/goals': typeof AuthenticatedGoalsRoute
+  '/habits': typeof AuthenticatedHabitsRoute
+  '/journal': typeof AuthenticatedJournalRoute
+  '/study': typeof AuthenticatedStudyRoute
+  '/tasks': typeof AuthenticatedTasksRoute
 }
 export interface FileRoutesByTo {
-  '/': typeof IndexRoute
   '/achievements': typeof AchievementsRoute
   '/ai': typeof AiRoute
   '/analytics': typeof AnalyticsRoute
+  '/auth': typeof AuthRoute
   '/calendar': typeof CalendarRoute
   '/cp': typeof CpRoute
-  '/habits': typeof HabitsRoute
   '/internships': typeof InternshipsRoute
-  '/journal': typeof JournalRoute
   '/math': typeof MathRoute
   '/projects': typeof ProjectsRoute
   '/resume': typeof ResumeRoute
   '/roadmap': typeof RoadmapRoute
   '/settings': typeof SettingsRoute
-  '/study': typeof StudyRoute
-  '/tasks': typeof TasksRoute
+  '/goals': typeof AuthenticatedGoalsRoute
+  '/habits': typeof AuthenticatedHabitsRoute
+  '/journal': typeof AuthenticatedJournalRoute
+  '/study': typeof AuthenticatedStudyRoute
+  '/tasks': typeof AuthenticatedTasksRoute
+  '/': typeof AuthenticatedIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
-  '/': typeof IndexRoute
+  '/_authenticated': typeof AuthenticatedRouteRouteWithChildren
   '/achievements': typeof AchievementsRoute
   '/ai': typeof AiRoute
   '/analytics': typeof AnalyticsRoute
+  '/auth': typeof AuthRoute
   '/calendar': typeof CalendarRoute
   '/cp': typeof CpRoute
-  '/habits': typeof HabitsRoute
   '/internships': typeof InternshipsRoute
-  '/journal': typeof JournalRoute
   '/math': typeof MathRoute
   '/projects': typeof ProjectsRoute
   '/resume': typeof ResumeRoute
   '/roadmap': typeof RoadmapRoute
   '/settings': typeof SettingsRoute
-  '/study': typeof StudyRoute
-  '/tasks': typeof TasksRoute
+  '/_authenticated/goals': typeof AuthenticatedGoalsRoute
+  '/_authenticated/habits': typeof AuthenticatedHabitsRoute
+  '/_authenticated/journal': typeof AuthenticatedJournalRoute
+  '/_authenticated/study': typeof AuthenticatedStudyRoute
+  '/_authenticated/tasks': typeof AuthenticatedTasksRoute
+  '/_authenticated/': typeof AuthenticatedIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -169,91 +193,81 @@ export interface FileRouteTypes {
     | '/achievements'
     | '/ai'
     | '/analytics'
+    | '/auth'
     | '/calendar'
     | '/cp'
-    | '/habits'
     | '/internships'
-    | '/journal'
     | '/math'
     | '/projects'
     | '/resume'
     | '/roadmap'
     | '/settings'
+    | '/goals'
+    | '/habits'
+    | '/journal'
     | '/study'
     | '/tasks'
   fileRoutesByTo: FileRoutesByTo
   to:
-    | '/'
     | '/achievements'
     | '/ai'
     | '/analytics'
+    | '/auth'
     | '/calendar'
     | '/cp'
-    | '/habits'
     | '/internships'
-    | '/journal'
     | '/math'
     | '/projects'
     | '/resume'
     | '/roadmap'
     | '/settings'
+    | '/goals'
+    | '/habits'
+    | '/journal'
     | '/study'
     | '/tasks'
+    | '/'
   id:
     | '__root__'
-    | '/'
+    | '/_authenticated'
     | '/achievements'
     | '/ai'
     | '/analytics'
+    | '/auth'
     | '/calendar'
     | '/cp'
-    | '/habits'
     | '/internships'
-    | '/journal'
     | '/math'
     | '/projects'
     | '/resume'
     | '/roadmap'
     | '/settings'
-    | '/study'
-    | '/tasks'
+    | '/_authenticated/goals'
+    | '/_authenticated/habits'
+    | '/_authenticated/journal'
+    | '/_authenticated/study'
+    | '/_authenticated/tasks'
+    | '/_authenticated/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
-  IndexRoute: typeof IndexRoute
+  AuthenticatedRouteRoute: typeof AuthenticatedRouteRouteWithChildren
   AchievementsRoute: typeof AchievementsRoute
   AiRoute: typeof AiRoute
   AnalyticsRoute: typeof AnalyticsRoute
+  AuthRoute: typeof AuthRoute
   CalendarRoute: typeof CalendarRoute
   CpRoute: typeof CpRoute
-  HabitsRoute: typeof HabitsRoute
   InternshipsRoute: typeof InternshipsRoute
-  JournalRoute: typeof JournalRoute
   MathRoute: typeof MathRoute
   ProjectsRoute: typeof ProjectsRoute
   ResumeRoute: typeof ResumeRoute
   RoadmapRoute: typeof RoadmapRoute
   SettingsRoute: typeof SettingsRoute
-  StudyRoute: typeof StudyRoute
-  TasksRoute: typeof TasksRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
-    '/tasks': {
-      id: '/tasks'
-      path: '/tasks'
-      fullPath: '/tasks'
-      preLoaderRoute: typeof TasksRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/study': {
-      id: '/study'
-      path: '/study'
-      fullPath: '/study'
-      preLoaderRoute: typeof StudyRouteImport
-      parentRoute: typeof rootRouteImport
-    }
     '/settings': {
       id: '/settings'
       path: '/settings'
@@ -289,25 +303,11 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof MathRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/journal': {
-      id: '/journal'
-      path: '/journal'
-      fullPath: '/journal'
-      preLoaderRoute: typeof JournalRouteImport
-      parentRoute: typeof rootRouteImport
-    }
     '/internships': {
       id: '/internships'
       path: '/internships'
       fullPath: '/internships'
       preLoaderRoute: typeof InternshipsRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/habits': {
-      id: '/habits'
-      path: '/habits'
-      fullPath: '/habits'
-      preLoaderRoute: typeof HabitsRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/cp': {
@@ -322,6 +322,13 @@ declare module '@tanstack/react-router' {
       path: '/calendar'
       fullPath: '/calendar'
       preLoaderRoute: typeof CalendarRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/auth': {
+      id: '/auth'
+      path: '/auth'
+      fullPath: '/auth'
+      preLoaderRoute: typeof AuthRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/analytics': {
@@ -345,33 +352,93 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AchievementsRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/': {
-      id: '/'
+    '/_authenticated': {
+      id: '/_authenticated'
+      path: ''
+      fullPath: '/'
+      preLoaderRoute: typeof AuthenticatedRouteRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/_authenticated/': {
+      id: '/_authenticated/'
       path: '/'
       fullPath: '/'
-      preLoaderRoute: typeof IndexRouteImport
-      parentRoute: typeof rootRouteImport
+      preLoaderRoute: typeof AuthenticatedIndexRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/tasks': {
+      id: '/_authenticated/tasks'
+      path: '/tasks'
+      fullPath: '/tasks'
+      preLoaderRoute: typeof AuthenticatedTasksRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/study': {
+      id: '/_authenticated/study'
+      path: '/study'
+      fullPath: '/study'
+      preLoaderRoute: typeof AuthenticatedStudyRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/journal': {
+      id: '/_authenticated/journal'
+      path: '/journal'
+      fullPath: '/journal'
+      preLoaderRoute: typeof AuthenticatedJournalRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/habits': {
+      id: '/_authenticated/habits'
+      path: '/habits'
+      fullPath: '/habits'
+      preLoaderRoute: typeof AuthenticatedHabitsRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/goals': {
+      id: '/_authenticated/goals'
+      path: '/goals'
+      fullPath: '/goals'
+      preLoaderRoute: typeof AuthenticatedGoalsRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
     }
   }
 }
 
+interface AuthenticatedRouteRouteChildren {
+  AuthenticatedGoalsRoute: typeof AuthenticatedGoalsRoute
+  AuthenticatedHabitsRoute: typeof AuthenticatedHabitsRoute
+  AuthenticatedJournalRoute: typeof AuthenticatedJournalRoute
+  AuthenticatedStudyRoute: typeof AuthenticatedStudyRoute
+  AuthenticatedTasksRoute: typeof AuthenticatedTasksRoute
+  AuthenticatedIndexRoute: typeof AuthenticatedIndexRoute
+}
+
+const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
+  AuthenticatedGoalsRoute: AuthenticatedGoalsRoute,
+  AuthenticatedHabitsRoute: AuthenticatedHabitsRoute,
+  AuthenticatedJournalRoute: AuthenticatedJournalRoute,
+  AuthenticatedStudyRoute: AuthenticatedStudyRoute,
+  AuthenticatedTasksRoute: AuthenticatedTasksRoute,
+  AuthenticatedIndexRoute: AuthenticatedIndexRoute,
+}
+
+const AuthenticatedRouteRouteWithChildren =
+  AuthenticatedRouteRoute._addFileChildren(AuthenticatedRouteRouteChildren)
+
 const rootRouteChildren: RootRouteChildren = {
-  IndexRoute: IndexRoute,
+  AuthenticatedRouteRoute: AuthenticatedRouteRouteWithChildren,
   AchievementsRoute: AchievementsRoute,
   AiRoute: AiRoute,
   AnalyticsRoute: AnalyticsRoute,
+  AuthRoute: AuthRoute,
   CalendarRoute: CalendarRoute,
   CpRoute: CpRoute,
-  HabitsRoute: HabitsRoute,
   InternshipsRoute: InternshipsRoute,
-  JournalRoute: JournalRoute,
   MathRoute: MathRoute,
   ProjectsRoute: ProjectsRoute,
   ResumeRoute: ResumeRoute,
   RoadmapRoute: RoadmapRoute,
   SettingsRoute: SettingsRoute,
-  StudyRoute: StudyRoute,
-  TasksRoute: TasksRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

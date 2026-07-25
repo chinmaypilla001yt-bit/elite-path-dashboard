@@ -15,7 +15,7 @@ import { GlassCard } from "@/components/ascend/GlassCard";
 import { RingProgress } from "@/components/ascend/RingProgress";
 import { ProgressBar } from "@/components/ascend/ProgressBar";
 
-export const Route = createFileRoute("/")({
+export const Route = createFileRoute("/_authenticated/")({
   head: () => ({
     meta: [
       { title: "Ascend — Mission Control" },
