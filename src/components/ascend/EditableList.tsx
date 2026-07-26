@@ -80,7 +80,7 @@ export function EditableList({
         eyebrow={eyebrow}
         title={title}
         description={description}
-        action={
+        actions={
           <button
             onClick={openNew}
             className="inline-flex items-center gap-2 rounded-lg bg-[image:var(--gradient-cyber)] px-4 py-2 text-sm font-semibold text-white shadow-[var(--shadow-glow)] transition hover:opacity-90"
