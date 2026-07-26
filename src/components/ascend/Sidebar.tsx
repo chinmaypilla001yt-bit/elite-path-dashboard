@@ -1,13 +1,10 @@
-import { Link, useRouterState, useNavigate } from "@tanstack/react-router";
+import { Link, useRouterState } from "@tanstack/react-router";
 import {
   LayoutDashboard, Map, ListChecks, CalendarDays, Flame, BookOpen,
   Code2, Sigma, Brain, FolderGit2, Briefcase, FileText, Trophy,
-  NotebookPen, BarChart3, Settings, Rocket, Target, LogOut,
+  NotebookPen, BarChart3, Settings, Rocket, Target,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
-import { supabase } from "@/integrations/supabase/client";
-import { useAuth } from "@/hooks/use-auth";
-import { useQueryClient } from "@tanstack/react-query";
 
 const nav = [
   { to: "/", label: "Dashboard", icon: LayoutDashboard },
@@ -31,19 +28,6 @@ const nav = [
 
 export function AscendSidebar() {
   const pathname = useRouterState({ select: (s) => s.location.pathname });
-  const navigate = useNavigate();
-  const qc = useQueryClient();
-  const { user } = useAuth();
-
-  const displayName = (user?.user_metadata?.full_name as string | undefined) ??
-    user?.email?.split("@")[0] ?? "Guest";
-
-  async function signOut() {
-    await qc.cancelQueries();
-    qc.clear();
-    await supabase.auth.signOut();
-    navigate({ to: "/auth", replace: true });
-  }
 
   return (
     <aside className="sticky top-0 hidden h-screen w-[260px] shrink-0 flex-col border-r border-white/5 bg-[#050816]/70 backdrop-blur-xl lg:flex">
@@ -61,8 +45,7 @@ export function AscendSidebar() {
 
       <nav className="mt-2 flex-1 space-y-0.5 overflow-y-auto px-2 pb-6">
         {nav.map((item) => {
-          const active =
-            item.to === "/" ? pathname === "/" : pathname.startsWith(item.to);
+          const active = item.to === "/" ? pathname === "/" : pathname.startsWith(item.to);
           const Icon = item.icon;
           return (
             <Link
@@ -93,18 +76,11 @@ export function AscendSidebar() {
         <div className="flex items-center gap-2">
           <div className="h-8 w-8 shrink-0 rounded-full bg-[image:var(--gradient-cyber)]" />
           <div className="min-w-0 flex-1">
-            <div className="truncate text-sm font-medium text-white">{displayName}</div>
+            <div className="truncate text-sm font-medium text-white">Ascending</div>
             <div className="truncate font-mono text-[10px] uppercase tracking-widest text-white/50">
-              Ascending
+              Local mode
             </div>
           </div>
-          <button
-            onClick={signOut}
-            title="Sign out"
-            className="rounded-md p-1.5 text-white/50 transition hover:bg-white/[0.06] hover:text-white"
-          >
-            <LogOut className="h-4 w-4" />
-          </button>
         </div>
       </div>
     </aside>
