@@ -4,7 +4,7 @@ import { motion } from "motion/react";
 import { Flame, Zap, Trophy, Clock, Target, Sparkles, Plus, CalendarDays } from "lucide-react";
 import {
   AreaChart, Area, BarChart, Bar, ResponsiveContainer, XAxis, YAxis, Tooltip,
-  CartesianGrid, defs as _defs,
+  CartesianGrid,
 } from "recharts";
 import { AppShell } from "@/components/ascend/AppShell";
 import { StatCard } from "@/components/ascend/StatCard";
