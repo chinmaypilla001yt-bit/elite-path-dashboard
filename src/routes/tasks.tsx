@@ -1,17 +1,18 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useState } from "react";
-import { Plus, Trash2, Check } from "lucide-react";
+import { Plus, Trash2, Check, Clock3 } from "lucide-react";
 import { motion, AnimatePresence } from "motion/react";
 import { AppShell } from "@/components/ascend/AppShell";
 import { PageHeader } from "@/components/ascend/PageHeader";
 import { GlassCard } from "@/components/ascend/GlassCard";
-import { useLocalCollection } from "@/hooks/use-local-collection";
+import { useLocalCollection, addXP } from "@/hooks/use-local-collection";
+import { toast } from "sonner";
 
 export const Route = createFileRoute("/tasks")({
   head: () => ({
     meta: [
       { title: "Tasks · Ascend" },
-      { name: "description", content: "Prioritized task queue with XP rewards." },
+      { name: "description", content: "Prioritized task queue with time estimates and XP rewards." },
     ],
   }),
   component: TasksPage,
@@ -20,33 +21,56 @@ export const Route = createFileRoute("/tasks")({
 type Task = {
   id: string;
   title: string;
-  priority: string;
+  estimatedMinutes: number;
   difficulty: string;
   xp: number;
   tag: string;
   done: boolean;
+  completedAt?: number;
 };
 
-const PRIORITIES = ["P0", "P1", "P2"];
 const DIFFICULTIES = ["Easy", "Medium", "Hard"];
+const PRESETS = [
+  { label: "15 min", value: 15 },
+  { label: "30 min", value: 30 },
+  { label: "45 min", value: 45 },
+  { label: "1 hour", value: 60 },
+  { label: "2 hours", value: 120 },
+];
 
 function TasksPage() {
   const { items, add, update, remove, hydrated } = useLocalCollection<Task>("tasks");
   const [showForm, setShowForm] = useState(false);
-  const [draft, setDraft] = useState({ title: "", priority: "P1", difficulty: "Medium", xp: "50", tag: "" });
+  const [draft, setDraft] = useState({ title: "", estimatedMinutes: 30, custom: "", difficulty: "Medium", xp: "50", tag: "" });
 
   function save() {
     if (!draft.title.trim()) return;
+    const minutes = draft.custom.trim() ? Math.max(1, Number(draft.custom)) : draft.estimatedMinutes;
     add({
       title: draft.title.trim(),
-      priority: draft.priority,
+      estimatedMinutes: minutes,
       difficulty: draft.difficulty,
       xp: Number(draft.xp) || 0,
       tag: draft.tag.trim(),
       done: false,
     });
-    setDraft({ title: "", priority: "P1", difficulty: "Medium", xp: "50", tag: "" });
+    setDraft({ title: "", estimatedMinutes: 30, custom: "", difficulty: "Medium", xp: "50", tag: "" });
     setShowForm(false);
+  }
+
+  async function toggleDone(t: Task) {
+    if (!t.done) {
+      update(t.id, { done: true, completedAt: Date.now() } as Partial<Task>);
+      if (t.xp) {
+        await addXP(Number(t.xp));
+        toast.success(`+${t.xp} XP`, { description: t.title });
+      } else {
+        toast.success("Task completed", { description: t.title });
+      }
+    } else {
+      update(t.id, { done: false, completedAt: 0 } as Partial<Task>);
+      if (t.xp) await addXP(-Number(t.xp));
+    }
   }
 
   const open = items.filter((t) => !t.done);
@@ -74,26 +98,48 @@ function TasksPage() {
             <GlassCard glow="purple" className="p-5">
               <div className="grid gap-3 sm:grid-cols-6">
                 <input
-                  className="sm:col-span-3 rounded-lg border border-white/10 bg-white/[0.03] px-3 py-2 text-sm text-white placeholder:text-white/30 focus:border-white/30 focus:outline-none"
+                  className="sm:col-span-4 rounded-lg border border-white/10 bg-white/[0.03] px-3 py-2 text-sm text-white placeholder:text-white/30 focus:border-white/30 focus:outline-none"
                   placeholder="Task title"
                   value={draft.title}
                   onChange={(e) => setDraft({ ...draft, title: e.target.value })}
                 />
                 <input
-                  className="rounded-lg border border-white/10 bg-white/[0.03] px-3 py-2 text-sm text-white placeholder:text-white/30 focus:border-white/30 focus:outline-none"
+                  className="sm:col-span-2 rounded-lg border border-white/10 bg-white/[0.03] px-3 py-2 text-sm text-white placeholder:text-white/30 focus:border-white/30 focus:outline-none"
                   placeholder="Tag"
                   value={draft.tag}
                   onChange={(e) => setDraft({ ...draft, tag: e.target.value })}
                 />
+
+                <div className="sm:col-span-6">
+                  <div className="mb-1.5 font-mono text-[10px] uppercase tracking-widest text-white/45">Estimated time</div>
+                  <div className="flex flex-wrap gap-2">
+                    {PRESETS.map((p) => (
+                      <button
+                        key={p.value}
+                        type="button"
+                        onClick={() => setDraft({ ...draft, estimatedMinutes: p.value, custom: "" })}
+                        className={`rounded-full border px-3 py-1 text-xs transition ${
+                          !draft.custom && draft.estimatedMinutes === p.value
+                            ? "border-white/40 bg-white/[0.08] text-white"
+                            : "border-white/10 bg-white/[0.03] text-white/70 hover:border-white/30"
+                        }`}
+                      >
+                        {p.label}
+                      </button>
+                    ))}
+                    <input
+                      type="number"
+                      min={1}
+                      placeholder="Custom min"
+                      value={draft.custom}
+                      onChange={(e) => setDraft({ ...draft, custom: e.target.value })}
+                      className="w-28 rounded-full border border-white/10 bg-white/[0.03] px-3 py-1 text-xs text-white placeholder:text-white/30 focus:border-white/30 focus:outline-none"
+                    />
+                  </div>
+                </div>
+
                 <select
-                  className="rounded-lg border border-white/10 bg-white/[0.03] px-3 py-2 text-sm text-white focus:border-white/30 focus:outline-none"
-                  value={draft.priority}
-                  onChange={(e) => setDraft({ ...draft, priority: e.target.value })}
-                >
-                  {PRIORITIES.map((p) => <option key={p} value={p} className="bg-[#0b1024]">{p}</option>)}
-                </select>
-                <select
-                  className="rounded-lg border border-white/10 bg-white/[0.03] px-3 py-2 text-sm text-white focus:border-white/30 focus:outline-none"
+                  className="sm:col-span-2 rounded-lg border border-white/10 bg-white/[0.03] px-3 py-2 text-sm text-white focus:border-white/30 focus:outline-none"
                   value={draft.difficulty}
                   onChange={(e) => setDraft({ ...draft, difficulty: e.target.value })}
                 >
@@ -102,11 +148,11 @@ function TasksPage() {
                 <input
                   type="number"
                   className="sm:col-span-2 rounded-lg border border-white/10 bg-white/[0.03] px-3 py-2 text-sm text-white placeholder:text-white/30 focus:border-white/30 focus:outline-none"
-                  placeholder="XP"
+                  placeholder="XP reward"
                   value={draft.xp}
                   onChange={(e) => setDraft({ ...draft, xp: e.target.value })}
                 />
-                <button onClick={save} className="sm:col-span-4 rounded-lg bg-[image:var(--gradient-cyber)] px-4 py-2 text-sm font-semibold text-white">
+                <button onClick={save} className="sm:col-span-2 rounded-lg bg-[image:var(--gradient-cyber)] px-4 py-2 text-sm font-semibold text-white">
                   Save task
                 </button>
               </div>
@@ -122,9 +168,9 @@ function TasksPage() {
         </GlassCard>
       ) : (
         <div className="space-y-6">
-          <TaskGroup title="Open" items={open} onToggle={(id) => update(id, { done: true })} onRemove={remove} />
+          <TaskGroup title="Open" items={open} onToggle={toggleDone} onRemove={remove} />
           {done.length > 0 && (
-            <TaskGroup title="Completed" items={done} onToggle={(id) => update(id, { done: false })} onRemove={remove} muted />
+            <TaskGroup title="Completed" items={done} onToggle={toggleDone} onRemove={remove} muted />
           )}
         </div>
       )}
@@ -137,7 +183,7 @@ function TaskGroup({
 }: {
   title: string;
   items: Task[];
-  onToggle: (id: string) => void;
+  onToggle: (t: Task) => void;
   onRemove: (id: string) => void;
   muted?: boolean;
 }) {
@@ -158,7 +204,7 @@ function TaskGroup({
             >
               <div className="flex items-center gap-3">
                 <button
-                  onClick={() => onToggle(t.id)}
+                  onClick={() => onToggle(t)}
                   className={`flex h-5 w-5 items-center justify-center rounded-md border ${
                     t.done ? "border-emerald-400/60 bg-emerald-400/20 text-emerald-300" : "border-white/20 hover:border-white/50"
                   }`}
@@ -167,8 +213,10 @@ function TaskGroup({
                 </button>
                 <div>
                   <div className={`text-sm text-white ${t.done ? "line-through opacity-70" : ""}`}>{t.title}</div>
-                  <div className="font-mono text-[10px] uppercase tracking-widest text-white/40">
-                    {t.priority} · {t.difficulty}{t.tag ? ` · ${t.tag}` : ""}
+                  <div className="flex items-center gap-2 font-mono text-[10px] uppercase tracking-widest text-white/40">
+                    <span className="inline-flex items-center gap-1"><Clock3 className="h-3 w-3" />{fmtMin(t.estimatedMinutes)}</span>
+                    <span>· {t.difficulty || "—"}</span>
+                    {t.tag ? <span>· {t.tag}</span> : null}
                   </div>
                 </div>
               </div>
@@ -187,4 +235,12 @@ function TaskGroup({
       </div>
     </div>
   );
+}
+
+function fmtMin(m: number) {
+  if (!m) return "—";
+  if (m < 60) return `${m}m`;
+  const h = Math.floor(m / 60);
+  const r = m % 60;
+  return r ? `${h}h ${r}m` : `${h}h`;
 }
