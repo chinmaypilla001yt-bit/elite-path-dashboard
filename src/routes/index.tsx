@@ -16,8 +16,8 @@ import { useProfile } from "@/hooks/use-profile";
 import { Code2, ListChecks, BookOpen } from "lucide-react";
 import { CountdownLabel, daysUntil } from "./calendar";
 
-// silence unused
-void _defs;
+
+
 
 export const Route = createFileRoute("/")({
   head: () => ({
