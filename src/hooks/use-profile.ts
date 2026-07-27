@@ -23,7 +23,7 @@ export function useProfile() {
       return;
     }
     const unsub = onSnapshot(doc(db, "users", u.uid), (snap) => {
-      setProfile(snap.exists() ? ({ uid: u.uid, ...(snap.data() as Profile) }) : null);
+      setProfile(snap.exists() ? ({ ...(snap.data() as Profile), uid: u.uid }) : null);
       setLoading(false);
     });
     return unsub;

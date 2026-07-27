@@ -22,6 +22,7 @@ import { Route as HabitsRouteImport } from './routes/habits'
 import { Route as GoalsRouteImport } from './routes/goals'
 import { Route as CpRouteImport } from './routes/cp'
 import { Route as CalendarRouteImport } from './routes/calendar'
+import { Route as AuthRouteImport } from './routes/auth'
 import { Route as AnalyticsRouteImport } from './routes/analytics'
 import { Route as AiRouteImport } from './routes/ai'
 import { Route as AchievementsRouteImport } from './routes/achievements'
@@ -92,6 +93,11 @@ const CalendarRoute = CalendarRouteImport.update({
   path: '/calendar',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AuthRoute = AuthRouteImport.update({
+  id: '/auth',
+  path: '/auth',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const AnalyticsRoute = AnalyticsRouteImport.update({
   id: '/analytics',
   path: '/analytics',
@@ -118,6 +124,7 @@ export interface FileRoutesByFullPath {
   '/achievements': typeof AchievementsRoute
   '/ai': typeof AiRoute
   '/analytics': typeof AnalyticsRoute
+  '/auth': typeof AuthRoute
   '/calendar': typeof CalendarRoute
   '/cp': typeof CpRoute
   '/goals': typeof GoalsRoute
@@ -137,6 +144,7 @@ export interface FileRoutesByTo {
   '/achievements': typeof AchievementsRoute
   '/ai': typeof AiRoute
   '/analytics': typeof AnalyticsRoute
+  '/auth': typeof AuthRoute
   '/calendar': typeof CalendarRoute
   '/cp': typeof CpRoute
   '/goals': typeof GoalsRoute
@@ -157,6 +165,7 @@ export interface FileRoutesById {
   '/achievements': typeof AchievementsRoute
   '/ai': typeof AiRoute
   '/analytics': typeof AnalyticsRoute
+  '/auth': typeof AuthRoute
   '/calendar': typeof CalendarRoute
   '/cp': typeof CpRoute
   '/goals': typeof GoalsRoute
@@ -178,6 +187,7 @@ export interface FileRouteTypes {
     | '/achievements'
     | '/ai'
     | '/analytics'
+    | '/auth'
     | '/calendar'
     | '/cp'
     | '/goals'
@@ -197,6 +207,7 @@ export interface FileRouteTypes {
     | '/achievements'
     | '/ai'
     | '/analytics'
+    | '/auth'
     | '/calendar'
     | '/cp'
     | '/goals'
@@ -216,6 +227,7 @@ export interface FileRouteTypes {
     | '/achievements'
     | '/ai'
     | '/analytics'
+    | '/auth'
     | '/calendar'
     | '/cp'
     | '/goals'
@@ -236,6 +248,7 @@ export interface RootRouteChildren {
   AchievementsRoute: typeof AchievementsRoute
   AiRoute: typeof AiRoute
   AnalyticsRoute: typeof AnalyticsRoute
+  AuthRoute: typeof AuthRoute
   CalendarRoute: typeof CalendarRoute
   CpRoute: typeof CpRoute
   GoalsRoute: typeof GoalsRoute
@@ -344,6 +357,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof CalendarRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/auth': {
+      id: '/auth'
+      path: '/auth'
+      fullPath: '/auth'
+      preLoaderRoute: typeof AuthRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/analytics': {
       id: '/analytics'
       path: '/analytics'
@@ -380,6 +400,7 @@ const rootRouteChildren: RootRouteChildren = {
   AchievementsRoute: AchievementsRoute,
   AiRoute: AiRoute,
   AnalyticsRoute: AnalyticsRoute,
+  AuthRoute: AuthRoute,
   CalendarRoute: CalendarRoute,
   CpRoute: CpRoute,
   GoalsRoute: GoalsRoute,
