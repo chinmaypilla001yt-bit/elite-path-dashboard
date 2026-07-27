@@ -3,8 +3,11 @@ import { AppShell } from "@/components/ascend/AppShell";
 import { PageHeader } from "@/components/ascend/PageHeader";
 import { GlassCard } from "@/components/ascend/GlassCard";
 import { useLocalState, clearAllAscendData } from "@/hooks/use-local-collection";
-import { AlertTriangle } from "lucide-react";
+import { useAuth } from "@/hooks/use-auth";
+import { useProfile } from "@/hooks/use-profile";
+import { AlertTriangle, LogOut } from "lucide-react";
 import { toast } from "sonner";
+import { useState } from "react";
 
 export const Route = createFileRoute("/settings")({
   head: () => ({
@@ -18,28 +21,54 @@ export const Route = createFileRoute("/settings")({
 
 function SettingsPage() {
   const [name, setName] = useLocalState<string>("profile:name", "");
+  const { user, signOut } = useAuth();
+  const { stats } = useProfile();
+  const [busy, setBusy] = useState(false);
 
-  function reset() {
-    if (!confirm("Delete ALL local data? This cannot be undone.")) return;
-    clearAllAscendData();
-    toast.success("All data cleared");
+  async function reset() {
+    if (!confirm("Delete ALL your Ascend data? This cannot be undone.")) return;
+    setBusy(true);
+    try {
+      await clearAllAscendData();
+      toast.success("All data cleared");
+    } catch (e) {
+      toast.error((e as Error).message || "Failed to clear");
+    } finally {
+      setBusy(false);
+    }
   }
 
   return (
     <AppShell>
-      <PageHeader eyebrow="Preferences" title="Settings" description="This app stores everything locally in your browser." />
+      <PageHeader eyebrow="Preferences" title="Settings" description="Signed in — data syncs securely to Firebase." />
 
       <div className="grid gap-6 lg:grid-cols-2">
         <GlassCard glow="blue" className="p-6">
           <div className="font-mono text-[10px] uppercase tracking-[0.24em] text-white/45">Profile</div>
-          <div className="mt-1 text-lg font-semibold text-white">Your name</div>
+          <div className="mt-1 text-lg font-semibold text-white">Display name</div>
           <p className="mt-2 text-sm text-white/60">Shown in the greeting on your dashboard.</p>
           <input
             value={name}
             onChange={(e) => setName(e.target.value)}
-            placeholder="Chinmay"
+            placeholder={user?.displayName || "Chinmay"}
             className="mt-4 w-full rounded-lg border border-white/10 bg-white/[0.03] px-3 py-2 text-sm text-white placeholder:text-white/30 focus:border-white/30 focus:outline-none"
           />
+
+          <div className="mt-5 rounded-lg border border-white/5 bg-white/[0.03] p-3">
+            <div className="font-mono text-[10px] uppercase tracking-widest text-white/45">Account</div>
+            <div className="mt-1 text-sm text-white">{user?.email}</div>
+            <div className="mt-2 flex items-center gap-3 font-mono text-[10px] uppercase tracking-widest text-white/50">
+              <span>Level {stats.level}</span>
+              <span>·</span>
+              <span>{stats.xp} XP</span>
+            </div>
+            <button
+              onClick={() => signOut()}
+              className="mt-4 inline-flex items-center gap-2 rounded-lg border border-white/10 bg-white/[0.03] px-3 py-1.5 text-xs text-white/80 hover:bg-white/[0.06] hover:text-white"
+            >
+              <LogOut className="h-3.5 w-3.5" /> Sign out
+            </button>
+          </div>
         </GlassCard>
 
         <GlassCard glow="gold" className="p-6">
@@ -48,13 +77,14 @@ function SettingsPage() {
             <AlertTriangle className="h-4 w-4 text-[oklch(0.83_0.16_85)]" /> Reset all data
           </div>
           <p className="mt-2 text-sm text-white/60">
-            Erases every task, habit, goal, journal entry, roadmap year, and everything else you've saved locally.
+            Erases every task, habit, goal, journal entry, roadmap year, calendar event, study session, and XP total for your account.
           </p>
           <button
             onClick={reset}
-            className="mt-4 rounded-lg border border-red-400/30 bg-red-500/10 px-4 py-2 text-sm font-semibold text-red-200 transition hover:bg-red-500/20"
+            disabled={busy}
+            className="mt-4 rounded-lg border border-red-400/30 bg-red-500/10 px-4 py-2 text-sm font-semibold text-red-200 transition hover:bg-red-500/20 disabled:opacity-50"
           >
-            Delete everything
+            {busy ? "Deleting…" : "Delete everything"}
           </button>
         </GlassCard>
       </div>

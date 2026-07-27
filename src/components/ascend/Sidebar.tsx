@@ -2,9 +2,12 @@ import { Link, useRouterState } from "@tanstack/react-router";
 import {
   LayoutDashboard, Map, ListChecks, CalendarDays, Flame, BookOpen,
   Code2, Sigma, Brain, FolderGit2, Briefcase, FileText, Trophy,
-  NotebookPen, BarChart3, Settings, Rocket, Target,
+  NotebookPen, BarChart3, Settings, Rocket, Target, LogOut,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { useAuth } from "@/hooks/use-auth";
+import { useProfile } from "@/hooks/use-profile";
+import { toast } from "sonner";
 
 const nav = [
   { to: "/", label: "Dashboard", icon: LayoutDashboard },
@@ -28,6 +31,21 @@ const nav = [
 
 export function AscendSidebar() {
   const pathname = useRouterState({ select: (s) => s.location.pathname });
+  const { user, signOut } = useAuth();
+  const { stats } = useProfile();
+
+  const displayName =
+    user?.displayName ||
+    user?.email?.split("@")[0] ||
+    "Ascending";
+
+  async function handleSignOut() {
+    try {
+      await signOut();
+    } catch {
+      toast.error("Sign out failed");
+    }
+  }
 
   return (
     <aside className="sticky top-0 hidden h-screen w-[260px] shrink-0 flex-col border-r border-white/5 bg-[#050816]/70 backdrop-blur-xl lg:flex">
@@ -74,13 +92,24 @@ export function AscendSidebar() {
 
       <div className="mx-3 mb-4 rounded-xl border border-white/5 bg-white/[0.03] p-3">
         <div className="flex items-center gap-2">
-          <div className="h-8 w-8 shrink-0 rounded-full bg-[image:var(--gradient-cyber)]" />
+          {user?.photoURL ? (
+            <img src={user.photoURL} alt="" className="h-8 w-8 shrink-0 rounded-full object-cover" />
+          ) : (
+            <div className="h-8 w-8 shrink-0 rounded-full bg-[image:var(--gradient-cyber)]" />
+          )}
           <div className="min-w-0 flex-1">
-            <div className="truncate text-sm font-medium text-white">Ascending</div>
+            <div className="truncate text-sm font-medium text-white">{displayName}</div>
             <div className="truncate font-mono text-[10px] uppercase tracking-widest text-white/50">
-              Local mode
+              Lv {stats.level} · {stats.xp} XP
             </div>
           </div>
+          <button
+            onClick={handleSignOut}
+            title="Sign out"
+            className="rounded-md p-1.5 text-white/50 transition hover:bg-white/[0.06] hover:text-white"
+          >
+            <LogOut className="h-3.5 w-3.5" />
+          </button>
         </div>
       </div>
     </aside>

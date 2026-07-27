@@ -4,14 +4,18 @@ import {
   Link,
   createRootRouteWithContext,
   useRouter,
+  useRouterState,
+  useNavigate,
   HeadContent,
   Scripts,
 } from "@tanstack/react-router";
 import { useEffect, type ReactNode } from "react";
 import { Toaster as SonnerToaster } from "sonner";
+import { Loader2, Rocket } from "lucide-react";
 
 import appCss from "../styles.css?url";
 import { reportLovableError } from "../lib/lovable-error-reporting";
+import { AuthProvider, useAuth } from "@/hooks/use-auth";
 
 function NotFoundComponent() {
   return (
@@ -114,13 +118,52 @@ function RootShell({ children }: { children: ReactNode }) {
   );
 }
 
+function AuthGate({ children }: { children: ReactNode }) {
+  const { user, loading } = useAuth();
+  const pathname = useRouterState({ select: (s) => s.location.pathname });
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (loading) return;
+    if (!user && pathname !== "/auth") {
+      navigate({ to: "/auth", replace: true });
+    }
+  }, [user, loading, pathname, navigate]);
+
+  if (loading) {
+    return (
+      <div className="relative flex min-h-screen items-center justify-center bg-[#050816]">
+        <div className="pointer-events-none absolute inset-0 grid-bg opacity-[0.35]" />
+        <div className="relative flex flex-col items-center gap-4">
+          <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-[image:var(--gradient-cyber)] shadow-[var(--shadow-glow)]">
+            <Rocket className="h-5 w-5 text-white" />
+          </div>
+          <div className="flex items-center gap-2 font-mono text-[11px] uppercase tracking-[0.28em] text-white/60">
+            <Loader2 className="h-3 w-3 animate-spin" /> initializing mission control
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  if (!user && pathname !== "/auth") {
+    // While the redirect effect runs, avoid flashing protected UI.
+    return null;
+  }
+
+  return <>{children}</>;
+}
+
 function RootComponent() {
   const { queryClient } = Route.useRouteContext();
 
   return (
     <QueryClientProvider client={queryClient}>
-      {/* Required: nested routes render here. Removing <Outlet /> breaks all child routes. */}
-      <Outlet />
+      <AuthProvider>
+        <AuthGate>
+          <Outlet />
+        </AuthGate>
+      </AuthProvider>
       <SonnerToaster theme="dark" position="top-right" richColors />
     </QueryClientProvider>
   );
