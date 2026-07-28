@@ -69,19 +69,6 @@ function TasksPage() {
       setSaving(false);
     }
   }
-    if (!draft.title.trim()) return;
-    const minutes = draft.custom.trim() ? Math.max(1, Number(draft.custom)) : draft.estimatedMinutes;
-    add({
-      title: draft.title.trim(),
-      estimatedMinutes: minutes,
-      difficulty: draft.difficulty,
-      xp: Number(draft.xp) || 0,
-      tag: draft.tag.trim(),
-      done: false,
-    });
-    setDraft({ title: "", estimatedMinutes: 30, custom: "", difficulty: "Medium", xp: "50", tag: "" });
-    setShowForm(false);
-  }
 
   async function toggleDone(t: Task) {
     if (!t.done) {
