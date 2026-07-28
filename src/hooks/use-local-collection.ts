@@ -8,12 +8,12 @@ import {
   setDoc,
   updateDoc,
   deleteDoc,
-  addDoc,
   getDocs,
   query,
   orderBy,
   writeBatch,
 } from "firebase/firestore";
+import { onAuthStateChanged } from "firebase/auth";
 import { db, auth } from "@/lib/firebase";
 
 export type Identified = { id: string };
@@ -25,28 +25,39 @@ function stateDoc(uid: string, key: string) {
   return doc(db, "users", uid, "state", key);
 }
 
+/** Track the current auth uid reactively so hooks re-subscribe on sign-in. */
+function useUid() {
+  const [uid, setUid] = useState<string | null>(() => auth.currentUser?.uid ?? null);
+  useEffect(() => {
+    return onAuthStateChanged(auth, (u) => setUid(u?.uid ?? null));
+  }, []);
+  return uid;
+}
+
 /** Single-value user state, backed by users/{uid}/state/{key}.value */
 export function useLocalState<T>(key: string, initial: T) {
   const [value, setValue] = useState<T>(initial);
   const [hydrated, setHydrated] = useState(false);
-  const uidRef = useRef<string | null>(null);
+  const uid = useUid();
+  const initialRef = useRef(initial);
+  initialRef.current = initial;
 
   useEffect(() => {
-    const u = auth.currentUser;
-    if (!u) {
+    if (!uid) {
+      setValue(initialRef.current);
       setHydrated(true);
       return;
     }
-    uidRef.current = u.uid;
-    const ref = stateDoc(u.uid, key);
+    setHydrated(false);
+    const ref = stateDoc(uid, key);
     const unsub = onSnapshot(
       ref,
       (snap) => {
         if (snap.exists()) {
           const data = snap.data() as { value?: T };
-          setValue(data.value !== undefined ? (data.value as T) : initial);
+          setValue(data.value !== undefined ? (data.value as T) : initialRef.current);
         } else {
-          setValue(initial);
+          setValue(initialRef.current);
         }
         setHydrated(true);
       },
@@ -57,20 +68,19 @@ export function useLocalState<T>(key: string, initial: T) {
       },
     );
     return unsub;
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [key]);
+  }, [uid, key]);
 
   const update = useCallback(
     (v: T | ((prev: T) => T)) => {
-      const uid = uidRef.current ?? auth.currentUser?.uid;
-      if (!uid) return;
+      const currentUid = uid ?? auth.currentUser?.uid;
+      if (!currentUid) return;
       setValue((prev) => {
         const next = typeof v === "function" ? (v as (p: T) => T)(prev) : v;
-        void setDoc(stateDoc(uid, key), { value: next }, { merge: true });
+        void setDoc(stateDoc(currentUid, key), { value: next }, { merge: true });
         return next;
       });
     },
-    [key],
+    [uid, key],
   );
 
   return [value, update, hydrated] as const;
@@ -80,18 +90,19 @@ export function useLocalState<T>(key: string, initial: T) {
 export function useLocalCollection<T extends Identified>(key: string, _initial: T[] = []) {
   const [items, setItems] = useState<T[]>([]);
   const [hydrated, setHydrated] = useState(false);
-  const uidRef = useRef<string | null>(null);
+  const uid = useUid();
 
   useEffect(() => {
-    const u = auth.currentUser;
-    if (!u) {
+    if (!uid) {
+      setItems([]);
       setHydrated(true);
       return;
     }
-    uidRef.current = u.uid;
-    const col = userSub(u.uid, key);
-    // Order by _createdAt descending (newest first) if present.
+    setHydrated(false);
+    const col = userSub(uid, key);
     const q = query(col, orderBy("_createdAt", "desc"));
+    let fallbackUnsub: (() => void) | null = null;
+
     const unsub = onSnapshot(
       q,
       (snap) => {
@@ -104,10 +115,9 @@ export function useLocalCollection<T extends Identified>(key: string, _initial: 
         setHydrated(true);
       },
       (err) => {
-        // Fallback: no createdAt on legacy docs → fetch without ordering
         // eslint-disable-next-line no-console
         console.warn("[useLocalCollection]", key, err?.message);
-        const unsub2 = onSnapshot(col, (snap) => {
+        fallbackUnsub = onSnapshot(col, (snap) => {
           const out: T[] = [];
           snap.forEach((d) => {
             const data = d.data() as Record<string, unknown>;
@@ -116,68 +126,66 @@ export function useLocalCollection<T extends Identified>(key: string, _initial: 
           setItems(out);
           setHydrated(true);
         });
-        return unsub2;
       },
     );
-    return unsub;
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [key]);
+    return () => {
+      unsub();
+      if (fallbackUnsub) fallbackUnsub();
+    };
+  }, [uid, key]);
 
   const add = useCallback(
-    (item: Omit<T, "id"> & Partial<Identified>) => {
-      const uid = uidRef.current ?? auth.currentUser?.uid;
-      if (!uid) return "";
-      const col = userSub(uid, key);
+    async (item: Omit<T, "id"> & Partial<Identified>) => {
+      const currentUid = uid ?? auth.currentUser?.uid;
+      if (!currentUid) throw new Error("Not signed in");
+      const col = userSub(currentUid, key);
       const payload = { ...(item as Record<string, unknown>), _createdAt: Date.now() };
       delete (payload as Record<string, unknown>).id;
-      if ((item as Partial<Identified>).id) {
-        const ref = doc(col, (item as Identified).id);
-        void setDoc(ref, payload);
-        return (item as Identified).id;
-      }
-      const ref = doc(col);
-      void setDoc(ref, payload);
+      const ref = (item as Partial<Identified>).id
+        ? doc(col, (item as Identified).id)
+        : doc(col);
+      await setDoc(ref, payload);
       return ref.id;
     },
-    [key],
+    [uid, key],
   );
 
   const update = useCallback(
-    (id: string, patch: Partial<T>) => {
-      const uid = uidRef.current ?? auth.currentUser?.uid;
-      if (!uid) return;
-      const ref = doc(userSub(uid, key), id);
+    async (id: string, patch: Partial<T>) => {
+      const currentUid = uid ?? auth.currentUser?.uid;
+      if (!currentUid) throw new Error("Not signed in");
+      const ref = doc(userSub(currentUid, key), id);
       const clean: Record<string, unknown> = { ...(patch as Record<string, unknown>) };
       delete clean.id;
-      void updateDoc(ref, clean);
+      await updateDoc(ref, clean);
     },
-    [key],
+    [uid, key],
   );
 
   const remove = useCallback(
-    (id: string) => {
-      const uid = uidRef.current ?? auth.currentUser?.uid;
-      if (!uid) return;
-      void deleteDoc(doc(userSub(uid, key), id));
+    async (id: string) => {
+      const currentUid = uid ?? auth.currentUser?.uid;
+      if (!currentUid) throw new Error("Not signed in");
+      await deleteDoc(doc(userSub(currentUid, key), id));
     },
-    [key],
+    [uid, key],
   );
 
   const clear = useCallback(async () => {
-    const uid = uidRef.current ?? auth.currentUser?.uid;
-    if (!uid) return;
-    const snap = await getDocs(userSub(uid, key));
+    const currentUid = uid ?? auth.currentUser?.uid;
+    if (!currentUid) return;
+    const snap = await getDocs(userSub(currentUid, key));
     const batch = writeBatch(db);
     snap.forEach((d) => batch.delete(d.ref));
     await batch.commit();
-  }, [key]);
+  }, [uid, key]);
 
   const setItemsExternal = useCallback(
     async (next: T[] | ((prev: T[]) => T[])) => {
-      const uid = uidRef.current ?? auth.currentUser?.uid;
-      if (!uid) return;
+      const currentUid = uid ?? auth.currentUser?.uid;
+      if (!currentUid) return;
       const value = typeof next === "function" ? (next as (p: T[]) => T[])(items) : next;
-      const col = userSub(uid, key);
+      const col = userSub(currentUid, key);
       const snap = await getDocs(col);
       const batch = writeBatch(db);
       snap.forEach((d) => batch.delete(d.ref));
@@ -190,7 +198,7 @@ export function useLocalCollection<T extends Identified>(key: string, _initial: 
       }
       await batch.commit();
     },
-    [items, key],
+    [items, uid, key],
   );
 
   return { items, add, update, remove, clear, setItems: setItemsExternal, hydrated };
@@ -212,7 +220,6 @@ export async function clearAllAscendData() {
     snap.forEach((d) => batch.delete(d.ref));
     await batch.commit();
   }
-  // Reset xp/level and profile scalars
   await setDoc(doc(db, "users", uid), { xp: 0 }, { merge: true });
   const stateSnap = await getDocs(collection(db, "users", uid, "state"));
   const b = writeBatch(db);

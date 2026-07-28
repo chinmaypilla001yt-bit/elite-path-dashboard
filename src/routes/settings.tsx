@@ -5,9 +5,9 @@ import { GlassCard } from "@/components/ascend/GlassCard";
 import { useLocalState, clearAllAscendData } from "@/hooks/use-local-collection";
 import { useAuth } from "@/hooks/use-auth";
 import { useProfile } from "@/hooks/use-profile";
-import { AlertTriangle, LogOut } from "lucide-react";
+import { AlertTriangle, LogOut, Check, Loader2, X } from "lucide-react";
 import { toast } from "sonner";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 export const Route = createFileRoute("/settings")({
   head: () => ({
@@ -20,10 +20,35 @@ export const Route = createFileRoute("/settings")({
 });
 
 function SettingsPage() {
-  const [name, setName] = useLocalState<string>("profile:name", "");
+  const [savedName, setSavedName, hydrated] = useLocalState<string>("profile:name", "");
   const { user, signOut } = useAuth();
   const { stats } = useProfile();
   const [busy, setBusy] = useState(false);
+  const [draftName, setDraftName] = useState("");
+  const [saving, setSaving] = useState(false);
+
+  useEffect(() => {
+    if (hydrated) setDraftName(savedName);
+  }, [hydrated, savedName]);
+
+  const dirty = draftName !== savedName;
+
+  async function handleSave() {
+    if (!dirty) return;
+    setSaving(true);
+    try {
+      await setSavedName(draftName);
+      toast.success("Profile saved");
+    } catch (e) {
+      toast.error((e as Error).message || "Failed to save");
+    } finally {
+      setSaving(false);
+    }
+  }
+
+  function handleCancel() {
+    setDraftName(savedName);
+  }
 
   async function reset() {
     if (!confirm("Delete ALL your Ascend data? This cannot be undone.")) return;
@@ -48,11 +73,29 @@ function SettingsPage() {
           <div className="mt-1 text-lg font-semibold text-white">Display name</div>
           <p className="mt-2 text-sm text-white/60">Shown in the greeting on your dashboard.</p>
           <input
-            value={name}
-            onChange={(e) => setName(e.target.value)}
+            value={draftName}
+            onChange={(e) => setDraftName(e.target.value)}
             placeholder={user?.displayName || "Chinmay"}
             className="mt-4 w-full rounded-lg border border-white/10 bg-white/[0.03] px-3 py-2 text-sm text-white placeholder:text-white/30 focus:border-white/30 focus:outline-none"
           />
+
+          <div className="mt-4 flex justify-end gap-2">
+            <button
+              onClick={handleCancel}
+              disabled={!dirty || saving}
+              className="inline-flex items-center gap-1.5 rounded-lg border border-white/10 bg-white/[0.03] px-3 py-1.5 text-xs text-white/70 hover:bg-white/[0.06] hover:text-white disabled:opacity-40"
+            >
+              <X className="h-3.5 w-3.5" /> Cancel
+            </button>
+            <button
+              onClick={handleSave}
+              disabled={!dirty || saving}
+              className="inline-flex items-center gap-1.5 rounded-lg bg-[image:var(--gradient-cyber)] px-4 py-1.5 text-xs font-semibold text-white shadow-[var(--shadow-glow)] transition hover:opacity-90 disabled:opacity-40"
+            >
+              {saving ? <Loader2 className="h-3.5 w-3.5 animate-spin" /> : <Check className="h-3.5 w-3.5" />}
+              {saving ? "Saving…" : "Save"}
+            </button>
+          </div>
 
           <div className="mt-5 rounded-lg border border-white/5 bg-white/[0.03] p-3">
             <div className="font-mono text-[10px] uppercase tracking-widest text-white/45">Account</div>

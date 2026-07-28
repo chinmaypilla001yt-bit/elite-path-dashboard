@@ -74,6 +74,7 @@ function CPPage() {
       )}
 
       <EditableList
+        embed
         storageKey="cp-contests"
         eyebrow="Log"
         title="Contests"

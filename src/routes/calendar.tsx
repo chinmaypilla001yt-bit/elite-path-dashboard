@@ -1,7 +1,8 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useEffect, useMemo, useState } from "react";
 import { motion, AnimatePresence } from "motion/react";
-import { Plus, ChevronLeft, ChevronRight, X, Check, Pencil, Trash2, Clock } from "lucide-react";
+import { Plus, ChevronLeft, ChevronRight, X, Check, Pencil, Trash2, Clock, Loader2 } from "lucide-react";
+import { toast } from "sonner";
 import { AppShell } from "@/components/ascend/AppShell";
 import { PageHeader } from "@/components/ascend/PageHeader";
 import { GlassCard } from "@/components/ascend/GlassCard";
@@ -77,12 +78,28 @@ function CalendarPage() {
     });
     setShowForm(true);
   }
-  function save() {
-    if (!draft.title.trim() || !draft.date) return;
-    if (editingId) update(editingId, draft as Partial<Event>);
-    else add(draft as Omit<Event, "id">);
-    setShowForm(false);
-    setEditingId(null);
+  const [saving, setSaving] = useState(false);
+  async function save() {
+    if (!draft.title.trim() || !draft.date) {
+      toast.error("Title and date are required");
+      return;
+    }
+    setSaving(true);
+    try {
+      if (editingId) {
+        await update(editingId, draft as Partial<Event>);
+        toast.success("Event updated");
+      } else {
+        await add(draft as Omit<Event, "id">);
+        toast.success("Event added");
+      }
+      setShowForm(false);
+      setEditingId(null);
+    } catch (e) {
+      toast.error((e as Error).message || "Failed to save");
+    } finally {
+      setSaving(false);
+    }
   }
 
   const monthLabel = new Date(cursor.y, cursor.m, 1).toLocaleString(undefined, { month: "long", year: "numeric" });
@@ -198,8 +215,8 @@ function CalendarPage() {
                 <button onClick={() => setShowForm(false)} className="rounded-lg border border-white/10 bg-white/[0.03] px-4 py-2 text-sm text-white/70 hover:bg-white/[0.06] hover:text-white">
                   Cancel
                 </button>
-                <button onClick={save} className="inline-flex items-center gap-2 rounded-lg bg-[image:var(--gradient-cyber)] px-4 py-2 text-sm font-semibold text-white shadow-[var(--shadow-glow)]">
-                  <Check className="h-4 w-4" /> Save
+                <button onClick={save} disabled={saving} className="inline-flex items-center gap-2 rounded-lg bg-[image:var(--gradient-cyber)] px-4 py-2 text-sm font-semibold text-white shadow-[var(--shadow-glow)] disabled:opacity-60">
+                  {saving ? <Loader2 className="h-4 w-4 animate-spin" /> : <Check className="h-4 w-4" />} {saving ? "Saving…" : "Save"}
                 </button>
               </div>
             </GlassCard>
@@ -293,7 +310,7 @@ function CalendarPage() {
                           <button onClick={() => openEdit(e)} className="rounded-md p-1 text-white/50 hover:bg-white/[0.06] hover:text-white">
                             <Pencil className="h-3 w-3" />
                           </button>
-                          <button onClick={() => remove(e.id)} className="rounded-md p-1 text-white/50 hover:bg-white/[0.06] hover:text-red-300">
+                          <button onClick={async () => { try { await remove(e.id); toast.success("Event deleted"); } catch (err) { toast.error((err as Error).message || "Failed to delete"); } }} className="rounded-md p-1 text-white/50 hover:bg-white/[0.06] hover:text-red-300">
                             <Trash2 className="h-3 w-3" />
                           </button>
                         </div>

@@ -1,6 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useState } from "react";
-import { Plus, Trash2, Check, Clock3 } from "lucide-react";
+import { Plus, Trash2, Check, Clock3, Loader2 } from "lucide-react";
 import { motion, AnimatePresence } from "motion/react";
 import { AppShell } from "@/components/ascend/AppShell";
 import { PageHeader } from "@/components/ascend/PageHeader";
@@ -41,21 +41,33 @@ const PRESETS = [
 function TasksPage() {
   const { items, add, update, remove, hydrated } = useLocalCollection<Task>("tasks");
   const [showForm, setShowForm] = useState(false);
+  const [saving, setSaving] = useState(false);
   const [draft, setDraft] = useState({ title: "", estimatedMinutes: 30, custom: "", difficulty: "Medium", xp: "50", tag: "" });
 
-  function save() {
-    if (!draft.title.trim()) return;
+  async function save() {
+    if (!draft.title.trim()) {
+      toast.error("Title is required");
+      return;
+    }
     const minutes = draft.custom.trim() ? Math.max(1, Number(draft.custom)) : draft.estimatedMinutes;
-    add({
-      title: draft.title.trim(),
-      estimatedMinutes: minutes,
-      difficulty: draft.difficulty,
-      xp: Number(draft.xp) || 0,
-      tag: draft.tag.trim(),
-      done: false,
-    });
-    setDraft({ title: "", estimatedMinutes: 30, custom: "", difficulty: "Medium", xp: "50", tag: "" });
-    setShowForm(false);
+    setSaving(true);
+    try {
+      await add({
+        title: draft.title.trim(),
+        estimatedMinutes: minutes,
+        difficulty: draft.difficulty,
+        xp: Number(draft.xp) || 0,
+        tag: draft.tag.trim(),
+        done: false,
+      });
+      toast.success("Task added");
+      setDraft({ title: "", estimatedMinutes: 30, custom: "", difficulty: "Medium", xp: "50", tag: "" });
+      setShowForm(false);
+    } catch (e) {
+      toast.error((e as Error).message || "Failed to save");
+    } finally {
+      setSaving(false);
+    }
   }
 
   async function toggleDone(t: Task) {
@@ -152,8 +164,9 @@ function TasksPage() {
                   value={draft.xp}
                   onChange={(e) => setDraft({ ...draft, xp: e.target.value })}
                 />
-                <button onClick={save} className="sm:col-span-2 rounded-lg bg-[image:var(--gradient-cyber)] px-4 py-2 text-sm font-semibold text-white">
-                  Save task
+                <button onClick={save} disabled={saving} className="sm:col-span-2 inline-flex items-center justify-center gap-2 rounded-lg bg-[image:var(--gradient-cyber)] px-4 py-2 text-sm font-semibold text-white disabled:opacity-60">
+                  {saving ? <Loader2 className="h-4 w-4 animate-spin" /> : null}
+                  {saving ? "Saving…" : "Save task"}
                 </button>
               </div>
             </GlassCard>
