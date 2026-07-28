@@ -41,9 +41,34 @@ const PRESETS = [
 function TasksPage() {
   const { items, add, update, remove, hydrated } = useLocalCollection<Task>("tasks");
   const [showForm, setShowForm] = useState(false);
+  const [saving, setSaving] = useState(false);
   const [draft, setDraft] = useState({ title: "", estimatedMinutes: 30, custom: "", difficulty: "Medium", xp: "50", tag: "" });
 
-  function save() {
+  async function save() {
+    if (!draft.title.trim()) {
+      toast.error("Title is required");
+      return;
+    }
+    const minutes = draft.custom.trim() ? Math.max(1, Number(draft.custom)) : draft.estimatedMinutes;
+    setSaving(true);
+    try {
+      await add({
+        title: draft.title.trim(),
+        estimatedMinutes: minutes,
+        difficulty: draft.difficulty,
+        xp: Number(draft.xp) || 0,
+        tag: draft.tag.trim(),
+        done: false,
+      });
+      toast.success("Task added");
+      setDraft({ title: "", estimatedMinutes: 30, custom: "", difficulty: "Medium", xp: "50", tag: "" });
+      setShowForm(false);
+    } catch (e) {
+      toast.error((e as Error).message || "Failed to save");
+    } finally {
+      setSaving(false);
+    }
+  }
     if (!draft.title.trim()) return;
     const minutes = draft.custom.trim() ? Math.max(1, Number(draft.custom)) : draft.estimatedMinutes;
     add({
