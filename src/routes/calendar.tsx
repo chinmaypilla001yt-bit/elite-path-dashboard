@@ -215,8 +215,8 @@ function CalendarPage() {
                 <button onClick={() => setShowForm(false)} className="rounded-lg border border-white/10 bg-white/[0.03] px-4 py-2 text-sm text-white/70 hover:bg-white/[0.06] hover:text-white">
                   Cancel
                 </button>
-                <button onClick={save} className="inline-flex items-center gap-2 rounded-lg bg-[image:var(--gradient-cyber)] px-4 py-2 text-sm font-semibold text-white shadow-[var(--shadow-glow)]">
-                  <Check className="h-4 w-4" /> Save
+                <button onClick={save} disabled={saving} className="inline-flex items-center gap-2 rounded-lg bg-[image:var(--gradient-cyber)] px-4 py-2 text-sm font-semibold text-white shadow-[var(--shadow-glow)] disabled:opacity-60">
+                  {saving ? <Loader2 className="h-4 w-4 animate-spin" /> : <Check className="h-4 w-4" />} {saving ? "Saving…" : "Save"}
                 </button>
               </div>
             </GlassCard>
@@ -310,7 +310,7 @@ function CalendarPage() {
                           <button onClick={() => openEdit(e)} className="rounded-md p-1 text-white/50 hover:bg-white/[0.06] hover:text-white">
                             <Pencil className="h-3 w-3" />
                           </button>
-                          <button onClick={() => remove(e.id)} className="rounded-md p-1 text-white/50 hover:bg-white/[0.06] hover:text-red-300">
+                          <button onClick={async () => { try { await remove(e.id); toast.success("Event deleted"); } catch (err) { toast.error((err as Error).message || "Failed to delete"); } }} className="rounded-md p-1 text-white/50 hover:bg-white/[0.06] hover:text-red-300">
                             <Trash2 className="h-3 w-3" />
                           </button>
                         </div>
