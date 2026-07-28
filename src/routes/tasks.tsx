@@ -1,6 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useState } from "react";
-import { Plus, Trash2, Check, Clock3 } from "lucide-react";
+import { Plus, Trash2, Check, Clock3, Loader2 } from "lucide-react";
 import { motion, AnimatePresence } from "motion/react";
 import { AppShell } from "@/components/ascend/AppShell";
 import { PageHeader } from "@/components/ascend/PageHeader";
@@ -164,8 +164,9 @@ function TasksPage() {
                   value={draft.xp}
                   onChange={(e) => setDraft({ ...draft, xp: e.target.value })}
                 />
-                <button onClick={save} className="sm:col-span-2 rounded-lg bg-[image:var(--gradient-cyber)] px-4 py-2 text-sm font-semibold text-white">
-                  Save task
+                <button onClick={save} disabled={saving} className="sm:col-span-2 inline-flex items-center justify-center gap-2 rounded-lg bg-[image:var(--gradient-cyber)] px-4 py-2 text-sm font-semibold text-white disabled:opacity-60">
+                  {saving ? <Loader2 className="h-4 w-4 animate-spin" /> : null}
+                  {saving ? "Saving…" : "Save task"}
                 </button>
               </div>
             </GlassCard>

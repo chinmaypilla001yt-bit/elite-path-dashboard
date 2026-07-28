@@ -1,7 +1,8 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useEffect, useMemo, useState } from "react";
 import { motion, AnimatePresence } from "motion/react";
-import { Plus, ChevronLeft, ChevronRight, X, Check, Pencil, Trash2, Clock } from "lucide-react";
+import { Plus, ChevronLeft, ChevronRight, X, Check, Pencil, Trash2, Clock, Loader2 } from "lucide-react";
+import { toast } from "sonner";
 import { AppShell } from "@/components/ascend/AppShell";
 import { PageHeader } from "@/components/ascend/PageHeader";
 import { GlassCard } from "@/components/ascend/GlassCard";
@@ -77,12 +78,28 @@ function CalendarPage() {
     });
     setShowForm(true);
   }
-  function save() {
-    if (!draft.title.trim() || !draft.date) return;
-    if (editingId) update(editingId, draft as Partial<Event>);
-    else add(draft as Omit<Event, "id">);
-    setShowForm(false);
-    setEditingId(null);
+  const [saving, setSaving] = useState(false);
+  async function save() {
+    if (!draft.title.trim() || !draft.date) {
+      toast.error("Title and date are required");
+      return;
+    }
+    setSaving(true);
+    try {
+      if (editingId) {
+        await update(editingId, draft as Partial<Event>);
+        toast.success("Event updated");
+      } else {
+        await add(draft as Omit<Event, "id">);
+        toast.success("Event added");
+      }
+      setShowForm(false);
+      setEditingId(null);
+    } catch (e) {
+      toast.error((e as Error).message || "Failed to save");
+    } finally {
+      setSaving(false);
+    }
   }
 
   const monthLabel = new Date(cursor.y, cursor.m, 1).toLocaleString(undefined, { month: "long", year: "numeric" });
