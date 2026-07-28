@@ -1,10 +1,11 @@
 import { useState, type ReactNode } from "react";
-import { Plus, Trash2, Pencil, X, Check } from "lucide-react";
+import { Plus, Trash2, Pencil, X, Check, Loader2 } from "lucide-react";
 import { AppShell } from "./AppShell";
 import { PageHeader } from "./PageHeader";
 import { GlassCard } from "./GlassCard";
 import { useLocalCollection, type Identified } from "@/hooks/use-local-collection";
 import { motion, AnimatePresence } from "motion/react";
+import { toast } from "sonner";
 
 export type FieldDef = {
   name: string;
@@ -28,6 +29,7 @@ export function EditableList({
   renderItem,
   emptyHint,
   glow = "purple",
+  embed = false,
 }: {
   storageKey: string;
   eyebrow: string;
@@ -38,11 +40,14 @@ export function EditableList({
   renderItem: (item: EditableItem) => ReactNode;
   emptyHint?: string;
   glow?: "blue" | "purple" | "cyan" | "emerald" | "gold";
+  /** When true, don't render AppShell/PageHeader — caller supplies them. */
+  embed?: boolean;
 }) {
   const { items, add, update, remove, hydrated } = useLocalCollection<EditableItem>(storageKey);
   const [editingId, setEditingId] = useState<string | null>(null);
   const [draft, setDraft] = useState<Record<string, string>>({});
   const [showForm, setShowForm] = useState(false);
+  const [saving, setSaving] = useState(false);
 
   function openNew() {
     setEditingId(null);
@@ -61,35 +66,54 @@ export function EditableList({
     setEditingId(null);
     setDraft({});
   }
-  function save() {
+  async function save() {
     const missing = fields.find((f) => f.required && !draft[f.name]?.trim());
-    if (missing) return;
+    if (missing) {
+      toast.error(`${missing.label} is required`);
+      return;
+    }
     const payload: Record<string, unknown> = {};
     for (const f of fields) {
       const v = draft[f.name] ?? "";
       payload[f.name] = f.type === "number" ? (v === "" ? 0 : Number(v)) : v;
     }
-    if (editingId) update(editingId, payload);
-    else add(payload as Omit<EditableItem, "id">);
-    cancel();
+    setSaving(true);
+    try {
+      if (editingId) {
+        await update(editingId, payload);
+        toast.success(`${cap(itemLabel)} updated`);
+      } else {
+        await add(payload as Omit<EditableItem, "id">);
+        toast.success(`${cap(itemLabel)} added`);
+      }
+      cancel();
+    } catch (e) {
+      toast.error((e as Error).message || "Failed to save");
+    } finally {
+      setSaving(false);
+    }
   }
 
-  return (
-    <AppShell>
-      <PageHeader
-        eyebrow={eyebrow}
-        title={title}
-        description={description}
-        actions={
-          <button
-            onClick={openNew}
-            className="inline-flex items-center gap-2 rounded-lg bg-[image:var(--gradient-cyber)] px-4 py-2 text-sm font-semibold text-white shadow-[var(--shadow-glow)] transition hover:opacity-90"
-          >
-            <Plus className="h-4 w-4" /> Add {itemLabel}
-          </button>
-        }
-      />
+  async function handleRemove(id: string) {
+    try {
+      await remove(id);
+      toast.success(`${cap(itemLabel)} deleted`);
+    } catch (e) {
+      toast.error((e as Error).message || "Failed to delete");
+    }
+  }
 
+  const addBtn = (
+    <button
+      onClick={openNew}
+      className="inline-flex items-center gap-2 rounded-lg bg-[image:var(--gradient-cyber)] px-4 py-2 text-sm font-semibold text-white shadow-[var(--shadow-glow)] transition hover:opacity-90"
+    >
+      <Plus className="h-4 w-4" /> Add {itemLabel}
+    </button>
+  );
+
+  const body = (
+    <>
       <AnimatePresence>
         {showForm && (
           <motion.div
@@ -146,14 +170,20 @@ export function EditableList({
                 ))}
               </div>
               <div className="mt-4 flex justify-end gap-2">
-                <button onClick={cancel} className="rounded-lg border border-white/10 bg-white/[0.03] px-4 py-2 text-sm text-white/70 hover:bg-white/[0.06] hover:text-white">
+                <button
+                  onClick={cancel}
+                  disabled={saving}
+                  className="rounded-lg border border-white/10 bg-white/[0.03] px-4 py-2 text-sm text-white/70 hover:bg-white/[0.06] hover:text-white disabled:opacity-50"
+                >
                   Cancel
                 </button>
                 <button
                   onClick={save}
-                  className="inline-flex items-center gap-2 rounded-lg bg-[image:var(--gradient-cyber)] px-4 py-2 text-sm font-semibold text-white shadow-[var(--shadow-glow)] transition hover:opacity-90"
+                  disabled={saving}
+                  className="inline-flex items-center gap-2 rounded-lg bg-[image:var(--gradient-cyber)] px-4 py-2 text-sm font-semibold text-white shadow-[var(--shadow-glow)] transition hover:opacity-90 disabled:opacity-60"
                 >
-                  <Check className="h-4 w-4" /> Save
+                  {saving ? <Loader2 className="h-4 w-4 animate-spin" /> : <Check className="h-4 w-4" />}
+                  {saving ? "Saving…" : "Save"}
                 </button>
               </div>
             </GlassCard>
@@ -165,7 +195,7 @@ export function EditableList({
         <GlassCard glow={glow} className="flex flex-col items-center justify-center p-16 text-center">
           <div className="text-lg font-semibold text-white">Nothing here yet</div>
           <p className="mt-2 max-w-md text-sm text-white/60">
-            {emptyHint ?? `Click “Add ${itemLabel}” to start tracking.`}
+            {emptyHint ?? `Click "Add ${itemLabel}" to start tracking.`}
           </p>
         </GlassCard>
       ) : (
@@ -190,7 +220,7 @@ export function EditableList({
                       <Pencil className="h-3.5 w-3.5" />
                     </button>
                     <button
-                      onClick={() => remove(it.id)}
+                      onClick={() => handleRemove(it.id)}
                       className="rounded-md p-1.5 text-white/50 hover:bg-white/[0.06] hover:text-red-300"
                       title="Delete"
                     >
@@ -204,6 +234,33 @@ export function EditableList({
           </AnimatePresence>
         </div>
       )}
+    </>
+  );
+
+  if (embed) {
+    return (
+      <div>
+        <div className="mb-4 flex items-center justify-between gap-4">
+          <div>
+            <div className="font-mono text-[10px] uppercase tracking-[0.24em] text-white/50">{eyebrow}</div>
+            <div className="mt-1 text-xl font-semibold text-white">{title}</div>
+            <p className="mt-1 text-sm text-white/60">{description}</p>
+          </div>
+          {addBtn}
+        </div>
+        {body}
+      </div>
+    );
+  }
+
+  return (
+    <AppShell>
+      <PageHeader eyebrow={eyebrow} title={title} description={description} actions={addBtn} />
+      {body}
     </AppShell>
   );
+}
+
+function cap(s: string) {
+  return s.charAt(0).toUpperCase() + s.slice(1);
 }
