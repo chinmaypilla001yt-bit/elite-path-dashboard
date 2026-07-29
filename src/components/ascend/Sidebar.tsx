@@ -2,11 +2,12 @@ import { Link, useRouterState } from "@tanstack/react-router";
 import {
   LayoutDashboard, Map, ListChecks, CalendarDays, Flame, BookOpen,
   Code2, Sigma, Brain, FolderGit2, Briefcase, FileText, Trophy,
-  NotebookPen, BarChart3, Settings, Rocket, Target, LogOut,
+  NotebookPen, BarChart3, Settings, Rocket, Target, LogOut, Bell, Crown,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { useAuth } from "@/hooks/use-auth";
 import { useProfile } from "@/hooks/use-profile";
+import { useNotifications } from "@/hooks/use-notifications";
 import { toast } from "sonner";
 
 const nav = [
@@ -24,6 +25,8 @@ const nav = [
   { to: "/internships", label: "Internships", icon: Briefcase },
   { to: "/resume", label: "Resume", icon: FileText },
   { to: "/achievements", label: "Achievements", icon: Trophy },
+  { to: "/leaderboard", label: "Leaderboard", icon: Crown },
+  { to: "/notifications", label: "Notifications", icon: Bell },
   { to: "/journal", label: "Journal", icon: NotebookPen },
   { to: "/analytics", label: "Analytics", icon: BarChart3 },
   { to: "/settings", label: "Settings", icon: Settings },
@@ -33,6 +36,7 @@ export function AscendSidebar() {
   const pathname = useRouterState({ select: (s) => s.location.pathname });
   const { user, signOut } = useAuth();
   const { stats } = useProfile();
+  const { unread } = useNotifications();
 
   const displayName =
     user?.displayName ||
@@ -85,6 +89,11 @@ export function AscendSidebar() {
                 )}
               />
               <span className="truncate">{item.label}</span>
+              {item.to === "/notifications" && unread > 0 && (
+                <span className="ml-auto rounded-full bg-[image:var(--gradient-cyber)] px-1.5 py-0.5 text-[10px] font-semibold text-white shadow-[var(--shadow-glow)]">
+                  {unread > 99 ? "99+" : unread}
+                </span>
+              )}
             </Link>
           );
         })}

@@ -15,7 +15,9 @@ import { Route as SettingsRouteImport } from './routes/settings'
 import { Route as RoadmapRouteImport } from './routes/roadmap'
 import { Route as ResumeRouteImport } from './routes/resume'
 import { Route as ProjectsRouteImport } from './routes/projects'
+import { Route as NotificationsRouteImport } from './routes/notifications'
 import { Route as MathRouteImport } from './routes/math'
+import { Route as LeaderboardRouteImport } from './routes/leaderboard'
 import { Route as JournalRouteImport } from './routes/journal'
 import { Route as InternshipsRouteImport } from './routes/internships'
 import { Route as HabitsRouteImport } from './routes/habits'
@@ -58,9 +60,19 @@ const ProjectsRoute = ProjectsRouteImport.update({
   path: '/projects',
   getParentRoute: () => rootRouteImport,
 } as any)
+const NotificationsRoute = NotificationsRouteImport.update({
+  id: '/notifications',
+  path: '/notifications',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const MathRoute = MathRouteImport.update({
   id: '/math',
   path: '/math',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const LeaderboardRoute = LeaderboardRouteImport.update({
+  id: '/leaderboard',
+  path: '/leaderboard',
   getParentRoute: () => rootRouteImport,
 } as any)
 const JournalRoute = JournalRouteImport.update({
@@ -131,7 +143,9 @@ export interface FileRoutesByFullPath {
   '/habits': typeof HabitsRoute
   '/internships': typeof InternshipsRoute
   '/journal': typeof JournalRoute
+  '/leaderboard': typeof LeaderboardRoute
   '/math': typeof MathRoute
+  '/notifications': typeof NotificationsRoute
   '/projects': typeof ProjectsRoute
   '/resume': typeof ResumeRoute
   '/roadmap': typeof RoadmapRoute
@@ -151,7 +165,9 @@ export interface FileRoutesByTo {
   '/habits': typeof HabitsRoute
   '/internships': typeof InternshipsRoute
   '/journal': typeof JournalRoute
+  '/leaderboard': typeof LeaderboardRoute
   '/math': typeof MathRoute
+  '/notifications': typeof NotificationsRoute
   '/projects': typeof ProjectsRoute
   '/resume': typeof ResumeRoute
   '/roadmap': typeof RoadmapRoute
@@ -172,7 +188,9 @@ export interface FileRoutesById {
   '/habits': typeof HabitsRoute
   '/internships': typeof InternshipsRoute
   '/journal': typeof JournalRoute
+  '/leaderboard': typeof LeaderboardRoute
   '/math': typeof MathRoute
+  '/notifications': typeof NotificationsRoute
   '/projects': typeof ProjectsRoute
   '/resume': typeof ResumeRoute
   '/roadmap': typeof RoadmapRoute
@@ -194,7 +212,9 @@ export interface FileRouteTypes {
     | '/habits'
     | '/internships'
     | '/journal'
+    | '/leaderboard'
     | '/math'
+    | '/notifications'
     | '/projects'
     | '/resume'
     | '/roadmap'
@@ -214,7 +234,9 @@ export interface FileRouteTypes {
     | '/habits'
     | '/internships'
     | '/journal'
+    | '/leaderboard'
     | '/math'
+    | '/notifications'
     | '/projects'
     | '/resume'
     | '/roadmap'
@@ -234,7 +256,9 @@ export interface FileRouteTypes {
     | '/habits'
     | '/internships'
     | '/journal'
+    | '/leaderboard'
     | '/math'
+    | '/notifications'
     | '/projects'
     | '/resume'
     | '/roadmap'
@@ -255,7 +279,9 @@ export interface RootRouteChildren {
   HabitsRoute: typeof HabitsRoute
   InternshipsRoute: typeof InternshipsRoute
   JournalRoute: typeof JournalRoute
+  LeaderboardRoute: typeof LeaderboardRoute
   MathRoute: typeof MathRoute
+  NotificationsRoute: typeof NotificationsRoute
   ProjectsRoute: typeof ProjectsRoute
   ResumeRoute: typeof ResumeRoute
   RoadmapRoute: typeof RoadmapRoute
@@ -308,11 +334,25 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ProjectsRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/notifications': {
+      id: '/notifications'
+      path: '/notifications'
+      fullPath: '/notifications'
+      preLoaderRoute: typeof NotificationsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/math': {
       id: '/math'
       path: '/math'
       fullPath: '/math'
       preLoaderRoute: typeof MathRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/leaderboard': {
+      id: '/leaderboard'
+      path: '/leaderboard'
+      fullPath: '/leaderboard'
+      preLoaderRoute: typeof LeaderboardRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/journal': {
@@ -407,7 +447,9 @@ const rootRouteChildren: RootRouteChildren = {
   HabitsRoute: HabitsRoute,
   InternshipsRoute: InternshipsRoute,
   JournalRoute: JournalRoute,
+  LeaderboardRoute: LeaderboardRoute,
   MathRoute: MathRoute,
+  NotificationsRoute: NotificationsRoute,
   ProjectsRoute: ProjectsRoute,
   ResumeRoute: ResumeRoute,
   RoadmapRoute: RoadmapRoute,

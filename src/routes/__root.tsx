@@ -16,6 +16,8 @@ import { Loader2, Rocket } from "lucide-react";
 import appCss from "../styles.css?url";
 import { reportLovableError } from "../lib/lovable-error-reporting";
 import { AuthProvider, useAuth } from "@/hooks/use-auth";
+import { NotificationsProvider } from "@/hooks/use-notifications";
+import { useUserAggregatesSync } from "@/lib/user-aggregates";
 
 function NotFoundComponent() {
   return (
@@ -154,15 +156,23 @@ function AuthGate({ children }: { children: ReactNode }) {
   return <>{children}</>;
 }
 
+function AggregatesSyncer() {
+  useUserAggregatesSync();
+  return null;
+}
+
 function RootComponent() {
   const { queryClient } = Route.useRouteContext();
 
   return (
     <QueryClientProvider client={queryClient}>
       <AuthProvider>
-        <AuthGate>
-          <Outlet />
-        </AuthGate>
+        <NotificationsProvider>
+          <AuthGate>
+            <AggregatesSyncer />
+            <Outlet />
+          </AuthGate>
+        </NotificationsProvider>
       </AuthProvider>
       <SonnerToaster theme="dark" position="top-right" richColors />
     </QueryClientProvider>
