@@ -30,6 +30,7 @@ import { Route as AnalyticsRouteImport } from './routes/analytics'
 import { Route as AiRouteImport } from './routes/ai'
 import { Route as AchievementsRouteImport } from './routes/achievements'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as CareerIndexRouteImport } from './routes/career/index'
 
 const TasksRoute = TasksRouteImport.update({
   id: '/tasks',
@@ -136,6 +137,11 @@ const IndexRoute = IndexRouteImport.update({
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const CareerIndexRoute = CareerIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => CareerRoute,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -144,7 +150,7 @@ export interface FileRoutesByFullPath {
   '/analytics': typeof AnalyticsRoute
   '/auth': typeof AuthRoute
   '/calendar': typeof CalendarRoute
-  '/career': typeof CareerRoute
+  '/career': typeof CareerRouteWithChildren
   '/cp': typeof CpRoute
   '/goals': typeof GoalsRoute
   '/habits': typeof HabitsRoute
@@ -159,6 +165,7 @@ export interface FileRoutesByFullPath {
   '/settings': typeof SettingsRoute
   '/study': typeof StudyRoute
   '/tasks': typeof TasksRoute
+  '/career/': typeof CareerIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -167,7 +174,6 @@ export interface FileRoutesByTo {
   '/analytics': typeof AnalyticsRoute
   '/auth': typeof AuthRoute
   '/calendar': typeof CalendarRoute
-  '/career': typeof CareerRoute
   '/cp': typeof CpRoute
   '/goals': typeof GoalsRoute
   '/habits': typeof HabitsRoute
@@ -182,6 +188,7 @@ export interface FileRoutesByTo {
   '/settings': typeof SettingsRoute
   '/study': typeof StudyRoute
   '/tasks': typeof TasksRoute
+  '/career': typeof CareerIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -191,7 +198,7 @@ export interface FileRoutesById {
   '/analytics': typeof AnalyticsRoute
   '/auth': typeof AuthRoute
   '/calendar': typeof CalendarRoute
-  '/career': typeof CareerRoute
+  '/career': typeof CareerRouteWithChildren
   '/cp': typeof CpRoute
   '/goals': typeof GoalsRoute
   '/habits': typeof HabitsRoute
@@ -206,6 +213,7 @@ export interface FileRoutesById {
   '/settings': typeof SettingsRoute
   '/study': typeof StudyRoute
   '/tasks': typeof TasksRoute
+  '/career/': typeof CareerIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -231,6 +239,7 @@ export interface FileRouteTypes {
     | '/settings'
     | '/study'
     | '/tasks'
+    | '/career/'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -239,7 +248,6 @@ export interface FileRouteTypes {
     | '/analytics'
     | '/auth'
     | '/calendar'
-    | '/career'
     | '/cp'
     | '/goals'
     | '/habits'
@@ -254,6 +262,7 @@ export interface FileRouteTypes {
     | '/settings'
     | '/study'
     | '/tasks'
+    | '/career'
   id:
     | '__root__'
     | '/'
@@ -277,6 +286,7 @@ export interface FileRouteTypes {
     | '/settings'
     | '/study'
     | '/tasks'
+    | '/career/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -286,7 +296,7 @@ export interface RootRouteChildren {
   AnalyticsRoute: typeof AnalyticsRoute
   AuthRoute: typeof AuthRoute
   CalendarRoute: typeof CalendarRoute
-  CareerRoute: typeof CareerRoute
+  CareerRoute: typeof CareerRouteWithChildren
   CpRoute: typeof CpRoute
   GoalsRoute: typeof GoalsRoute
   HabitsRoute: typeof HabitsRoute
@@ -452,8 +462,26 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/career/': {
+      id: '/career/'
+      path: '/'
+      fullPath: '/career/'
+      preLoaderRoute: typeof CareerIndexRouteImport
+      parentRoute: typeof CareerRoute
+    }
   }
 }
+
+interface CareerRouteChildren {
+  CareerIndexRoute: typeof CareerIndexRoute
+}
+
+const CareerRouteChildren: CareerRouteChildren = {
+  CareerIndexRoute: CareerIndexRoute,
+}
+
+const CareerRouteWithChildren =
+  CareerRoute._addFileChildren(CareerRouteChildren)
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
@@ -462,7 +490,7 @@ const rootRouteChildren: RootRouteChildren = {
   AnalyticsRoute: AnalyticsRoute,
   AuthRoute: AuthRoute,
   CalendarRoute: CalendarRoute,
-  CareerRoute: CareerRoute,
+  CareerRoute: CareerRouteWithChildren,
   CpRoute: CpRoute,
   GoalsRoute: GoalsRoute,
   HabitsRoute: HabitsRoute,
