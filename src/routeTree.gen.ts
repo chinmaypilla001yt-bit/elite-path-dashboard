@@ -31,6 +31,7 @@ import { Route as AiRouteImport } from './routes/ai'
 import { Route as AchievementsRouteImport } from './routes/achievements'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as CareerIndexRouteImport } from './routes/career/index'
+import { Route as CareerSavedRouteImport } from './routes/career/saved'
 
 const TasksRoute = TasksRouteImport.update({
   id: '/tasks',
@@ -142,6 +143,11 @@ const CareerIndexRoute = CareerIndexRouteImport.update({
   path: '/',
   getParentRoute: () => CareerRoute,
 } as any)
+const CareerSavedRoute = CareerSavedRouteImport.update({
+  id: '/saved',
+  path: '/saved',
+  getParentRoute: () => CareerRoute,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -165,6 +171,7 @@ export interface FileRoutesByFullPath {
   '/settings': typeof SettingsRoute
   '/study': typeof StudyRoute
   '/tasks': typeof TasksRoute
+  '/career/saved': typeof CareerSavedRoute
   '/career/': typeof CareerIndexRoute
 }
 export interface FileRoutesByTo {
@@ -188,6 +195,7 @@ export interface FileRoutesByTo {
   '/settings': typeof SettingsRoute
   '/study': typeof StudyRoute
   '/tasks': typeof TasksRoute
+  '/career/saved': typeof CareerSavedRoute
   '/career': typeof CareerIndexRoute
 }
 export interface FileRoutesById {
@@ -213,6 +221,7 @@ export interface FileRoutesById {
   '/settings': typeof SettingsRoute
   '/study': typeof StudyRoute
   '/tasks': typeof TasksRoute
+  '/career/saved': typeof CareerSavedRoute
   '/career/': typeof CareerIndexRoute
 }
 export interface FileRouteTypes {
@@ -239,6 +248,7 @@ export interface FileRouteTypes {
     | '/settings'
     | '/study'
     | '/tasks'
+    | '/career/saved'
     | '/career/'
   fileRoutesByTo: FileRoutesByTo
   to:
@@ -262,6 +272,7 @@ export interface FileRouteTypes {
     | '/settings'
     | '/study'
     | '/tasks'
+    | '/career/saved'
     | '/career'
   id:
     | '__root__'
@@ -286,6 +297,7 @@ export interface FileRouteTypes {
     | '/settings'
     | '/study'
     | '/tasks'
+    | '/career/saved'
     | '/career/'
   fileRoutesById: FileRoutesById
 }
@@ -469,14 +481,23 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof CareerIndexRouteImport
       parentRoute: typeof CareerRoute
     }
+    '/career/saved': {
+      id: '/career/saved'
+      path: '/saved'
+      fullPath: '/career/saved'
+      preLoaderRoute: typeof CareerSavedRouteImport
+      parentRoute: typeof CareerRoute
+    }
   }
 }
 
 interface CareerRouteChildren {
+  CareerSavedRoute: typeof CareerSavedRoute
   CareerIndexRoute: typeof CareerIndexRoute
 }
 
 const CareerRouteChildren: CareerRouteChildren = {
+  CareerSavedRoute: CareerSavedRoute,
   CareerIndexRoute: CareerIndexRoute,
 }
 

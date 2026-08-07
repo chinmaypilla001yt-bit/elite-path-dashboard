@@ -201,3 +201,18 @@ html { color-scheme: dark; background: #050816; }
   background-size: 200% 100%;
   animation: shimmer 2.5s linear infinite;
 }
+
+/* Resume export: print only the resume paper so the PDF matches the preview. */
+@media print {
+  body * { visibility: hidden !important; }
+  #resume-paper, #resume-paper * { visibility: visible !important; }
+  #resume-paper {
+    position: absolute !important;
+    inset: 0 auto auto 0;
+    width: 100% !important;
+    max-width: none !important;
+    box-shadow: none !important;
+    margin: 0 !important;
+  }
+  @page { size: letter; margin: 0; }
+}
