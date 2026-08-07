@@ -21,7 +21,7 @@ export function SyncPanel({ edit }: { edit: (fn: (prev: ResumeData) => ResumeDat
     () => resumeEntries.filter((r) => String(r.kind ?? "").toLowerCase() === "certification"),
     [resumeEntries],
   );
-  const studyHours = Number(profile?.totalStudyHoursRaw ?? (profile as unknown as { totalStudyHours?: number })?.totalStudyHours ?? 0);
+  const studyHours = Number((profile as unknown as { totalStudyHours?: number } | null)?.totalStudyHours ?? 0);
 
   const [picked, setPicked] = useState<Record<string, boolean>>({});
   const toggle = (k: string) => setPicked((p) => ({ ...p, [k]: !p[k] }));
