@@ -32,7 +32,7 @@ export function ClassicTemplate({ data }: { data: ResumeData }) {
       <Section title="Education" show={data.education.length > 0}>
         {data.education.map((e) => (
           <div key={e.id} className="mb-2">
-            <Row left={e.university || "University"} right={[e.city, e.location].filter(Boolean).join(", ")} bold />
+            <Row left={e.university || "University"} right={e.location ?? ""} bold />
             <Row
               left={[e.degree, e.major].filter(Boolean).join(", ")}
               right={dateRange(e.startDate, e.endDate)}
