@@ -23,6 +23,7 @@ import { Route as InternshipsRouteImport } from './routes/internships'
 import { Route as HabitsRouteImport } from './routes/habits'
 import { Route as GoalsRouteImport } from './routes/goals'
 import { Route as CpRouteImport } from './routes/cp'
+import { Route as CareerRouteImport } from './routes/career'
 import { Route as CalendarRouteImport } from './routes/calendar'
 import { Route as AuthRouteImport } from './routes/auth'
 import { Route as AnalyticsRouteImport } from './routes/analytics'
@@ -100,6 +101,11 @@ const CpRoute = CpRouteImport.update({
   path: '/cp',
   getParentRoute: () => rootRouteImport,
 } as any)
+const CareerRoute = CareerRouteImport.update({
+  id: '/career',
+  path: '/career',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const CalendarRoute = CalendarRouteImport.update({
   id: '/calendar',
   path: '/calendar',
@@ -138,6 +144,7 @@ export interface FileRoutesByFullPath {
   '/analytics': typeof AnalyticsRoute
   '/auth': typeof AuthRoute
   '/calendar': typeof CalendarRoute
+  '/career': typeof CareerRoute
   '/cp': typeof CpRoute
   '/goals': typeof GoalsRoute
   '/habits': typeof HabitsRoute
@@ -160,6 +167,7 @@ export interface FileRoutesByTo {
   '/analytics': typeof AnalyticsRoute
   '/auth': typeof AuthRoute
   '/calendar': typeof CalendarRoute
+  '/career': typeof CareerRoute
   '/cp': typeof CpRoute
   '/goals': typeof GoalsRoute
   '/habits': typeof HabitsRoute
@@ -183,6 +191,7 @@ export interface FileRoutesById {
   '/analytics': typeof AnalyticsRoute
   '/auth': typeof AuthRoute
   '/calendar': typeof CalendarRoute
+  '/career': typeof CareerRoute
   '/cp': typeof CpRoute
   '/goals': typeof GoalsRoute
   '/habits': typeof HabitsRoute
@@ -207,6 +216,7 @@ export interface FileRouteTypes {
     | '/analytics'
     | '/auth'
     | '/calendar'
+    | '/career'
     | '/cp'
     | '/goals'
     | '/habits'
@@ -229,6 +239,7 @@ export interface FileRouteTypes {
     | '/analytics'
     | '/auth'
     | '/calendar'
+    | '/career'
     | '/cp'
     | '/goals'
     | '/habits'
@@ -251,6 +262,7 @@ export interface FileRouteTypes {
     | '/analytics'
     | '/auth'
     | '/calendar'
+    | '/career'
     | '/cp'
     | '/goals'
     | '/habits'
@@ -274,6 +286,7 @@ export interface RootRouteChildren {
   AnalyticsRoute: typeof AnalyticsRoute
   AuthRoute: typeof AuthRoute
   CalendarRoute: typeof CalendarRoute
+  CareerRoute: typeof CareerRoute
   CpRoute: typeof CpRoute
   GoalsRoute: typeof GoalsRoute
   HabitsRoute: typeof HabitsRoute
@@ -390,6 +403,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof CpRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/career': {
+      id: '/career'
+      path: '/career'
+      fullPath: '/career'
+      preLoaderRoute: typeof CareerRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/calendar': {
       id: '/calendar'
       path: '/calendar'
@@ -442,6 +462,7 @@ const rootRouteChildren: RootRouteChildren = {
   AnalyticsRoute: AnalyticsRoute,
   AuthRoute: AuthRoute,
   CalendarRoute: CalendarRoute,
+  CareerRoute: CareerRoute,
   CpRoute: CpRoute,
   GoalsRoute: GoalsRoute,
   HabitsRoute: HabitsRoute,
