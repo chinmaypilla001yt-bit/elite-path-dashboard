@@ -6,11 +6,13 @@ import { GlassCard } from "./GlassCard";
 import { useLocalCollection, type Identified } from "@/hooks/use-local-collection";
 import { motion, AnimatePresence } from "motion/react";
 import { toast } from "sonner";
+import { useCategoryOptions } from "@/hooks/use-categories";
+import { Link } from "@tanstack/react-router";
 
 export type FieldDef = {
   name: string;
   label: string;
-  type?: "text" | "textarea" | "number" | "date" | "select";
+  type?: "text" | "textarea" | "number" | "date" | "select" | "category";
   placeholder?: string;
   options?: string[];
   required?: boolean;
@@ -44,6 +46,7 @@ export function EditableList({
   embed?: boolean;
 }) {
   const { items, add, update, remove, hydrated } = useLocalCollection<EditableItem>(storageKey);
+  const { options: categoryOptions } = useCategoryOptions();
   const [editingId, setEditingId] = useState<string | null>(null);
   const [draft, setDraft] = useState<Record<string, string>>({});
   const [showForm, setShowForm] = useState(false);
@@ -146,17 +149,24 @@ export function EditableList({
                         rows={3}
                         className="w-full rounded-lg border border-white/10 bg-white/[0.03] px-3 py-2 text-sm text-white placeholder:text-white/30 focus:border-white/30 focus:outline-none"
                       />
-                    ) : f.type === "select" ? (
-                      <select
-                        value={draft[f.name] ?? ""}
-                        onChange={(e) => setDraft((d) => ({ ...d, [f.name]: e.target.value }))}
-                        className="w-full rounded-lg border border-white/10 bg-white/[0.03] px-3 py-2 text-sm text-white focus:border-white/30 focus:outline-none"
-                      >
-                        <option value="" className="bg-[#0b1024]">Select…</option>
-                        {f.options?.map((o) => (
-                          <option key={o} value={o} className="bg-[#0b1024]">{o}</option>
-                        ))}
-                      </select>
+                    ) : f.type === "select" || f.type === "category" ? (
+                      <>
+                        <select
+                          value={draft[f.name] ?? ""}
+                          onChange={(e) => setDraft((d) => ({ ...d, [f.name]: e.target.value }))}
+                          className="w-full rounded-lg border border-white/10 bg-white/[0.03] px-3 py-2 text-sm text-white focus:border-white/30 focus:outline-none"
+                        >
+                          <option value="" className="bg-[#0b1024]">Select…</option>
+                          {(f.type === "category" ? categoryOptions : f.options ?? []).map((o) => (
+                            <option key={o} value={o} className="bg-[#0b1024]">{o}</option>
+                          ))}
+                        </select>
+                        {f.type === "category" && categoryOptions.length === 0 && (
+                          <Link to="/categories" className="mt-1 block text-[11px] text-white/45 underline hover:text-white/70">
+                            No categories yet — create them in Categories
+                          </Link>
+                        )}
+                      </>
                     ) : (
                       <input
                         type={f.type ?? "text"}
