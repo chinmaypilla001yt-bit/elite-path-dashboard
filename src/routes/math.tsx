@@ -18,7 +18,7 @@ export const Route = createFileRoute("/math")({
       glow="blue"
       fields={[
         { name: "topic", label: "Topic", required: true, placeholder: "Linear Algebra" },
-        { name: "area", label: "Area", placeholder: "algebra, probability, calculus…" },
+        { name: "area", label: "Category", type: "category" },
         { name: "problems_solved", label: "Problems solved", type: "number" },
         { name: "progress", label: "Progress %", type: "number" },
         { name: "notes", label: "Notes", type: "textarea" },

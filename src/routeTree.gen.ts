@@ -23,12 +23,20 @@ import { Route as InternshipsRouteImport } from './routes/internships'
 import { Route as HabitsRouteImport } from './routes/habits'
 import { Route as GoalsRouteImport } from './routes/goals'
 import { Route as CpRouteImport } from './routes/cp'
+import { Route as CategoriesRouteImport } from './routes/categories'
+import { Route as CareerRouteImport } from './routes/career'
 import { Route as CalendarRouteImport } from './routes/calendar'
 import { Route as AuthRouteImport } from './routes/auth'
 import { Route as AnalyticsRouteImport } from './routes/analytics'
 import { Route as AiRouteImport } from './routes/ai'
 import { Route as AchievementsRouteImport } from './routes/achievements'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as CareerIndexRouteImport } from './routes/career/index'
+import { Route as CareerSavedRouteImport } from './routes/career/saved'
+import { Route as CareerPortfolioRouteImport } from './routes/career/portfolio'
+import { Route as CareerJobsRouteImport } from './routes/career/jobs'
+import { Route as CareerCertificationsRouteImport } from './routes/career/certifications'
+import { Route as CareerAchievementsRouteImport } from './routes/career/achievements'
 
 const TasksRoute = TasksRouteImport.update({
   id: '/tasks',
@@ -100,6 +108,16 @@ const CpRoute = CpRouteImport.update({
   path: '/cp',
   getParentRoute: () => rootRouteImport,
 } as any)
+const CategoriesRoute = CategoriesRouteImport.update({
+  id: '/categories',
+  path: '/categories',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const CareerRoute = CareerRouteImport.update({
+  id: '/career',
+  path: '/career',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const CalendarRoute = CalendarRouteImport.update({
   id: '/calendar',
   path: '/calendar',
@@ -130,6 +148,36 @@ const IndexRoute = IndexRouteImport.update({
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const CareerIndexRoute = CareerIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => CareerRoute,
+} as any)
+const CareerSavedRoute = CareerSavedRouteImport.update({
+  id: '/saved',
+  path: '/saved',
+  getParentRoute: () => CareerRoute,
+} as any)
+const CareerPortfolioRoute = CareerPortfolioRouteImport.update({
+  id: '/portfolio',
+  path: '/portfolio',
+  getParentRoute: () => CareerRoute,
+} as any)
+const CareerJobsRoute = CareerJobsRouteImport.update({
+  id: '/jobs',
+  path: '/jobs',
+  getParentRoute: () => CareerRoute,
+} as any)
+const CareerCertificationsRoute = CareerCertificationsRouteImport.update({
+  id: '/certifications',
+  path: '/certifications',
+  getParentRoute: () => CareerRoute,
+} as any)
+const CareerAchievementsRoute = CareerAchievementsRouteImport.update({
+  id: '/achievements',
+  path: '/achievements',
+  getParentRoute: () => CareerRoute,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -138,6 +186,8 @@ export interface FileRoutesByFullPath {
   '/analytics': typeof AnalyticsRoute
   '/auth': typeof AuthRoute
   '/calendar': typeof CalendarRoute
+  '/career': typeof CareerRouteWithChildren
+  '/categories': typeof CategoriesRoute
   '/cp': typeof CpRoute
   '/goals': typeof GoalsRoute
   '/habits': typeof HabitsRoute
@@ -152,6 +202,12 @@ export interface FileRoutesByFullPath {
   '/settings': typeof SettingsRoute
   '/study': typeof StudyRoute
   '/tasks': typeof TasksRoute
+  '/career/achievements': typeof CareerAchievementsRoute
+  '/career/certifications': typeof CareerCertificationsRoute
+  '/career/jobs': typeof CareerJobsRoute
+  '/career/portfolio': typeof CareerPortfolioRoute
+  '/career/saved': typeof CareerSavedRoute
+  '/career/': typeof CareerIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -160,6 +216,7 @@ export interface FileRoutesByTo {
   '/analytics': typeof AnalyticsRoute
   '/auth': typeof AuthRoute
   '/calendar': typeof CalendarRoute
+  '/categories': typeof CategoriesRoute
   '/cp': typeof CpRoute
   '/goals': typeof GoalsRoute
   '/habits': typeof HabitsRoute
@@ -174,6 +231,12 @@ export interface FileRoutesByTo {
   '/settings': typeof SettingsRoute
   '/study': typeof StudyRoute
   '/tasks': typeof TasksRoute
+  '/career/achievements': typeof CareerAchievementsRoute
+  '/career/certifications': typeof CareerCertificationsRoute
+  '/career/jobs': typeof CareerJobsRoute
+  '/career/portfolio': typeof CareerPortfolioRoute
+  '/career/saved': typeof CareerSavedRoute
+  '/career': typeof CareerIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -183,6 +246,8 @@ export interface FileRoutesById {
   '/analytics': typeof AnalyticsRoute
   '/auth': typeof AuthRoute
   '/calendar': typeof CalendarRoute
+  '/career': typeof CareerRouteWithChildren
+  '/categories': typeof CategoriesRoute
   '/cp': typeof CpRoute
   '/goals': typeof GoalsRoute
   '/habits': typeof HabitsRoute
@@ -197,6 +262,12 @@ export interface FileRoutesById {
   '/settings': typeof SettingsRoute
   '/study': typeof StudyRoute
   '/tasks': typeof TasksRoute
+  '/career/achievements': typeof CareerAchievementsRoute
+  '/career/certifications': typeof CareerCertificationsRoute
+  '/career/jobs': typeof CareerJobsRoute
+  '/career/portfolio': typeof CareerPortfolioRoute
+  '/career/saved': typeof CareerSavedRoute
+  '/career/': typeof CareerIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -207,6 +278,8 @@ export interface FileRouteTypes {
     | '/analytics'
     | '/auth'
     | '/calendar'
+    | '/career'
+    | '/categories'
     | '/cp'
     | '/goals'
     | '/habits'
@@ -221,6 +294,12 @@ export interface FileRouteTypes {
     | '/settings'
     | '/study'
     | '/tasks'
+    | '/career/achievements'
+    | '/career/certifications'
+    | '/career/jobs'
+    | '/career/portfolio'
+    | '/career/saved'
+    | '/career/'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -229,6 +308,7 @@ export interface FileRouteTypes {
     | '/analytics'
     | '/auth'
     | '/calendar'
+    | '/categories'
     | '/cp'
     | '/goals'
     | '/habits'
@@ -243,6 +323,12 @@ export interface FileRouteTypes {
     | '/settings'
     | '/study'
     | '/tasks'
+    | '/career/achievements'
+    | '/career/certifications'
+    | '/career/jobs'
+    | '/career/portfolio'
+    | '/career/saved'
+    | '/career'
   id:
     | '__root__'
     | '/'
@@ -251,6 +337,8 @@ export interface FileRouteTypes {
     | '/analytics'
     | '/auth'
     | '/calendar'
+    | '/career'
+    | '/categories'
     | '/cp'
     | '/goals'
     | '/habits'
@@ -265,6 +353,12 @@ export interface FileRouteTypes {
     | '/settings'
     | '/study'
     | '/tasks'
+    | '/career/achievements'
+    | '/career/certifications'
+    | '/career/jobs'
+    | '/career/portfolio'
+    | '/career/saved'
+    | '/career/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -274,6 +368,8 @@ export interface RootRouteChildren {
   AnalyticsRoute: typeof AnalyticsRoute
   AuthRoute: typeof AuthRoute
   CalendarRoute: typeof CalendarRoute
+  CareerRoute: typeof CareerRouteWithChildren
+  CategoriesRoute: typeof CategoriesRoute
   CpRoute: typeof CpRoute
   GoalsRoute: typeof GoalsRoute
   HabitsRoute: typeof HabitsRoute
@@ -390,6 +486,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof CpRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/categories': {
+      id: '/categories'
+      path: '/categories'
+      fullPath: '/categories'
+      preLoaderRoute: typeof CategoriesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/career': {
+      id: '/career'
+      path: '/career'
+      fullPath: '/career'
+      preLoaderRoute: typeof CareerRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/calendar': {
       id: '/calendar'
       path: '/calendar'
@@ -432,8 +542,71 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/career/': {
+      id: '/career/'
+      path: '/'
+      fullPath: '/career/'
+      preLoaderRoute: typeof CareerIndexRouteImport
+      parentRoute: typeof CareerRoute
+    }
+    '/career/saved': {
+      id: '/career/saved'
+      path: '/saved'
+      fullPath: '/career/saved'
+      preLoaderRoute: typeof CareerSavedRouteImport
+      parentRoute: typeof CareerRoute
+    }
+    '/career/portfolio': {
+      id: '/career/portfolio'
+      path: '/portfolio'
+      fullPath: '/career/portfolio'
+      preLoaderRoute: typeof CareerPortfolioRouteImport
+      parentRoute: typeof CareerRoute
+    }
+    '/career/jobs': {
+      id: '/career/jobs'
+      path: '/jobs'
+      fullPath: '/career/jobs'
+      preLoaderRoute: typeof CareerJobsRouteImport
+      parentRoute: typeof CareerRoute
+    }
+    '/career/certifications': {
+      id: '/career/certifications'
+      path: '/certifications'
+      fullPath: '/career/certifications'
+      preLoaderRoute: typeof CareerCertificationsRouteImport
+      parentRoute: typeof CareerRoute
+    }
+    '/career/achievements': {
+      id: '/career/achievements'
+      path: '/achievements'
+      fullPath: '/career/achievements'
+      preLoaderRoute: typeof CareerAchievementsRouteImport
+      parentRoute: typeof CareerRoute
+    }
   }
 }
+
+interface CareerRouteChildren {
+  CareerAchievementsRoute: typeof CareerAchievementsRoute
+  CareerCertificationsRoute: typeof CareerCertificationsRoute
+  CareerJobsRoute: typeof CareerJobsRoute
+  CareerPortfolioRoute: typeof CareerPortfolioRoute
+  CareerSavedRoute: typeof CareerSavedRoute
+  CareerIndexRoute: typeof CareerIndexRoute
+}
+
+const CareerRouteChildren: CareerRouteChildren = {
+  CareerAchievementsRoute: CareerAchievementsRoute,
+  CareerCertificationsRoute: CareerCertificationsRoute,
+  CareerJobsRoute: CareerJobsRoute,
+  CareerPortfolioRoute: CareerPortfolioRoute,
+  CareerSavedRoute: CareerSavedRoute,
+  CareerIndexRoute: CareerIndexRoute,
+}
+
+const CareerRouteWithChildren =
+  CareerRoute._addFileChildren(CareerRouteChildren)
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
@@ -442,6 +615,8 @@ const rootRouteChildren: RootRouteChildren = {
   AnalyticsRoute: AnalyticsRoute,
   AuthRoute: AuthRoute,
   CalendarRoute: CalendarRoute,
+  CareerRoute: CareerRouteWithChildren,
+  CategoriesRoute: CategoriesRoute,
   CpRoute: CpRoute,
   GoalsRoute: GoalsRoute,
   HabitsRoute: HabitsRoute,

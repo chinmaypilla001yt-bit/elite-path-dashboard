@@ -19,7 +19,7 @@ export const Route = createFileRoute("/goals")({
       glow="emerald"
       fields={[
         { name: "title", label: "Title", required: true, placeholder: "e.g. Land Google STEP internship" },
-        { name: "category", label: "Category", placeholder: "career, learning, health…" },
+        { name: "category", label: "Category", type: "category" },
         { name: "target_date", label: "Target date", type: "date" },
         { name: "progress", label: "Progress %", type: "number", placeholder: "0-100" },
         { name: "description", label: "Notes", type: "textarea" },

@@ -19,6 +19,7 @@ export const Route = createFileRoute("/ai")({
       fields={[
         { name: "title", label: "Title", required: true, placeholder: "Attention Is All You Need" },
         { name: "kind", label: "Kind", type: "select", options: ["Paper", "Course", "Model", "Notebook", "Project"] },
+        { name: "category", label: "Category", type: "category" },
         { name: "status", label: "Status", type: "select", options: ["Queued", "In progress", "Done"] },
         { name: "link", label: "Link", placeholder: "https://…" },
         { name: "notes", label: "Notes", type: "textarea" },

@@ -20,6 +20,7 @@ export const Route = createFileRoute("/projects")({
         { name: "name", label: "Name", required: true, placeholder: "Ascend Dashboard" },
         { name: "stack", label: "Stack", placeholder: "React, TypeScript, …" },
         { name: "status", label: "Status", type: "select", options: ["Idea", "Building", "Shipped", "Archived"] },
+        { name: "category", label: "Category", type: "category" },
         { name: "repo", label: "Repo / URL", placeholder: "https://github.com/…" },
         { name: "description", label: "Description", type: "textarea" },
       ]}

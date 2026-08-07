@@ -2,9 +2,10 @@ import { createFileRoute } from "@tanstack/react-router";
 import { AppShell } from "@/components/ascend/AppShell";
 import { PageHeader } from "@/components/ascend/PageHeader";
 import { GlassCard } from "@/components/ascend/GlassCard";
-import { useLocalState, clearAllAscendData } from "@/hooks/use-local-collection";
+import { clearAllAscendData } from "@/hooks/use-local-collection";
 import { useAuth } from "@/hooks/use-auth";
-import { useProfile } from "@/hooks/use-profile";
+import { useProfile, saveDisplayName } from "@/hooks/use-profile";
+import { CategoryManager } from "@/components/ascend/CategoryManager";
 import { useNotifications, type NotifSettings } from "@/hooks/use-notifications";
 import { AlertTriangle, LogOut, Check, Loader2, X, Bell, Plus, Trash2 } from "lucide-react";
 import { toast } from "sonner";
@@ -21,9 +22,10 @@ export const Route = createFileRoute("/settings")({
 });
 
 function SettingsPage() {
-  const [savedName, setSavedName, hydrated] = useLocalState<string>("profile:name", "");
   const { user, signOut } = useAuth();
-  const { stats } = useProfile();
+  const { stats, profile, loading } = useProfile();
+  const savedName = profile?.name ?? "";
+  const hydrated = !loading;
   const [busy, setBusy] = useState(false);
   const [draftName, setDraftName] = useState("");
   const [saving, setSaving] = useState(false);
@@ -38,7 +40,7 @@ function SettingsPage() {
     if (!dirty) return;
     setSaving(true);
     try {
-      await setSavedName(draftName);
+      await saveDisplayName(draftName);
       toast.success("Profile saved");
     } catch (e) {
       toast.error((e as Error).message || "Failed to save");
@@ -135,6 +137,10 @@ function SettingsPage() {
 
       <div className="mt-6">
         <NotificationSettingsCard />
+      </div>
+
+      <div className="mt-6">
+        <CategoryManager />
       </div>
     </AppShell>
   );

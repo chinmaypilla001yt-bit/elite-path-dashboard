@@ -2,7 +2,7 @@ import { Link, useRouterState } from "@tanstack/react-router";
 import {
   LayoutDashboard, Map, ListChecks, CalendarDays, Flame, BookOpen,
   Code2, Sigma, Brain, FolderGit2, Briefcase, FileText, Trophy,
-  NotebookPen, BarChart3, Settings, Rocket, Target, LogOut, Bell, Crown,
+  NotebookPen, BarChart3, Settings, Rocket, Target, LogOut, Bell, Crown, Layers,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { useAuth } from "@/hooks/use-auth";
@@ -23,8 +23,8 @@ const nav = [
   { to: "/ai", label: "AI & ML", icon: Brain },
   { to: "/projects", label: "Projects", icon: FolderGit2 },
   { to: "/internships", label: "Internships", icon: Briefcase },
-  { to: "/resume", label: "Resume", icon: FileText },
-  { to: "/achievements", label: "Achievements", icon: Trophy },
+  { to: "/career", label: "Career Hub", icon: FileText },
+  { to: "/categories", label: "Categories", icon: Layers },
   { to: "/leaderboard", label: "Leaderboard", icon: Crown },
   { to: "/notifications", label: "Notifications", icon: Bell },
   { to: "/journal", label: "Journal", icon: NotebookPen },
@@ -35,13 +35,10 @@ const nav = [
 export function AscendSidebar() {
   const pathname = useRouterState({ select: (s) => s.location.pathname });
   const { user, signOut } = useAuth();
-  const { stats } = useProfile();
+  const { stats, displayName } = useProfile();
   const { unread } = useNotifications();
 
-  const displayName =
-    user?.displayName ||
-    user?.email?.split("@")[0] ||
-    "Ascending";
+
 
   async function handleSignOut() {
     try {
