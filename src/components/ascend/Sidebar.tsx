@@ -2,7 +2,7 @@ import { Link, useRouterState } from "@tanstack/react-router";
 import {
   LayoutDashboard, Map, ListChecks, CalendarDays, Flame, BookOpen,
   Code2, Sigma, Brain, FolderGit2, Briefcase, FileText, Trophy,
-  NotebookPen, BarChart3, Settings, Rocket, Target, LogOut, Bell, Crown, Layers,
+  NotebookPen, BarChart3, Settings, Rocket, Target, LogOut, Bell, Crown,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { useAuth } from "@/hooks/use-auth";
@@ -24,7 +24,6 @@ const nav = [
   { to: "/projects", label: "Projects", icon: FolderGit2 },
   { to: "/internships", label: "Internships", icon: Briefcase },
   { to: "/career", label: "Career Hub", icon: FileText },
-  { to: "/categories", label: "Categories", icon: Layers },
   { to: "/leaderboard", label: "Leaderboard", icon: Crown },
   { to: "/notifications", label: "Notifications", icon: Bell },
   { to: "/journal", label: "Journal", icon: NotebookPen },

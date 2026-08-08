@@ -5,7 +5,6 @@ import { GlassCard } from "@/components/ascend/GlassCard";
 import { clearAllAscendData } from "@/hooks/use-local-collection";
 import { useAuth } from "@/hooks/use-auth";
 import { useProfile, saveDisplayName } from "@/hooks/use-profile";
-import { CategoryManager } from "@/components/ascend/CategoryManager";
 import { useNotifications, type NotifSettings } from "@/hooks/use-notifications";
 import { AlertTriangle, LogOut, Check, Loader2, X, Bell, Plus, Trash2 } from "lucide-react";
 import { toast } from "sonner";
@@ -139,9 +138,6 @@ function SettingsPage() {
         <NotificationSettingsCard />
       </div>
 
-      <div className="mt-6">
-        <CategoryManager />
-      </div>
     </AppShell>
   );
 }
