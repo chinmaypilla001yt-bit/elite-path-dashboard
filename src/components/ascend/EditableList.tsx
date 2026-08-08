@@ -6,8 +6,7 @@ import { GlassCard } from "./GlassCard";
 import { useLocalCollection, type Identified } from "@/hooks/use-local-collection";
 import { motion, AnimatePresence } from "motion/react";
 import { toast } from "sonner";
-import { useCategoryOptions } from "@/hooks/use-categories";
-import { Link } from "@tanstack/react-router";
+import { CategorySelect } from "./CategorySelect";
 
 export type FieldDef = {
   name: string;
@@ -46,7 +45,6 @@ export function EditableList({
   embed?: boolean;
 }) {
   const { items, add, update, remove, hydrated } = useLocalCollection<EditableItem>(storageKey);
-  const { options: categoryOptions } = useCategoryOptions();
   const [editingId, setEditingId] = useState<string | null>(null);
   const [draft, setDraft] = useState<Record<string, string>>({});
   const [showForm, setShowForm] = useState(false);
@@ -152,7 +150,7 @@ export function EditableList({
                     ) : f.type === "category" ? (
                       <CategorySelect
                         value={draft[f.name] ?? ""}
-                        onChange={(v) => setDraft((d) => ({ ...d, [f.name]: v }))}
+                        onChange={(v: string) => setDraft((d) => ({ ...d, [f.name]: v }))}
                       />
                     ) : f.type === "select" ? (
                       <select

@@ -7,6 +7,7 @@ import { AppShell } from "@/components/ascend/AppShell";
 import { PageHeader } from "@/components/ascend/PageHeader";
 import { GlassCard } from "@/components/ascend/GlassCard";
 import { useLocalCollection } from "@/hooks/use-local-collection";
+import { CategorySelect } from "@/components/ascend/CategorySelect";
 
 export const Route = createFileRoute("/calendar")({
   head: () => ({
@@ -28,7 +29,6 @@ type Event = {
   description?: string;
 };
 
-const CATEGORIES = ["Contest", "Deadline", "Interview", "Meeting", "Personal", "Other"];
 const PRIORITIES = ["Low", "Medium", "High"];
 
 function CalendarPage() {
@@ -187,14 +187,10 @@ function CalendarPage() {
                   value={draft.time}
                   onChange={(e) => setDraft({ ...draft, time: e.target.value })}
                 />
-                <select
-                  className="rounded-lg border border-white/10 bg-white/[0.03] px-3 py-2 text-sm text-white focus:border-white/30 focus:outline-none"
+                <CategorySelect
                   value={draft.category ?? ""}
-                  onChange={(e) => setDraft({ ...draft, category: e.target.value })}
-                >
-                  <option value="" className="bg-[#0b1024]">Category…</option>
-                  {CATEGORIES.map((c) => <option key={c} value={c} className="bg-[#0b1024]">{c}</option>)}
-                </select>
+                  onChange={(v) => setDraft({ ...draft, category: v })}
+                />
                 <select
                   className="rounded-lg border border-white/10 bg-white/[0.03] px-3 py-2 text-sm text-white focus:border-white/30 focus:outline-none"
                   value={draft.priority ?? ""}
