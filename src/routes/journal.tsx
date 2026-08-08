@@ -19,6 +19,7 @@ export const Route = createFileRoute("/journal")({
       fields={[
         { name: "title", label: "Title", placeholder: "One line summary" },
         { name: "entry_date", label: "Date", type: "date" },
+        { name: "category", label: "Category", type: "category" },
         { name: "mood", label: "Mood", type: "select", options: ["🚀 Great", "😊 Good", "😐 Okay", "😔 Low", "😤 Frustrated"] },
         { name: "energy", label: "Energy /10", type: "number" },
         { name: "content", label: "Entry", type: "textarea", required: true, placeholder: "What happened today?" },

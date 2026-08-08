@@ -19,6 +19,7 @@ export const Route = createFileRoute("/internships")({
       fields={[
         { name: "company", label: "Company", required: true, placeholder: "Google" },
         { name: "role", label: "Role", placeholder: "STEP Intern" },
+        { name: "category", label: "Category", type: "category" },
         { name: "status", label: "Status", type: "select", required: true, options: ["Interested", "Applied", "OA", "Interview", "Offer", "Rejected"] },
         { name: "applied_at", label: "Applied on", type: "date" },
         { name: "link", label: "Job link", placeholder: "https://…" },
