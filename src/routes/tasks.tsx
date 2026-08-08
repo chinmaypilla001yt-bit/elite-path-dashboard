@@ -7,6 +7,7 @@ import { PageHeader } from "@/components/ascend/PageHeader";
 import { GlassCard } from "@/components/ascend/GlassCard";
 import { useLocalCollection, addXP } from "@/hooks/use-local-collection";
 import { toast } from "sonner";
+import { CategorySelect } from "@/components/ascend/CategorySelect";
 
 export const Route = createFileRoute("/tasks")({
   head: () => ({
@@ -115,11 +116,10 @@ function TasksPage() {
                   value={draft.title}
                   onChange={(e) => setDraft({ ...draft, title: e.target.value })}
                 />
-                <input
-                  className="sm:col-span-2 rounded-lg border border-white/10 bg-white/[0.03] px-3 py-2 text-sm text-white placeholder:text-white/30 focus:border-white/30 focus:outline-none"
-                  placeholder="Tag"
+                <CategorySelect
+                  className="sm:col-span-2"
                   value={draft.tag}
-                  onChange={(e) => setDraft({ ...draft, tag: e.target.value })}
+                  onChange={(v) => setDraft({ ...draft, tag: v })}
                 />
 
                 <div className="sm:col-span-6">

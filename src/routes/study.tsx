@@ -7,6 +7,7 @@ import { PageHeader } from "@/components/ascend/PageHeader";
 import { GlassCard } from "@/components/ascend/GlassCard";
 import { useLocalCollection } from "@/hooks/use-local-collection";
 import { toast } from "sonner";
+import { CategorySelect } from "@/components/ascend/CategorySelect";
 
 export const Route = createFileRoute("/study")({
   head: () => ({
@@ -170,11 +171,10 @@ function StudyPage() {
           <motion.div initial={{ opacity: 0, y: -8 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -8 }} className="mb-6">
             <GlassCard glow="blue" className="p-5">
               <div className="grid gap-3 sm:grid-cols-[1fr_auto_auto]">
-                <input
-                  className="rounded-lg border border-white/10 bg-white/[0.03] px-3 py-2 text-sm text-white placeholder:text-white/30 focus:border-white/30 focus:outline-none"
-                  placeholder="Subject (e.g. Linear Algebra)"
+                <CategorySelect
+                  placeholder="Subject / category…"
                   value={draft.subject}
-                  onChange={(e) => setDraft({ ...draft, subject: e.target.value })}
+                  onChange={(v) => setDraft({ ...draft, subject: v })}
                 />
                 <input
                   type="number"
