@@ -23,7 +23,6 @@ import { Route as InternshipsRouteImport } from './routes/internships'
 import { Route as HabitsRouteImport } from './routes/habits'
 import { Route as GoalsRouteImport } from './routes/goals'
 import { Route as CpRouteImport } from './routes/cp'
-import { Route as CategoriesRouteImport } from './routes/categories'
 import { Route as CareerRouteImport } from './routes/career'
 import { Route as CalendarRouteImport } from './routes/calendar'
 import { Route as AuthRouteImport } from './routes/auth'
@@ -108,11 +107,6 @@ const CpRoute = CpRouteImport.update({
   path: '/cp',
   getParentRoute: () => rootRouteImport,
 } as any)
-const CategoriesRoute = CategoriesRouteImport.update({
-  id: '/categories',
-  path: '/categories',
-  getParentRoute: () => rootRouteImport,
-} as any)
 const CareerRoute = CareerRouteImport.update({
   id: '/career',
   path: '/career',
@@ -187,7 +181,6 @@ export interface FileRoutesByFullPath {
   '/auth': typeof AuthRoute
   '/calendar': typeof CalendarRoute
   '/career': typeof CareerRouteWithChildren
-  '/categories': typeof CategoriesRoute
   '/cp': typeof CpRoute
   '/goals': typeof GoalsRoute
   '/habits': typeof HabitsRoute
@@ -216,7 +209,6 @@ export interface FileRoutesByTo {
   '/analytics': typeof AnalyticsRoute
   '/auth': typeof AuthRoute
   '/calendar': typeof CalendarRoute
-  '/categories': typeof CategoriesRoute
   '/cp': typeof CpRoute
   '/goals': typeof GoalsRoute
   '/habits': typeof HabitsRoute
@@ -247,7 +239,6 @@ export interface FileRoutesById {
   '/auth': typeof AuthRoute
   '/calendar': typeof CalendarRoute
   '/career': typeof CareerRouteWithChildren
-  '/categories': typeof CategoriesRoute
   '/cp': typeof CpRoute
   '/goals': typeof GoalsRoute
   '/habits': typeof HabitsRoute
@@ -279,7 +270,6 @@ export interface FileRouteTypes {
     | '/auth'
     | '/calendar'
     | '/career'
-    | '/categories'
     | '/cp'
     | '/goals'
     | '/habits'
@@ -308,7 +298,6 @@ export interface FileRouteTypes {
     | '/analytics'
     | '/auth'
     | '/calendar'
-    | '/categories'
     | '/cp'
     | '/goals'
     | '/habits'
@@ -338,7 +327,6 @@ export interface FileRouteTypes {
     | '/auth'
     | '/calendar'
     | '/career'
-    | '/categories'
     | '/cp'
     | '/goals'
     | '/habits'
@@ -369,7 +357,6 @@ export interface RootRouteChildren {
   AuthRoute: typeof AuthRoute
   CalendarRoute: typeof CalendarRoute
   CareerRoute: typeof CareerRouteWithChildren
-  CategoriesRoute: typeof CategoriesRoute
   CpRoute: typeof CpRoute
   GoalsRoute: typeof GoalsRoute
   HabitsRoute: typeof HabitsRoute
@@ -484,13 +471,6 @@ declare module '@tanstack/react-router' {
       path: '/cp'
       fullPath: '/cp'
       preLoaderRoute: typeof CpRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/categories': {
-      id: '/categories'
-      path: '/categories'
-      fullPath: '/categories'
-      preLoaderRoute: typeof CategoriesRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/career': {
@@ -616,7 +596,6 @@ const rootRouteChildren: RootRouteChildren = {
   AuthRoute: AuthRoute,
   CalendarRoute: CalendarRoute,
   CareerRoute: CareerRouteWithChildren,
-  CategoriesRoute: CategoriesRoute,
   CpRoute: CpRoute,
   GoalsRoute: GoalsRoute,
   HabitsRoute: HabitsRoute,
@@ -635,13 +614,3 @@ const rootRouteChildren: RootRouteChildren = {
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
-
-import type { getRouter } from './router.tsx'
-import type { startInstance } from './start.ts'
-declare module '@tanstack/react-start' {
-  interface Register {
-    ssr: true
-    router: Awaited<ReturnType<typeof getRouter>>
-    config: Awaited<ReturnType<typeof startInstance.getOptions>>
-  }
-}
