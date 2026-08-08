@@ -19,6 +19,7 @@ export const Route = createFileRoute("/habits")({
       fields={[
         { name: "name", label: "Name", required: true, placeholder: "e.g. 30m LeetCode" },
         { name: "icon", label: "Emoji", placeholder: "🔥" },
+        { name: "category", label: "Category", type: "category" },
         { name: "target_per_week", label: "Target / week", type: "number", placeholder: "7" },
         { name: "notes", label: "Notes", type: "textarea" },
       ]}
