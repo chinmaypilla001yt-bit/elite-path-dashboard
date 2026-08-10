@@ -61,12 +61,12 @@ function CPPage() {
           <div className="h-64">
             <ResponsiveContainer width="100%" height="100%">
               <LineChart data={chart}>
-                <CartesianGrid stroke="oklch(1 0 0 / 0.06)" vertical={false} />
-                <XAxis dataKey="c" stroke="oklch(1 0 0 / 0.45)" fontSize={11} tickLine={false} axisLine={false} />
-                <YAxis stroke="oklch(1 0 0 / 0.45)" fontSize={11} tickLine={false} axisLine={false} />
+                <CartesianGrid stroke="color-mix(in oklab, var(--foreground) 6%, transparent)" vertical={false} />
+                <XAxis dataKey="c" stroke="color-mix(in oklab, var(--foreground) 45%, transparent)" fontSize={11} tickLine={false} axisLine={false} />
+                <YAxis stroke="color-mix(in oklab, var(--foreground) 45%, transparent)" fontSize={11} tickLine={false} axisLine={false} />
                 <Tooltip contentStyle={{ background: "#0b1024", border: "1px solid rgba(255,255,255,0.08)", borderRadius: 10, fontSize: 12 }} />
-                <Line type="monotone" dataKey="r" stroke="oklch(0.72 0.2 255)" strokeWidth={2.5} dot={{ r: 3, fill: "oklch(0.72 0.2 255)" }}
-                  style={{ filter: "drop-shadow(0 0 8px oklch(0.72 0.2 255 / 0.8))" }} />
+                <Line type="monotone" dataKey="r" stroke="var(--electric)" strokeWidth={2.5} dot={{ r: 3, fill: "var(--electric)" }}
+                  style={{ filter: "drop-shadow(0 0 8px color-mix(in oklab, var(--electric) 80%, transparent))" }} />
               </LineChart>
             </ResponsiveContainer>
           </div>

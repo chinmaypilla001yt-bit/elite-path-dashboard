@@ -137,7 +137,7 @@ export function EditableList({
                   <div key={f.name} className={f.full || f.type === "textarea" ? "sm:col-span-2" : ""}>
                     <label className="mb-1 block font-mono text-[10px] uppercase tracking-widest text-foreground/45">
                       {f.label}
-                      {f.required && <span className="text-[oklch(0.83_0.16_85)]"> *</span>}
+                      {f.required && <span className="text-[var(--gold)]"> *</span>}
                     </label>
                     {f.type === "textarea" ? (
                       <textarea

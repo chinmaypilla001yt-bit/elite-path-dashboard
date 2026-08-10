@@ -90,7 +90,7 @@ function NotificationsPage() {
                     <div className="flex items-center gap-2">
                       <div className="truncate text-sm font-medium text-foreground">{n.title}</div>
                       {!n.read && (
-                        <span className="h-1.5 w-1.5 rounded-full bg-[oklch(0.72_0.2_255)] shadow-[0_0_8px_oklch(0.72_0.2_255)]" />
+                        <span className="h-1.5 w-1.5 rounded-full bg-[var(--electric)] shadow-[0_0_8px_var(--electric)]" />
                       )}
                     </div>
                     <div className="mt-0.5 text-xs text-foreground/60">{n.message}</div>

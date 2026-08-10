@@ -33,7 +33,7 @@ export const Route = createFileRoute("/internships")({
           <div className="mt-1 text-lg font-semibold text-foreground">{a.company as string}</div>
           {a.role ? <div className="text-sm text-foreground/70">{a.role as string}</div> : null}
           {a.link ? (
-            <a href={a.link as string} target="_blank" rel="noreferrer" className="mt-1 block text-xs text-[oklch(0.85_0.13_200)] hover:underline">
+            <a href={a.link as string} target="_blank" rel="noreferrer" className="mt-1 block text-xs text-[var(--cyan)] hover:underline">
               {a.link as string}
             </a>
           ) : null}

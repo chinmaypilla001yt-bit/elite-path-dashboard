@@ -76,7 +76,7 @@ export function AscendSidebar() {
               )}
             >
               {active && (
-                <span className="absolute left-0 top-1/2 h-6 w-[3px] -translate-y-1/2 rounded-r bg-[image:var(--gradient-cyber)] shadow-[0_0_12px_oklch(0.72_0.2_255/0.9)]" />
+                <span className="absolute left-0 top-1/2 h-6 w-[3px] -translate-y-1/2 rounded-r bg-[image:var(--gradient-cyber)] shadow-[0_0_12px_color-mix(in_oklab,_var(--electric)_90%,_transparent)]" />
               )}
               <Icon
                 className={cn(

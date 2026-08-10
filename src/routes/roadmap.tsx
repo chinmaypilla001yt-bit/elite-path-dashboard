@@ -140,7 +140,7 @@ function RoadmapPage() {
         </GlassCard>
       ) : (
         <div className="relative">
-          <div className="pointer-events-none absolute left-4 top-2 bottom-2 w-px bg-gradient-to-b from-[oklch(0.72_0.2_255)] via-[oklch(0.66_0.24_305)] to-[oklch(0.83_0.16_85)] md:left-1/2" />
+          <div className="pointer-events-none absolute left-4 top-2 bottom-2 w-px bg-gradient-to-b from-[var(--electric)] via-[var(--neon-purple)] to-[var(--gold)] md:left-1/2" />
           <div className="space-y-8">
             {items.map((y, i) => {
               const Icon = ICONS[i % ICONS.length];
@@ -229,7 +229,7 @@ function RoadmapPage() {
                   </div>
 
                   <div className="absolute left-4 top-6 -translate-x-1/2 md:left-1/2">
-                    <div className="h-3 w-3 rounded-full bg-foreground shadow-[0_0_12px_oklch(0.72_0.2_255)]" />
+                    <div className="h-3 w-3 rounded-full bg-foreground shadow-[0_0_12px_var(--electric)]" />
                   </div>
                 </motion.div>
               );

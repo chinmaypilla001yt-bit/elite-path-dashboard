@@ -31,7 +31,7 @@ export const Route = createFileRoute("/ai")({
           </div>
           <div className="mt-1 text-lg font-semibold text-foreground">{a.title as string}</div>
           {a.link ? (
-            <a href={a.link as string} target="_blank" rel="noreferrer" className="mt-1 block text-xs text-[oklch(0.85_0.13_200)] hover:underline">
+            <a href={a.link as string} target="_blank" rel="noreferrer" className="mt-1 block text-xs text-[var(--cyan)] hover:underline">
               {a.link as string}
             </a>
           ) : null}

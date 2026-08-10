@@ -148,7 +148,7 @@ function CalendarPage() {
         </div>
 
         <div className="flex items-center gap-2 rounded-full border border-foreground/10 bg-foreground/[0.04] py-1.5 pl-3 pr-4">
-          <Clock className="h-3.5 w-3.5 text-[oklch(0.82_0.14_200)]" />
+          <Clock className="h-3.5 w-3.5 text-[var(--cyan)]" />
           <span className="font-mono text-[10px] uppercase tracking-widest text-foreground/50">Now</span>
           <span className="font-mono text-sm text-foreground">
             {now.toLocaleTimeString(undefined, { hour: "2-digit", minute: "2-digit", second: "2-digit" })}
@@ -241,9 +241,9 @@ function CalendarPage() {
                       : "border-foreground/5 bg-foreground/[0.02] hover:bg-foreground/[0.05]"
                   } ${!inMonth ? "opacity-30" : ""}`}
                 >
-                  <div className={`font-mono text-[11px] ${isToday ? "text-[oklch(0.83_0.16_85)]" : "text-foreground/70"}`}>
+                  <div className={`font-mono text-[11px] ${isToday ? "text-[var(--gold)]" : "text-foreground/70"}`}>
                     {Number(cell.date.slice(-2))}
-                    {isToday && <span className="ml-1 inline-block h-1 w-1 rounded-full bg-[oklch(0.83_0.16_85)]" />}
+                    {isToday && <span className="ml-1 inline-block h-1 w-1 rounded-full bg-[var(--gold)]" />}
                   </div>
                   {dayEvs.length > 0 && (
                     <div className="absolute bottom-1 left-1 right-1 flex flex-wrap gap-0.5">
@@ -377,10 +377,10 @@ function UpcomingList({
 export function CountdownLabel({ date }: { date: string }) {
   const days = daysUntil(date);
   let text = `${Math.abs(days)} Days Left`;
-  let cls = "text-[oklch(0.82_0.14_200)]";
-  if (days === 0) { text = "Today"; cls = "text-[oklch(0.83_0.16_85)]"; }
+  let cls = "text-[var(--cyan)]";
+  if (days === 0) { text = "Today"; cls = "text-[var(--gold)]"; }
   else if (days < 0) { text = "Completed"; cls = "text-foreground/40"; }
-  else if (days === 1) { text = "1 Day Left"; cls = "text-[oklch(0.83_0.16_85)]"; }
+  else if (days === 1) { text = "1 Day Left"; cls = "text-[var(--gold)]"; }
   return <span className={`font-mono text-[10px] uppercase tracking-widest ${cls}`}>{text}</span>;
 }
 
@@ -425,8 +425,8 @@ function buildMonthGrid(y: number, m: number) {
 function priorityDot(priority?: string) {
   switch (priority) {
     case "High": return "bg-[oklch(0.7_0.19_25)]";
-    case "Medium": return "bg-[oklch(0.83_0.16_85)]";
-    case "Low": return "bg-[oklch(0.75_0.18_155)]";
-    default: return "bg-[oklch(0.72_0.2_255)]";
+    case "Medium": return "bg-[var(--gold)]";
+    case "Low": return "bg-[var(--emerald)]";
+    default: return "bg-[var(--electric)]";
   }
 }

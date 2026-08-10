@@ -234,7 +234,7 @@ function TaskGroup({
                 </div>
               </div>
               <div className="flex items-center gap-3">
-                {t.xp ? <span className="font-mono text-xs text-[oklch(0.83_0.16_85)]">+{t.xp} XP</span> : null}
+                {t.xp ? <span className="font-mono text-xs text-[var(--gold)]">+{t.xp} XP</span> : null}
                 <button
                   onClick={() => onRemove(t.id)}
                   className="rounded-md p-1.5 text-foreground/40 opacity-0 transition group-hover:opacity-100 hover:bg-foreground/[0.06] hover:text-red-300"

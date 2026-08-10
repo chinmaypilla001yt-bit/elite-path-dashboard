@@ -31,7 +31,7 @@ export const Route = createFileRoute("/projects")({
           </div>
           <div className="mt-1 text-lg font-semibold text-foreground">{p.name as string}</div>
           {p.repo ? (
-            <a href={p.repo as string} target="_blank" rel="noreferrer" className="mt-1 block text-xs text-[oklch(0.85_0.13_200)] hover:underline">
+            <a href={p.repo as string} target="_blank" rel="noreferrer" className="mt-1 block text-xs text-[var(--cyan)] hover:underline">
               {p.repo as string}
             </a>
           ) : null}

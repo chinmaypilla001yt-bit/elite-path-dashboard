@@ -295,7 +295,7 @@ function TimerCard({
 
         <div className="mt-3 h-1.5 w-full overflow-hidden rounded-full bg-foreground/5">
           <motion.div
-            className="h-full bg-[image:var(--gradient-cyber)] shadow-[0_0_16px_oklch(0.72_0.2_255/0.6)]"
+            className="h-full bg-[image:var(--gradient-cyber)] shadow-[0_0_16px_color-mix(in_oklab,_var(--electric)_60%,_transparent)]"
             animate={{ width: `${progress}%` }}
             transition={{ duration: 0.4 }}
           />

@@ -282,7 +282,7 @@ export function ResumeEditor({
                     type="checkbox"
                     checked={!!sec.enabled}
                     onChange={(e) => setOptional(s.key, { enabled: e.target.checked })}
-                    className="h-3.5 w-3.5 accent-[oklch(0.72_0.2_255)]"
+                    className="h-3.5 w-3.5 accent-[var(--electric)]"
                   />
                   {s.label}
                 </label>

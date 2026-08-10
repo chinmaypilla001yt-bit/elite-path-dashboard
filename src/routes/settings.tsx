@@ -120,7 +120,7 @@ function SettingsPage() {
         <GlassCard glow="gold" className="p-6">
           <div className="font-mono text-[10px] uppercase tracking-[0.24em] text-foreground/45">Danger zone</div>
           <div className="mt-1 flex items-center gap-2 text-lg font-semibold text-foreground">
-            <AlertTriangle className="h-4 w-4 text-[oklch(0.83_0.16_85)]" /> Reset all data
+            <AlertTriangle className="h-4 w-4 text-[var(--gold)]" /> Reset all data
           </div>
           <p className="mt-2 text-sm text-foreground/60">
             Erases every task, habit, goal, journal entry, roadmap year, calendar event, study session, and XP total for your account.
@@ -218,7 +218,7 @@ function NotificationSettingsCard() {
               type="checkbox"
               checked={Boolean(settings[it.key])}
               onChange={toggle(it.key)}
-              className="mt-0.5 h-4 w-4 accent-[oklch(0.72_0.2_255)]"
+              className="mt-0.5 h-4 w-4 accent-[var(--electric)]"
             />
             <div className="min-w-0">
               <div className="text-sm text-foreground">{it.label}</div>

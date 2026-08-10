@@ -157,14 +157,14 @@ function Dashboard() {
             <BarChart data={weekly}>
               <defs>
                 <linearGradient id="taskBar" x1="0" y1="0" x2="0" y2="1">
-                  <stop offset="0%" stopColor="oklch(0.72 0.2 255)" stopOpacity={0.9} />
-                  <stop offset="100%" stopColor="oklch(0.66 0.24 305)" stopOpacity={0.6} />
+                  <stop offset="0%" stopColor="var(--electric)" stopOpacity={0.9} />
+                  <stop offset="100%" stopColor="var(--neon-purple)" stopOpacity={0.6} />
                 </linearGradient>
               </defs>
-              <CartesianGrid stroke="oklch(1 0 0 / 0.06)" vertical={false} />
-              <XAxis dataKey="label" stroke="oklch(1 0 0 / 0.45)" fontSize={11} tickLine={false} axisLine={false} />
-              <YAxis stroke="oklch(1 0 0 / 0.45)" fontSize={11} tickLine={false} axisLine={false} allowDecimals={false} />
-              <Tooltip content={<ChartTip />} cursor={{ fill: "oklch(1 0 0 / 0.04)" }} />
+              <CartesianGrid stroke="color-mix(in oklab, var(--foreground) 6%, transparent)" vertical={false} />
+              <XAxis dataKey="label" stroke="color-mix(in oklab, var(--foreground) 45%, transparent)" fontSize={11} tickLine={false} axisLine={false} />
+              <YAxis stroke="color-mix(in oklab, var(--foreground) 45%, transparent)" fontSize={11} tickLine={false} axisLine={false} allowDecimals={false} />
+              <Tooltip content={<ChartTip />} cursor={{ fill: "color-mix(in oklab, var(--foreground) 4%, transparent)" }} />
               <Bar dataKey="tasks" fill="url(#taskBar)" radius={[6, 6, 0, 0]} animationDuration={800} />
             </BarChart>
           </ResponsiveContainer>
@@ -175,15 +175,15 @@ function Dashboard() {
             <AreaChart data={weekly}>
               <defs>
                 <linearGradient id="hoursArea" x1="0" y1="0" x2="0" y2="1">
-                  <stop offset="0%" stopColor="oklch(0.82 0.14 200)" stopOpacity={0.7} />
-                  <stop offset="100%" stopColor="oklch(0.72 0.2 255)" stopOpacity={0.05} />
+                  <stop offset="0%" stopColor="var(--cyan)" stopOpacity={0.7} />
+                  <stop offset="100%" stopColor="var(--electric)" stopOpacity={0.05} />
                 </linearGradient>
               </defs>
-              <CartesianGrid stroke="oklch(1 0 0 / 0.06)" vertical={false} />
-              <XAxis dataKey="label" stroke="oklch(1 0 0 / 0.45)" fontSize={11} tickLine={false} axisLine={false} />
-              <YAxis stroke="oklch(1 0 0 / 0.45)" fontSize={11} tickLine={false} axisLine={false} />
+              <CartesianGrid stroke="color-mix(in oklab, var(--foreground) 6%, transparent)" vertical={false} />
+              <XAxis dataKey="label" stroke="color-mix(in oklab, var(--foreground) 45%, transparent)" fontSize={11} tickLine={false} axisLine={false} />
+              <YAxis stroke="color-mix(in oklab, var(--foreground) 45%, transparent)" fontSize={11} tickLine={false} axisLine={false} />
               <Tooltip content={<ChartTip />} />
-              <Area type="monotone" dataKey="hours" stroke="oklch(0.82 0.14 200)" strokeWidth={2.5} fill="url(#hoursArea)" animationDuration={800} />
+              <Area type="monotone" dataKey="hours" stroke="var(--cyan)" strokeWidth={2.5} fill="url(#hoursArea)" animationDuration={800} />
             </AreaChart>
           </ResponsiveContainer>
         </ChartCard>
@@ -193,15 +193,15 @@ function Dashboard() {
             <AreaChart data={weekly}>
               <defs>
                 <linearGradient id="xpArea" x1="0" y1="0" x2="0" y2="1">
-                  <stop offset="0%" stopColor="oklch(0.83 0.16 85)" stopOpacity={0.7} />
+                  <stop offset="0%" stopColor="var(--gold)" stopOpacity={0.7} />
                   <stop offset="100%" stopColor="oklch(0.7 0.19 45)" stopOpacity={0.05} />
                 </linearGradient>
               </defs>
-              <CartesianGrid stroke="oklch(1 0 0 / 0.06)" vertical={false} />
-              <XAxis dataKey="label" stroke="oklch(1 0 0 / 0.45)" fontSize={11} tickLine={false} axisLine={false} />
-              <YAxis stroke="oklch(1 0 0 / 0.45)" fontSize={11} tickLine={false} axisLine={false} />
+              <CartesianGrid stroke="color-mix(in oklab, var(--foreground) 6%, transparent)" vertical={false} />
+              <XAxis dataKey="label" stroke="color-mix(in oklab, var(--foreground) 45%, transparent)" fontSize={11} tickLine={false} axisLine={false} />
+              <YAxis stroke="color-mix(in oklab, var(--foreground) 45%, transparent)" fontSize={11} tickLine={false} axisLine={false} />
               <Tooltip content={<ChartTip />} />
-              <Area type="monotone" dataKey="xp" stroke="oklch(0.83 0.16 85)" strokeWidth={2.5} fill="url(#xpArea)" animationDuration={800} />
+              <Area type="monotone" dataKey="xp" stroke="var(--gold)" strokeWidth={2.5} fill="url(#xpArea)" animationDuration={800} />
             </AreaChart>
           </ResponsiveContainer>
         </ChartCard>
@@ -211,14 +211,14 @@ function Dashboard() {
             <BarChart data={weekly}>
               <defs>
                 <linearGradient id="studyBar" x1="0" y1="0" x2="0" y2="1">
-                  <stop offset="0%" stopColor="oklch(0.75 0.18 155)" stopOpacity={0.9} />
-                  <stop offset="100%" stopColor="oklch(0.82 0.14 200)" stopOpacity={0.5} />
+                  <stop offset="0%" stopColor="var(--emerald)" stopOpacity={0.9} />
+                  <stop offset="100%" stopColor="var(--cyan)" stopOpacity={0.5} />
                 </linearGradient>
               </defs>
-              <CartesianGrid stroke="oklch(1 0 0 / 0.06)" vertical={false} />
-              <XAxis dataKey="label" stroke="oklch(1 0 0 / 0.45)" fontSize={11} tickLine={false} axisLine={false} />
-              <YAxis stroke="oklch(1 0 0 / 0.45)" fontSize={11} tickLine={false} axisLine={false} />
-              <Tooltip content={<ChartTip />} cursor={{ fill: "oklch(1 0 0 / 0.04)" }} />
+              <CartesianGrid stroke="color-mix(in oklab, var(--foreground) 6%, transparent)" vertical={false} />
+              <XAxis dataKey="label" stroke="color-mix(in oklab, var(--foreground) 45%, transparent)" fontSize={11} tickLine={false} axisLine={false} />
+              <YAxis stroke="color-mix(in oklab, var(--foreground) 45%, transparent)" fontSize={11} tickLine={false} axisLine={false} />
+              <Tooltip content={<ChartTip />} cursor={{ fill: "color-mix(in oklab, var(--foreground) 4%, transparent)" }} />
               <Bar dataKey="hours" fill="url(#studyBar)" radius={[6, 6, 0, 0]} animationDuration={800} />
             </BarChart>
           </ResponsiveContainer>
@@ -247,7 +247,7 @@ function Dashboard() {
                         {t.estimatedMinutes ? `${t.estimatedMinutes}m` : ""}{t.tag ? ` · ${t.tag}` : ""}
                       </div>
                     </div>
-                    {t.xp ? <span className="font-mono text-xs text-[oklch(0.83_0.16_85)]">+{t.xp} XP</span> : null}
+                    {t.xp ? <span className="font-mono text-xs text-[var(--gold)]">+{t.xp} XP</span> : null}
                   </motion.li>
                 ))}
               </ul>
@@ -398,11 +398,11 @@ function Pill({
   icon: Icon, label, value, tone,
 }: { icon: React.ComponentType<{ className?: string }>; label: string; value: string; tone: "gold" | "blue" | "purple" | "cyan" | "emerald" }) {
   const map: Record<string, string> = {
-    gold: "text-[oklch(0.83_0.16_85)]",
-    blue: "text-[oklch(0.78_0.16_255)]",
-    purple: "text-[oklch(0.75_0.2_305)]",
-    cyan: "text-[oklch(0.85_0.13_200)]",
-    emerald: "text-[oklch(0.8_0.16_155)]",
+    gold: "text-[var(--gold)]",
+    blue: "text-[var(--electric)]",
+    purple: "text-[var(--neon-purple)]",
+    cyan: "text-[var(--cyan)]",
+    emerald: "text-[var(--emerald)]",
   };
   return (
     <div className="flex items-center gap-2 rounded-full border border-foreground/10 bg-foreground/[0.04] py-1.5 pl-2 pr-3">

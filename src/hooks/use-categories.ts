@@ -31,11 +31,11 @@ export const CATEGORY_ICONS = [
 ] as const;
 
 export const CATEGORY_COLORS = [
-  "oklch(0.72 0.2 255)",
-  "oklch(0.66 0.24 305)",
-  "oklch(0.82 0.14 200)",
-  "oklch(0.75 0.18 155)",
-  "oklch(0.83 0.16 85)",
+  "var(--electric)",
+  "var(--neon-purple)",
+  "var(--cyan)",
+  "var(--emerald)",
+  "var(--gold)",
   "oklch(0.68 0.21 25)",
   "oklch(0.78 0.15 130)",
   "oklch(0.7 0.18 340)",

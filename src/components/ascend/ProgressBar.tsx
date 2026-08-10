@@ -27,7 +27,7 @@ export function ProgressBar({
           initial={{ width: 0 }}
           animate={{ width: `${Math.min(100, Math.max(0, value))}%` }}
           transition={{ duration: 1, ease: "easeOut" }}
-          className={cn("h-full rounded-full shadow-[0_0_16px_oklch(0.72_0.2_255/0.6)]", map[accent])}
+          className={cn("h-full rounded-full shadow-[0_0_16px_color-mix(in_oklab,_var(--electric)_60%,_transparent)]", map[accent])}
         />
       </div>
     </div>

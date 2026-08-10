@@ -37,7 +37,7 @@ export const Route = createFileRoute("/career/certifications")({
           <div className="mt-1 text-lg font-semibold text-foreground">{r.title as string}</div>
           {r.org ? <div className="text-sm text-foreground/70">{r.org as string}</div> : null}
           {r.url ? (
-            <a href={r.url as string} target="_blank" rel="noreferrer" className="mt-1 block truncate text-xs text-[oklch(0.82_0.14_200)] underline">
+            <a href={r.url as string} target="_blank" rel="noreferrer" className="mt-1 block truncate text-xs text-[var(--cyan)] underline">
               {r.url as string}
             </a>
           ) : null}

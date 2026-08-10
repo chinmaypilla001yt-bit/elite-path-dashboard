@@ -233,7 +233,7 @@ function LeaderboardPage() {
                     animate={{ opacity: 1, y: 0 }}
                     className={cn(
                       "flex items-center gap-4 px-4 py-3 sm:px-5",
-                      isMe && "bg-[image:linear-gradient(90deg,oklch(0.72_0.2_255/0.14),transparent_70%)] ring-1 ring-inset ring-foreground/10",
+                      isMe && "bg-[image:linear-gradient(90deg,color-mix(in_oklab,_var(--electric)_14%,_transparent),transparent_70%)] ring-1 ring-inset ring-foreground/10",
                     )}
                   >
                     <RankBadge rank={rank} />
@@ -308,7 +308,7 @@ function RankBadge({ rank }: { rank: number }) {
       <motion.div
         animate={{ y: [0, -2, 0], rotate: [0, -3, 3, 0] }}
         transition={{ duration: 2.4, repeat: Infinity, ease: "easeInOut" }}
-        className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-[radial-gradient(circle_at_30%_20%,oklch(0.93_0.16_85),oklch(0.7_0.18_60))] text-lg shadow-[0_0_18px_oklch(0.83_0.16_85/0.6)]"
+        className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-[radial-gradient(circle_at_30%_20%,var(--gold),oklch(0.7_0.18_60))] text-lg shadow-[0_0_18px_color-mix(in_oklab,_var(--gold)_60%,_transparent)]"
         title="Gold — Rank #1"
       >
         <Trophy className="h-4 w-4 text-foreground" />
