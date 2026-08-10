@@ -7,7 +7,7 @@ export function ClassicTemplate({ data }: { data: ResumeData }) {
   return (
     <div
       id="resume-paper"
-      className="resume-paper mx-auto w-full bg-foreground text-[#111] shadow-2xl"
+      className="resume-paper mx-auto w-full bg-white text-[#111] shadow-2xl"
       style={{
         maxWidth: "8.5in",
         minHeight: "11in",
