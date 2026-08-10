@@ -55,18 +55,18 @@ function CPPage() {
       {items.length > 0 && (
         <GlassCard glow="blue" className="mb-8 p-5">
           <div className="mb-4">
-            <div className="font-mono text-[10px] uppercase tracking-[0.24em] text-white/45">Rating history</div>
-            <div className="mt-1 text-lg font-semibold text-white">Across all logged contests</div>
+            <div className="font-mono text-[10px] uppercase tracking-[0.24em] text-foreground/45">Rating history</div>
+            <div className="mt-1 text-lg font-semibold text-foreground">Across all logged contests</div>
           </div>
           <div className="h-64">
             <ResponsiveContainer width="100%" height="100%">
               <LineChart data={chart}>
-                <CartesianGrid stroke="oklch(1 0 0 / 0.06)" vertical={false} />
-                <XAxis dataKey="c" stroke="oklch(1 0 0 / 0.45)" fontSize={11} tickLine={false} axisLine={false} />
-                <YAxis stroke="oklch(1 0 0 / 0.45)" fontSize={11} tickLine={false} axisLine={false} />
+                <CartesianGrid stroke="color-mix(in oklab, var(--foreground) 6%, transparent)" vertical={false} />
+                <XAxis dataKey="c" stroke="color-mix(in oklab, var(--foreground) 45%, transparent)" fontSize={11} tickLine={false} axisLine={false} />
+                <YAxis stroke="color-mix(in oklab, var(--foreground) 45%, transparent)" fontSize={11} tickLine={false} axisLine={false} />
                 <Tooltip contentStyle={{ background: "#0b1024", border: "1px solid rgba(255,255,255,0.08)", borderRadius: 10, fontSize: 12 }} />
-                <Line type="monotone" dataKey="r" stroke="oklch(0.72 0.2 255)" strokeWidth={2.5} dot={{ r: 3, fill: "oklch(0.72 0.2 255)" }}
-                  style={{ filter: "drop-shadow(0 0 8px oklch(0.72 0.2 255 / 0.8))" }} />
+                <Line type="monotone" dataKey="r" stroke="var(--electric)" strokeWidth={2.5} dot={{ r: 3, fill: "var(--electric)" }}
+                  style={{ filter: "drop-shadow(0 0 8px color-mix(in oklab, var(--electric) 80%, transparent))" }} />
               </LineChart>
             </ResponsiveContainer>
           </div>
@@ -91,15 +91,15 @@ function CPPage() {
         ]}
         renderItem={(c) => (
           <>
-            <div className="font-mono text-[10px] uppercase tracking-widest text-white/45">
+            <div className="font-mono text-[10px] uppercase tracking-widest text-foreground/45">
               {(c.platform as string) || "contest"}{c.date ? ` · ${c.date}` : ""}
             </div>
-            <div className="mt-1 text-lg font-semibold text-white">{c.name as string}</div>
+            <div className="mt-1 text-lg font-semibold text-foreground">{c.name as string}</div>
             <div className="mt-3 flex flex-wrap gap-2 text-xs">
-              {c.rating ? <span className="rounded-full border border-white/10 bg-white/[0.04] px-3 py-1 text-white/80">Rating {c.rating as number}</span> : null}
-              {c.solved ? <span className="rounded-full border border-white/10 bg-white/[0.04] px-3 py-1 text-white/80">{c.solved as number} solved</span> : null}
+              {c.rating ? <span className="rounded-full border border-foreground/10 bg-foreground/[0.04] px-3 py-1 text-foreground/80">Rating {c.rating as number}</span> : null}
+              {c.solved ? <span className="rounded-full border border-foreground/10 bg-foreground/[0.04] px-3 py-1 text-foreground/80">{c.solved as number} solved</span> : null}
             </div>
-            {c.notes ? <p className="mt-2 text-sm text-white/60">{c.notes as string}</p> : null}
+            {c.notes ? <p className="mt-2 text-sm text-foreground/60">{c.notes as string}</p> : null}
           </>
         )}
       />

@@ -98,7 +98,7 @@ function TasksPage() {
         actions={
           <button
             onClick={() => setShowForm((v) => !v)}
-            className="inline-flex items-center gap-2 rounded-lg bg-[image:var(--gradient-cyber)] px-4 py-2 text-sm font-semibold text-white shadow-[var(--shadow-glow)] transition hover:opacity-90"
+            className="inline-flex items-center gap-2 rounded-lg bg-[image:var(--gradient-cyber)] px-4 py-2 text-sm font-semibold text-foreground shadow-[var(--shadow-glow)] transition hover:opacity-90"
           >
             <Plus className="h-4 w-4" /> New task
           </button>
@@ -111,7 +111,7 @@ function TasksPage() {
             <GlassCard glow="purple" className="p-5">
               <div className="grid gap-3 sm:grid-cols-6">
                 <input
-                  className="sm:col-span-4 rounded-lg border border-white/10 bg-white/[0.03] px-3 py-2 text-sm text-white placeholder:text-white/30 focus:border-white/30 focus:outline-none"
+                  className="sm:col-span-4 rounded-lg border border-foreground/10 bg-foreground/[0.03] px-3 py-2 text-sm text-foreground placeholder:text-foreground/30 focus:border-foreground/30 focus:outline-none"
                   placeholder="Task title"
                   value={draft.title}
                   onChange={(e) => setDraft({ ...draft, title: e.target.value })}
@@ -123,7 +123,7 @@ function TasksPage() {
                 />
 
                 <div className="sm:col-span-6">
-                  <div className="mb-1.5 font-mono text-[10px] uppercase tracking-widest text-white/45">Estimated time</div>
+                  <div className="mb-1.5 font-mono text-[10px] uppercase tracking-widest text-foreground/45">Estimated time</div>
                   <div className="flex flex-wrap gap-2">
                     {PRESETS.map((p) => (
                       <button
@@ -132,8 +132,8 @@ function TasksPage() {
                         onClick={() => setDraft({ ...draft, estimatedMinutes: p.value, custom: "" })}
                         className={`rounded-full border px-3 py-1 text-xs transition ${
                           !draft.custom && draft.estimatedMinutes === p.value
-                            ? "border-white/40 bg-white/[0.08] text-white"
-                            : "border-white/10 bg-white/[0.03] text-white/70 hover:border-white/30"
+                            ? "border-foreground/40 bg-foreground/[0.08] text-foreground"
+                            : "border-foreground/10 bg-foreground/[0.03] text-foreground/70 hover:border-foreground/30"
                         }`}
                       >
                         {p.label}
@@ -145,13 +145,13 @@ function TasksPage() {
                       placeholder="Custom min"
                       value={draft.custom}
                       onChange={(e) => setDraft({ ...draft, custom: e.target.value })}
-                      className="w-28 rounded-full border border-white/10 bg-white/[0.03] px-3 py-1 text-xs text-white placeholder:text-white/30 focus:border-white/30 focus:outline-none"
+                      className="w-28 rounded-full border border-foreground/10 bg-foreground/[0.03] px-3 py-1 text-xs text-foreground placeholder:text-foreground/30 focus:border-foreground/30 focus:outline-none"
                     />
                   </div>
                 </div>
 
                 <select
-                  className="sm:col-span-2 rounded-lg border border-white/10 bg-white/[0.03] px-3 py-2 text-sm text-white focus:border-white/30 focus:outline-none"
+                  className="sm:col-span-2 rounded-lg border border-foreground/10 bg-foreground/[0.03] px-3 py-2 text-sm text-foreground focus:border-foreground/30 focus:outline-none"
                   value={draft.difficulty}
                   onChange={(e) => setDraft({ ...draft, difficulty: e.target.value })}
                 >
@@ -159,12 +159,12 @@ function TasksPage() {
                 </select>
                 <input
                   type="number"
-                  className="sm:col-span-2 rounded-lg border border-white/10 bg-white/[0.03] px-3 py-2 text-sm text-white placeholder:text-white/30 focus:border-white/30 focus:outline-none"
+                  className="sm:col-span-2 rounded-lg border border-foreground/10 bg-foreground/[0.03] px-3 py-2 text-sm text-foreground placeholder:text-foreground/30 focus:border-foreground/30 focus:outline-none"
                   placeholder="XP reward"
                   value={draft.xp}
                   onChange={(e) => setDraft({ ...draft, xp: e.target.value })}
                 />
-                <button onClick={save} disabled={saving} className="sm:col-span-2 inline-flex items-center justify-center gap-2 rounded-lg bg-[image:var(--gradient-cyber)] px-4 py-2 text-sm font-semibold text-white disabled:opacity-60">
+                <button onClick={save} disabled={saving} className="sm:col-span-2 inline-flex items-center justify-center gap-2 rounded-lg bg-[image:var(--gradient-cyber)] px-4 py-2 text-sm font-semibold text-foreground disabled:opacity-60">
                   {saving ? <Loader2 className="h-4 w-4 animate-spin" /> : null}
                   {saving ? "Saving…" : "Save task"}
                 </button>
@@ -176,8 +176,8 @@ function TasksPage() {
 
       {hydrated && items.length === 0 ? (
         <GlassCard glow="purple" className="flex flex-col items-center justify-center p-16 text-center">
-          <div className="text-lg font-semibold text-white">No tasks yet</div>
-          <p className="mt-2 text-sm text-white/60">Add your first mission above.</p>
+          <div className="text-lg font-semibold text-foreground">No tasks yet</div>
+          <p className="mt-2 text-sm text-foreground/60">Add your first mission above.</p>
         </GlassCard>
       ) : (
         <div className="space-y-6">
@@ -203,7 +203,7 @@ function TaskGroup({
   if (items.length === 0) return null;
   return (
     <div>
-      <div className="mb-3 font-mono text-[10px] uppercase tracking-[0.24em] text-white/45">{title} · {items.length}</div>
+      <div className="mb-3 font-mono text-[10px] uppercase tracking-[0.24em] text-foreground/45">{title} · {items.length}</div>
       <div className="space-y-2">
         <AnimatePresence>
           {items.map((t) => (
@@ -213,20 +213,20 @@ function TaskGroup({
               initial={{ opacity: 0, y: 6 }}
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, scale: 0.98 }}
-              className={`group flex items-center justify-between rounded-lg border border-white/5 bg-white/[0.03] p-3 ${muted ? "opacity-60" : ""}`}
+              className={`group flex items-center justify-between rounded-lg border border-foreground/5 bg-foreground/[0.03] p-3 ${muted ? "opacity-60" : ""}`}
             >
               <div className="flex items-center gap-3">
                 <button
                   onClick={() => onToggle(t)}
                   className={`flex h-5 w-5 items-center justify-center rounded-md border ${
-                    t.done ? "border-emerald-400/60 bg-emerald-400/20 text-emerald-300" : "border-white/20 hover:border-white/50"
+                    t.done ? "border-emerald-400/60 bg-emerald-400/20 text-emerald-300" : "border-foreground/20 hover:border-foreground/50"
                   }`}
                 >
                   {t.done && <Check className="h-3 w-3" />}
                 </button>
                 <div>
-                  <div className={`text-sm text-white ${t.done ? "line-through opacity-70" : ""}`}>{t.title}</div>
-                  <div className="flex items-center gap-2 font-mono text-[10px] uppercase tracking-widest text-white/40">
+                  <div className={`text-sm text-foreground ${t.done ? "line-through opacity-70" : ""}`}>{t.title}</div>
+                  <div className="flex items-center gap-2 font-mono text-[10px] uppercase tracking-widest text-foreground/40">
                     <span className="inline-flex items-center gap-1"><Clock3 className="h-3 w-3" />{fmtMin(t.estimatedMinutes)}</span>
                     <span>· {t.difficulty || "—"}</span>
                     {t.tag ? <span>· {t.tag}</span> : null}
@@ -234,10 +234,10 @@ function TaskGroup({
                 </div>
               </div>
               <div className="flex items-center gap-3">
-                {t.xp ? <span className="font-mono text-xs text-[oklch(0.83_0.16_85)]">+{t.xp} XP</span> : null}
+                {t.xp ? <span className="font-mono text-xs text-[var(--gold)]">+{t.xp} XP</span> : null}
                 <button
                   onClick={() => onRemove(t.id)}
-                  className="rounded-md p-1.5 text-white/40 opacity-0 transition group-hover:opacity-100 hover:bg-white/[0.06] hover:text-red-300"
+                  className="rounded-md p-1.5 text-foreground/40 opacity-0 transition group-hover:opacity-100 hover:bg-foreground/[0.06] hover:text-red-300"
                 >
                   <Trash2 className="h-3.5 w-3.5" />
                 </button>

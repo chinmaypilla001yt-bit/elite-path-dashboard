@@ -56,7 +56,7 @@ function AuthPage() {
   }
 
   return (
-    <div className="relative flex min-h-screen items-center justify-center overflow-hidden bg-[#050816] px-4">
+    <div className="relative flex min-h-screen items-center justify-center overflow-hidden bg-background px-4">
       <div className="pointer-events-none absolute inset-0 grid-bg opacity-[0.35]" />
       <div className="pointer-events-none absolute inset-0">
         <Particles count={45} />
@@ -72,43 +72,43 @@ function AuthPage() {
       >
         <div className="mb-6 flex items-center gap-3">
           <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-[image:var(--gradient-cyber)] shadow-[var(--shadow-glow)]">
-            <Rocket className="h-5 w-5 text-white" />
+            <Rocket className="h-5 w-5 text-foreground" />
           </div>
           <div>
-            <div className="font-mono text-[10px] uppercase tracking-[0.28em] text-white/50">Mission Control</div>
+            <div className="font-mono text-[10px] uppercase tracking-[0.28em] text-foreground/50">Mission Control</div>
             <div className="text-2xl font-semibold tracking-tight text-gradient">Ascend</div>
           </div>
         </div>
 
         <GlassCard glow="purple" className="p-7">
-          <div className="font-mono text-[11px] uppercase tracking-[0.28em] text-white/50">
+          <div className="font-mono text-[11px] uppercase tracking-[0.28em] text-foreground/50">
             {mode === "signin" ? "Sign in" : "Create account"}
           </div>
-          <h1 className="mt-2 text-2xl font-semibold text-white">
+          <h1 className="mt-2 text-2xl font-semibold text-foreground">
             {mode === "signin" ? "Welcome back" : "Start your ascent"}
           </h1>
-          <p className="mt-2 text-sm text-white/60">
+          <p className="mt-2 text-sm text-foreground/60">
             Your data syncs across devices. Any local progress migrates automatically on first sign-in.
           </p>
 
           <button
             onClick={handleGoogle}
             disabled={busy}
-            className="mt-6 flex w-full items-center justify-center gap-3 rounded-lg border border-white/10 bg-white/[0.04] px-4 py-2.5 text-sm font-medium text-white transition hover:bg-white/[0.08] disabled:opacity-50"
+            className="mt-6 flex w-full items-center justify-center gap-3 rounded-lg border border-foreground/10 bg-foreground/[0.04] px-4 py-2.5 text-sm font-medium text-foreground transition hover:bg-foreground/[0.08] disabled:opacity-50"
           >
             {busy ? <Loader2 className="h-4 w-4 animate-spin" /> : <GoogleIcon />}
             Continue with Google
           </button>
 
           <div className="my-5 flex items-center gap-3">
-            <div className="h-px flex-1 bg-white/10" />
-            <span className="font-mono text-[10px] uppercase tracking-widest text-white/40">or</span>
-            <div className="h-px flex-1 bg-white/10" />
+            <div className="h-px flex-1 bg-foreground/10" />
+            <span className="font-mono text-[10px] uppercase tracking-widest text-foreground/40">or</span>
+            <div className="h-px flex-1 bg-foreground/10" />
           </div>
 
           <form onSubmit={handleEmail} className="space-y-3">
             <label className="block">
-              <span className="mb-1 flex items-center gap-1.5 font-mono text-[10px] uppercase tracking-widest text-white/45">
+              <span className="mb-1 flex items-center gap-1.5 font-mono text-[10px] uppercase tracking-widest text-foreground/45">
                 <Mail className="h-3 w-3" /> Email
               </span>
               <input
@@ -117,11 +117,11 @@ function AuthPage() {
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 placeholder="you@ascend.dev"
-                className="w-full rounded-lg border border-white/10 bg-white/[0.03] px-3 py-2.5 text-sm text-white placeholder:text-white/30 focus:border-white/30 focus:outline-none"
+                className="w-full rounded-lg border border-foreground/10 bg-foreground/[0.03] px-3 py-2.5 text-sm text-foreground placeholder:text-foreground/30 focus:border-foreground/30 focus:outline-none"
               />
             </label>
             <label className="block">
-              <span className="mb-1 flex items-center gap-1.5 font-mono text-[10px] uppercase tracking-widest text-white/45">
+              <span className="mb-1 flex items-center gap-1.5 font-mono text-[10px] uppercase tracking-widest text-foreground/45">
                 <Lock className="h-3 w-3" /> Password
               </span>
               <input
@@ -131,13 +131,13 @@ function AuthPage() {
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 placeholder="••••••••"
-                className="w-full rounded-lg border border-white/10 bg-white/[0.03] px-3 py-2.5 text-sm text-white placeholder:text-white/30 focus:border-white/30 focus:outline-none"
+                className="w-full rounded-lg border border-foreground/10 bg-foreground/[0.03] px-3 py-2.5 text-sm text-foreground placeholder:text-foreground/30 focus:border-foreground/30 focus:outline-none"
               />
             </label>
             <button
               type="submit"
               disabled={busy}
-              className="mt-2 flex w-full items-center justify-center gap-2 rounded-lg bg-[image:var(--gradient-cyber)] px-4 py-2.5 text-sm font-semibold text-white shadow-[var(--shadow-glow)] transition hover:opacity-90 disabled:opacity-50"
+              className="mt-2 flex w-full items-center justify-center gap-2 rounded-lg bg-[image:var(--gradient-cyber)] px-4 py-2.5 text-sm font-semibold text-foreground shadow-[var(--shadow-glow)] transition hover:opacity-90 disabled:opacity-50"
             >
               {busy && <Loader2 className="h-4 w-4 animate-spin" />}
               {mode === "signin" ? "Sign in" : "Create account"}
@@ -146,7 +146,7 @@ function AuthPage() {
 
           <button
             onClick={() => setMode((m) => (m === "signin" ? "signup" : "signin"))}
-            className="mt-5 w-full text-center text-xs text-white/60 hover:text-white"
+            className="mt-5 w-full text-center text-xs text-foreground/60 hover:text-foreground"
           >
             {mode === "signin" ? "Need an account? Sign up →" : "Have an account? Sign in →"}
           </button>

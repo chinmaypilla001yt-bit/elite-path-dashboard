@@ -18,15 +18,15 @@ export function PageHeader({
     >
       <div>
         {eyebrow && (
-          <div className="font-mono text-[11px] uppercase tracking-[0.28em] text-white/50">
+          <div className="font-mono text-[11px] uppercase tracking-[0.28em] text-foreground/50">
             {eyebrow}
           </div>
         )}
-        <h1 className="mt-1 text-3xl font-semibold tracking-tight text-white sm:text-4xl">
+        <h1 className="mt-1 text-3xl font-semibold tracking-tight text-foreground sm:text-4xl">
           {title}
         </h1>
         {description && (
-          <p className="mt-2 max-w-2xl text-sm text-white/60">{description}</p>
+          <p className="mt-2 max-w-2xl text-sm text-foreground/60">{description}</p>
         )}
       </div>
       {actions && <div className="flex items-center gap-2">{actions}</div>}

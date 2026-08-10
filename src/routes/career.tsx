@@ -45,8 +45,8 @@ function CareerLayout() {
               className={cn(
                 "rounded-full border px-4 py-1.5 text-xs font-medium transition",
                 active
-                  ? "border-white/20 bg-white/[0.09] text-white shadow-[var(--shadow-glow)]"
-                  : "border-white/10 bg-white/[0.03] text-white/65 hover:bg-white/[0.06] hover:text-white",
+                  ? "border-foreground/20 bg-foreground/[0.09] text-foreground shadow-[var(--shadow-glow)]"
+                  : "border-foreground/10 bg-foreground/[0.03] text-foreground/65 hover:bg-foreground/[0.06] hover:text-foreground",
               )}
             >
               {t.label}

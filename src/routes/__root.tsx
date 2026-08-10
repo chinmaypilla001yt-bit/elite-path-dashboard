@@ -17,6 +17,7 @@ import appCss from "../styles.css?url";
 import { reportLovableError } from "../lib/lovable-error-reporting";
 import { AuthProvider, useAuth } from "@/hooks/use-auth";
 import { NotificationsProvider } from "@/hooks/use-notifications";
+import { ThemeProvider } from "@/hooks/use-theme";
 import { useUserAggregatesSync } from "@/lib/user-aggregates";
 
 function NotFoundComponent() {
@@ -134,13 +135,13 @@ function AuthGate({ children }: { children: ReactNode }) {
 
   if (loading) {
     return (
-      <div className="relative flex min-h-screen items-center justify-center bg-[#050816]">
+      <div className="relative flex min-h-screen items-center justify-center bg-background">
         <div className="pointer-events-none absolute inset-0 grid-bg opacity-[0.35]" />
         <div className="relative flex flex-col items-center gap-4">
           <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-[image:var(--gradient-cyber)] shadow-[var(--shadow-glow)]">
-            <Rocket className="h-5 w-5 text-white" />
+            <Rocket className="h-5 w-5 text-foreground" />
           </div>
-          <div className="flex items-center gap-2 font-mono text-[11px] uppercase tracking-[0.28em] text-white/60">
+          <div className="flex items-center gap-2 font-mono text-[11px] uppercase tracking-[0.28em] text-foreground/60">
             <Loader2 className="h-3 w-3 animate-spin" /> initializing mission control
           </div>
         </div>
@@ -166,14 +167,16 @@ function RootComponent() {
 
   return (
     <QueryClientProvider client={queryClient}>
-      <AuthProvider>
-        <NotificationsProvider>
-          <AuthGate>
-            <AggregatesSyncer />
-            <Outlet />
-          </AuthGate>
-        </NotificationsProvider>
-      </AuthProvider>
+      <ThemeProvider>
+        <AuthProvider>
+          <NotificationsProvider>
+            <AuthGate>
+              <AggregatesSyncer />
+              <Outlet />
+            </AuthGate>
+          </NotificationsProvider>
+        </AuthProvider>
+      </ThemeProvider>
       <SonnerToaster theme="dark" position="top-right" richColors />
     </QueryClientProvider>
   );

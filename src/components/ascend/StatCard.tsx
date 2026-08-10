@@ -13,11 +13,11 @@ export function StatCard({
   delay?: number;
 }) {
   const map: Record<string, string> = {
-    blue: "from-[oklch(0.72_0.2_255)] to-[oklch(0.66_0.24_305)]",
-    purple: "from-[oklch(0.66_0.24_305)] to-[oklch(0.72_0.2_255)]",
-    cyan: "from-[oklch(0.82_0.14_200)] to-[oklch(0.72_0.2_255)]",
-    emerald: "from-[oklch(0.75_0.18_155)] to-[oklch(0.82_0.14_200)]",
-    gold: "from-[oklch(0.83_0.16_85)] to-[oklch(0.7_0.19_45)]",
+    blue: "from-[var(--electric)] to-[var(--neon-purple)]",
+    purple: "from-[var(--neon-purple)] to-[var(--electric)]",
+    cyan: "from-[var(--cyan)] to-[var(--electric)]",
+    emerald: "from-[var(--emerald)] to-[var(--cyan)]",
+    gold: "from-[var(--gold)] to-[oklch(0.7_0.19_45)]",
   };
   return (
     <motion.div
@@ -29,21 +29,21 @@ export function StatCard({
     >
       <div className="flex items-start justify-between">
         <div>
-          <div className="font-mono text-[10px] uppercase tracking-[0.2em] text-white/50">
+          <div className="font-mono text-[10px] uppercase tracking-[0.2em] text-foreground/50">
             {label}
           </div>
-          <div className="mt-2 text-3xl font-semibold tracking-tight text-white">
+          <div className="mt-2 text-3xl font-semibold tracking-tight text-foreground">
             {value}
           </div>
-          {hint && <div className="mt-1 text-xs text-white/50">{hint}</div>}
+          {hint && <div className="mt-1 text-xs text-foreground/50">{hint}</div>}
         </div>
         <div
           className={cn(
-            "flex h-10 w-10 items-center justify-center rounded-xl bg-gradient-to-br shadow-[0_0_24px_-6px_oklch(0.72_0.2_255/0.6)]",
+            "flex h-10 w-10 items-center justify-center rounded-xl bg-gradient-to-br shadow-[0_0_24px_-6px_color-mix(in_oklab,_var(--electric)_60%,_transparent)]",
             map[accent],
           )}
         >
-          <Icon className="h-5 w-5 text-white" />
+          <Icon className="h-5 w-5 text-foreground" />
         </div>
       </div>
       <div className="pointer-events-none absolute -bottom-16 -right-16 h-40 w-40 rounded-full bg-[image:var(--gradient-cyber)] opacity-10 blur-2xl" />

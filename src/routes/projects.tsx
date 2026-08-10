@@ -26,16 +26,16 @@ export const Route = createFileRoute("/projects")({
       ]}
       renderItem={(p) => (
         <>
-          <div className="font-mono text-[10px] uppercase tracking-widest text-white/45">
+          <div className="font-mono text-[10px] uppercase tracking-widest text-foreground/45">
             {(p.status as string) || "project"}{p.stack ? ` · ${p.stack}` : ""}
           </div>
-          <div className="mt-1 text-lg font-semibold text-white">{p.name as string}</div>
+          <div className="mt-1 text-lg font-semibold text-foreground">{p.name as string}</div>
           {p.repo ? (
-            <a href={p.repo as string} target="_blank" rel="noreferrer" className="mt-1 block text-xs text-[oklch(0.85_0.13_200)] hover:underline">
+            <a href={p.repo as string} target="_blank" rel="noreferrer" className="mt-1 block text-xs text-[var(--cyan)] hover:underline">
               {p.repo as string}
             </a>
           ) : null}
-          {p.description ? <p className="mt-2 text-sm text-white/60">{p.description as string}</p> : null}
+          {p.description ? <p className="mt-2 text-sm text-foreground/60">{p.description as string}</p> : null}
         </>
       )}
     />

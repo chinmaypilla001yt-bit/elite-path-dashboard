@@ -29,17 +29,17 @@ export const Route = createFileRoute("/career/portfolio")({
       ]}
       renderItem={(r) => (
         <>
-          <div className="font-mono text-[10px] uppercase tracking-widest text-white/45">
+          <div className="font-mono text-[10px] uppercase tracking-widest text-foreground/45">
             {(r.kind as string) || "link"}
           </div>
-          <div className="mt-1 text-lg font-semibold text-white">{r.title as string}</div>
-          {r.org ? <div className="text-sm text-white/70">{r.org as string}</div> : null}
+          <div className="mt-1 text-lg font-semibold text-foreground">{r.title as string}</div>
+          {r.org ? <div className="text-sm text-foreground/70">{r.org as string}</div> : null}
           {r.url ? (
-            <a href={r.url as string} target="_blank" rel="noreferrer" className="mt-1 block truncate text-xs text-[oklch(0.82_0.14_200)] underline">
+            <a href={r.url as string} target="_blank" rel="noreferrer" className="mt-1 block truncate text-xs text-[var(--cyan)] underline">
               {r.url as string}
             </a>
           ) : null}
-          {r.description ? <p className="mt-2 whitespace-pre-wrap text-sm text-white/60">{r.description as string}</p> : null}
+          {r.description ? <p className="mt-2 whitespace-pre-wrap text-sm text-foreground/60">{r.description as string}</p> : null}
         </>
       )}
     />

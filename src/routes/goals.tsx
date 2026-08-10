@@ -26,11 +26,11 @@ export const Route = createFileRoute("/goals")({
       ]}
       renderItem={(g) => (
         <>
-          <div className="font-mono text-[10px] uppercase tracking-widest text-white/45">
+          <div className="font-mono text-[10px] uppercase tracking-widest text-foreground/45">
             {(g.category as string) || "goal"}{g.target_date ? ` · by ${g.target_date}` : ""}
           </div>
-          <div className="mt-1 text-lg font-semibold text-white">{g.title as string}</div>
-          {g.description ? <p className="mt-2 text-sm text-white/60">{g.description as string}</p> : null}
+          <div className="mt-1 text-lg font-semibold text-foreground">{g.title as string}</div>
+          {g.description ? <p className="mt-2 text-sm text-foreground/60">{g.description as string}</p> : null}
           <div className="mt-4">
             <ProgressBar label="Progress" value={Number(g.progress) || 0} right={`${Number(g.progress) || 0}%`} accent="emerald" />
           </div>

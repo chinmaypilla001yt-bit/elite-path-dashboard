@@ -26,11 +26,11 @@ export const Route = createFileRoute("/journal")({
       ]}
       renderItem={(j) => (
         <>
-          <div className="font-mono text-[10px] uppercase tracking-widest text-white/45">
+          <div className="font-mono text-[10px] uppercase tracking-widest text-foreground/45">
             {(j.entry_date as string) || "today"}{j.mood ? ` · ${j.mood}` : ""}{j.energy ? ` · energy ${j.energy}/10` : ""}
           </div>
-          {j.title ? <div className="mt-1 text-lg font-semibold text-white">{j.title as string}</div> : null}
-          <p className="mt-2 whitespace-pre-wrap text-sm text-white/70">{j.content as string}</p>
+          {j.title ? <div className="mt-1 text-lg font-semibold text-foreground">{j.title as string}</div> : null}
+          <p className="mt-2 whitespace-pre-wrap text-sm text-foreground/70">{j.content as string}</p>
         </>
       )}
     />

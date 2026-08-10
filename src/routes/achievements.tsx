@@ -27,11 +27,11 @@ export const Route = createFileRoute("/achievements")({
           <div className="flex items-center gap-3">
             <span className="text-3xl">{(a.icon as string) || "🏆"}</span>
             <div>
-              <div className="font-mono text-[10px] uppercase tracking-widest text-white/45">{(a.date as string) || "achievement"}</div>
-              <div className="text-lg font-semibold text-white">{a.title as string}</div>
+              <div className="font-mono text-[10px] uppercase tracking-widest text-foreground/45">{(a.date as string) || "achievement"}</div>
+              <div className="text-lg font-semibold text-foreground">{a.title as string}</div>
             </div>
           </div>
-          {a.description ? <p className="mt-3 text-sm text-white/60">{a.description as string}</p> : null}
+          {a.description ? <p className="mt-3 text-sm text-foreground/60">{a.description as string}</p> : null}
         </>
       )}
     />

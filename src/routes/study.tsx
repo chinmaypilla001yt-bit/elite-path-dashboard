@@ -153,7 +153,7 @@ function StudyPage() {
         actions={
           <button
             onClick={() => setShowForm((v) => !v)}
-            className="inline-flex items-center gap-2 rounded-lg bg-[image:var(--gradient-cyber)] px-4 py-2 text-sm font-semibold text-white shadow-[var(--shadow-glow)] transition hover:opacity-90"
+            className="inline-flex items-center gap-2 rounded-lg bg-[image:var(--gradient-cyber)] px-4 py-2 text-sm font-semibold text-foreground shadow-[var(--shadow-glow)] transition hover:opacity-90"
           >
             <Plus className="h-4 w-4" /> New timer
           </button>
@@ -179,14 +179,14 @@ function StudyPage() {
                 <input
                   type="number"
                   min={1}
-                  className="w-32 rounded-lg border border-white/10 bg-white/[0.03] px-3 py-2 text-sm text-white placeholder:text-white/30 focus:border-white/30 focus:outline-none"
+                  className="w-32 rounded-lg border border-foreground/10 bg-foreground/[0.03] px-3 py-2 text-sm text-foreground placeholder:text-foreground/30 focus:border-foreground/30 focus:outline-none"
                   placeholder="Minutes"
                   value={draft.plannedMinutes}
                   onChange={(e) => setDraft({ ...draft, plannedMinutes: Number(e.target.value) })}
                 />
                 <button
                   onClick={newTimer}
-                  className="rounded-lg bg-[image:var(--gradient-cyber)] px-4 py-2 text-sm font-semibold text-white shadow-[var(--shadow-glow)]"
+                  className="rounded-lg bg-[image:var(--gradient-cyber)] px-4 py-2 text-sm font-semibold text-foreground shadow-[var(--shadow-glow)]"
                 >
                   Create
                 </button>
@@ -198,9 +198,9 @@ function StudyPage() {
 
       {timers.hydrated && timers.items.length === 0 ? (
         <GlassCard glow="blue" className="flex flex-col items-center justify-center p-16 text-center">
-          <Bell className="h-8 w-8 text-white/60" />
-          <div className="mt-4 text-lg font-semibold text-white">No timers running</div>
-          <p className="mt-2 max-w-md text-sm text-white/60">
+          <Bell className="h-8 w-8 text-foreground/60" />
+          <div className="mt-4 text-lg font-semibold text-foreground">No timers running</div>
+          <p className="mt-2 max-w-md text-sm text-foreground/60">
             Create a timer above. When it hits zero, we'll notify you and log the session automatically.
           </p>
         </GlassCard>
@@ -226,19 +226,19 @@ function StudyPage() {
 
       {sessions.items.length > 0 && (
         <div className="mt-10">
-          <div className="mb-3 font-mono text-[10px] uppercase tracking-[0.24em] text-white/45">
+          <div className="mb-3 font-mono text-[10px] uppercase tracking-[0.24em] text-foreground/45">
             Recent sessions · {sessions.items.length}
           </div>
           <div className="grid gap-2 md:grid-cols-2 xl:grid-cols-3">
             {sessions.items.slice(0, 12).map((s) => (
-              <div key={s.id} className="flex items-center justify-between rounded-lg border border-white/5 bg-white/[0.03] p-3">
+              <div key={s.id} className="flex items-center justify-between rounded-lg border border-foreground/5 bg-foreground/[0.03] p-3">
                 <div>
-                  <div className="text-sm text-white">{s.subject}</div>
-                  <div className="font-mono text-[10px] uppercase tracking-widest text-white/40">{s.date}</div>
+                  <div className="text-sm text-foreground">{s.subject}</div>
+                  <div className="font-mono text-[10px] uppercase tracking-widest text-foreground/40">{s.date}</div>
                 </div>
                 <div className="flex items-center gap-2">
-                  <span className="font-mono text-xs text-white/70">{s.minutes}m</span>
-                  <button onClick={() => sessions.remove(s.id)} className="rounded-md p-1 text-white/40 hover:text-red-300">
+                  <span className="font-mono text-xs text-foreground/70">{s.minutes}m</span>
+                  <button onClick={() => sessions.remove(s.id)} className="rounded-md p-1 text-foreground/40 hover:text-red-300">
                     <Trash2 className="h-3 w-3" />
                   </button>
                 </div>
@@ -274,14 +274,14 @@ function TimerCard({
       <GlassCard glow={glow} className="p-5">
         <div className="flex items-start justify-between">
           <div>
-            <div className="font-mono text-[10px] uppercase tracking-[0.24em] text-white/45">
+            <div className="font-mono text-[10px] uppercase tracking-[0.24em] text-foreground/45">
               {statusLabel(timer.status)}
             </div>
-            <div className="mt-1 text-lg font-semibold text-white">{timer.subject}</div>
+            <div className="mt-1 text-lg font-semibold text-foreground">{timer.subject}</div>
           </div>
           <button
             onClick={onDelete}
-            className="rounded-md p-1.5 text-white/40 hover:bg-white/[0.06] hover:text-red-300"
+            className="rounded-md p-1.5 text-foreground/40 hover:bg-foreground/[0.06] hover:text-red-300"
             title="Delete"
           >
             <Trash2 className="h-3.5 w-3.5" />
@@ -289,13 +289,13 @@ function TimerCard({
         </div>
 
         <div className="mt-5 flex items-baseline gap-2 font-mono">
-          <span className="text-5xl font-semibold tracking-tight text-white">{fmtCountdown(remaining)}</span>
-          <span className="text-xs text-white/50">/ {timer.plannedMinutes}m</span>
+          <span className="text-5xl font-semibold tracking-tight text-foreground">{fmtCountdown(remaining)}</span>
+          <span className="text-xs text-foreground/50">/ {timer.plannedMinutes}m</span>
         </div>
 
-        <div className="mt-3 h-1.5 w-full overflow-hidden rounded-full bg-white/5">
+        <div className="mt-3 h-1.5 w-full overflow-hidden rounded-full bg-foreground/5">
           <motion.div
-            className="h-full bg-[image:var(--gradient-cyber)] shadow-[0_0_16px_oklch(0.72_0.2_255/0.6)]"
+            className="h-full bg-[image:var(--gradient-cyber)] shadow-[0_0_16px_color-mix(in_oklab,_var(--electric)_60%,_transparent)]"
             animate={{ width: `${progress}%` }}
             transition={{ duration: 0.4 }}
           />
@@ -340,8 +340,8 @@ function ActionBtn({
       onClick={onClick}
       className={`inline-flex items-center gap-1.5 rounded-lg px-3 py-1.5 text-xs font-semibold transition ${
         primary
-          ? "bg-[image:var(--gradient-cyber)] text-white shadow-[var(--shadow-glow)] hover:opacity-90"
-          : "border border-white/10 bg-white/[0.03] text-white/80 hover:bg-white/[0.06] hover:text-white"
+          ? "bg-[image:var(--gradient-cyber)] text-foreground shadow-[var(--shadow-glow)] hover:opacity-90"
+          : "border border-foreground/10 bg-foreground/[0.03] text-foreground/80 hover:bg-foreground/[0.06] hover:text-foreground"
       }`}
     >
       <Icon className="h-3.5 w-3.5" /> {label}
@@ -351,9 +351,9 @@ function ActionBtn({
 
 function StatPill({ label, value }: { label: string; value: string }) {
   return (
-    <div className="flex items-center gap-2 rounded-full border border-white/10 bg-white/[0.04] py-1.5 pl-3 pr-4">
-      <span className="font-mono text-[10px] uppercase tracking-widest text-white/45">{label}</span>
-      <span className="text-xs font-semibold text-white">{value}</span>
+    <div className="flex items-center gap-2 rounded-full border border-foreground/10 bg-foreground/[0.04] py-1.5 pl-3 pr-4">
+      <span className="font-mono text-[10px] uppercase tracking-widest text-foreground/45">{label}</span>
+      <span className="text-xs font-semibold text-foreground">{value}</span>
     </div>
   );
 }
