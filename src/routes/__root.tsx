@@ -17,6 +17,7 @@ import appCss from "../styles.css?url";
 import { reportLovableError } from "../lib/lovable-error-reporting";
 import { AuthProvider, useAuth } from "@/hooks/use-auth";
 import { NotificationsProvider } from "@/hooks/use-notifications";
+import { ThemeProvider } from "@/hooks/use-theme";
 import { useUserAggregatesSync } from "@/lib/user-aggregates";
 
 function NotFoundComponent() {
@@ -166,14 +167,16 @@ function RootComponent() {
 
   return (
     <QueryClientProvider client={queryClient}>
-      <AuthProvider>
-        <NotificationsProvider>
-          <AuthGate>
-            <AggregatesSyncer />
-            <Outlet />
-          </AuthGate>
-        </NotificationsProvider>
-      </AuthProvider>
+      <ThemeProvider>
+        <AuthProvider>
+          <NotificationsProvider>
+            <AuthGate>
+              <AggregatesSyncer />
+              <Outlet />
+            </AuthGate>
+          </NotificationsProvider>
+        </AuthProvider>
+      </ThemeProvider>
       <SonnerToaster theme="dark" position="top-right" richColors />
     </QueryClientProvider>
   );

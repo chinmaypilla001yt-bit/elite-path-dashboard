@@ -2,6 +2,7 @@ import { createFileRoute } from "@tanstack/react-router";
 import { AppShell } from "@/components/ascend/AppShell";
 import { PageHeader } from "@/components/ascend/PageHeader";
 import { GlassCard } from "@/components/ascend/GlassCard";
+import { ThemePicker } from "@/components/ascend/ThemePicker";
 import { clearAllAscendData } from "@/hooks/use-local-collection";
 import { useAuth } from "@/hooks/use-auth";
 import { useProfile, saveDisplayName } from "@/hooks/use-profile";
@@ -132,6 +133,10 @@ function SettingsPage() {
             {busy ? "Deleting…" : "Delete everything"}
           </button>
         </GlassCard>
+      </div>
+
+      <div className="mt-6">
+        <ThemePicker />
       </div>
 
       <div className="mt-6">

@@ -8,11 +8,11 @@ type Props = HTMLMotionProps<"div"> & {
 };
 
 const glowMap: Record<string, string> = {
-  blue: "before:bg-[radial-gradient(60%_60%_at_50%_0%,oklch(0.72_0.2_255/0.35),transparent_60%)]",
-  purple: "before:bg-[radial-gradient(60%_60%_at_50%_0%,oklch(0.66_0.24_305/0.35),transparent_60%)]",
-  cyan: "before:bg-[radial-gradient(60%_60%_at_50%_0%,oklch(0.82_0.14_200/0.35),transparent_60%)]",
-  emerald: "before:bg-[radial-gradient(60%_60%_at_50%_0%,oklch(0.75_0.18_155/0.35),transparent_60%)]",
-  gold: "before:bg-[radial-gradient(60%_60%_at_50%_0%,oklch(0.83_0.16_85/0.35),transparent_60%)]",
+  blue: "before:bg-[radial-gradient(60%_60%_at_50%_0%,color-mix(in_oklab,var(--electric)_35%,transparent),transparent_60%)]",
+  purple: "before:bg-[radial-gradient(60%_60%_at_50%_0%,color-mix(in_oklab,var(--neon-purple)_35%,transparent),transparent_60%)]",
+  cyan: "before:bg-[radial-gradient(60%_60%_at_50%_0%,color-mix(in_oklab,var(--cyan)_35%,transparent),transparent_60%)]",
+  emerald: "before:bg-[radial-gradient(60%_60%_at_50%_0%,color-mix(in_oklab,var(--emerald)_35%,transparent),transparent_60%)]",
+  gold: "before:bg-[radial-gradient(60%_60%_at_50%_0%,color-mix(in_oklab,var(--gold)_35%,transparent),transparent_60%)]",
   none: "",
 };
 
