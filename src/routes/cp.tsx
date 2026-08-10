@@ -55,8 +55,8 @@ function CPPage() {
       {items.length > 0 && (
         <GlassCard glow="blue" className="mb-8 p-5">
           <div className="mb-4">
-            <div className="font-mono text-[10px] uppercase tracking-[0.24em] text-white/45">Rating history</div>
-            <div className="mt-1 text-lg font-semibold text-white">Across all logged contests</div>
+            <div className="font-mono text-[10px] uppercase tracking-[0.24em] text-foreground/45">Rating history</div>
+            <div className="mt-1 text-lg font-semibold text-foreground">Across all logged contests</div>
           </div>
           <div className="h-64">
             <ResponsiveContainer width="100%" height="100%">
@@ -91,15 +91,15 @@ function CPPage() {
         ]}
         renderItem={(c) => (
           <>
-            <div className="font-mono text-[10px] uppercase tracking-widest text-white/45">
+            <div className="font-mono text-[10px] uppercase tracking-widest text-foreground/45">
               {(c.platform as string) || "contest"}{c.date ? ` · ${c.date}` : ""}
             </div>
-            <div className="mt-1 text-lg font-semibold text-white">{c.name as string}</div>
+            <div className="mt-1 text-lg font-semibold text-foreground">{c.name as string}</div>
             <div className="mt-3 flex flex-wrap gap-2 text-xs">
-              {c.rating ? <span className="rounded-full border border-white/10 bg-white/[0.04] px-3 py-1 text-white/80">Rating {c.rating as number}</span> : null}
-              {c.solved ? <span className="rounded-full border border-white/10 bg-white/[0.04] px-3 py-1 text-white/80">{c.solved as number} solved</span> : null}
+              {c.rating ? <span className="rounded-full border border-foreground/10 bg-foreground/[0.04] px-3 py-1 text-foreground/80">Rating {c.rating as number}</span> : null}
+              {c.solved ? <span className="rounded-full border border-foreground/10 bg-foreground/[0.04] px-3 py-1 text-foreground/80">{c.solved as number} solved</span> : null}
             </div>
-            {c.notes ? <p className="mt-2 text-sm text-white/60">{c.notes as string}</p> : null}
+            {c.notes ? <p className="mt-2 text-sm text-foreground/60">{c.notes as string}</p> : null}
           </>
         )}
       />

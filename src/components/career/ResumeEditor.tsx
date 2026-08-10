@@ -9,7 +9,7 @@ import {
 } from "@/lib/resume";
 
 const inputCls =
-  "w-full rounded-lg border border-white/10 bg-white/[0.03] px-3 py-2 text-sm text-white placeholder:text-white/30 focus:border-white/30 focus:outline-none";
+  "w-full rounded-lg border border-foreground/10 bg-foreground/[0.03] px-3 py-2 text-sm text-foreground placeholder:text-foreground/30 focus:border-foreground/30 focus:outline-none";
 
 function Field({
   label, value, onChange, placeholder, textarea, full,
@@ -19,7 +19,7 @@ function Field({
 }) {
   return (
     <div className={full || textarea ? "sm:col-span-2" : ""}>
-      <label className="mb-1 block font-mono text-[10px] uppercase tracking-widest text-white/45">{label}</label>
+      <label className="mb-1 block font-mono text-[10px] uppercase tracking-widest text-foreground/45">{label}</label>
       {textarea ? (
         <textarea rows={3} value={value} onChange={(e) => onChange(e.target.value)} placeholder={placeholder} className={inputCls} />
       ) : (
@@ -34,10 +34,10 @@ function Panel({ title, count, children, defaultOpen }: { title: string; count?:
   return (
     <GlassCard glow="none" className="p-0">
       <button onClick={() => setOpen((v) => !v)} className="flex w-full items-center gap-2 px-5 py-4 text-left">
-        <ChevronRight className={`h-4 w-4 text-white/45 transition ${open ? "rotate-90" : ""}`} />
-        <span className="text-sm font-semibold text-white">{title}</span>
+        <ChevronRight className={`h-4 w-4 text-foreground/45 transition ${open ? "rotate-90" : ""}`} />
+        <span className="text-sm font-semibold text-foreground">{title}</span>
         {typeof count === "number" && (
-          <span className="ml-auto rounded-full border border-white/10 bg-white/[0.04] px-2 py-0.5 font-mono text-[10px] text-white/60">
+          <span className="ml-auto rounded-full border border-foreground/10 bg-foreground/[0.04] px-2 py-0.5 font-mono text-[10px] text-foreground/60">
             {count}
           </span>
         )}
@@ -45,7 +45,7 @@ function Panel({ title, count, children, defaultOpen }: { title: string; count?:
       <AnimatePresence initial={false}>
         {open && (
           <motion.div initial={{ height: 0, opacity: 0 }} animate={{ height: "auto", opacity: 1 }} exit={{ height: 0, opacity: 0 }} className="overflow-hidden">
-            <div className="border-t border-white/5 px-5 py-4">{children}</div>
+            <div className="border-t border-foreground/5 px-5 py-4">{children}</div>
           </motion.div>
         )}
       </AnimatePresence>
@@ -60,16 +60,16 @@ function ItemShell({
   onUp: () => void; onDown: () => void; children: ReactNode;
 }) {
   return (
-    <div className="mb-3 rounded-xl border border-white/5 bg-white/[0.02] p-3">
+    <div className="mb-3 rounded-xl border border-foreground/5 bg-foreground/[0.02] p-3">
       <div className="mb-2 flex items-center gap-1">
-        <GripVertical className="h-3.5 w-3.5 text-white/25" />
-        <span className="min-w-0 flex-1 truncate text-xs font-medium text-white/80">{title}</span>
-        <button onClick={onUp} className="rounded p-1 text-white/45 hover:text-white" title="Move up"><ChevronUp className="h-3.5 w-3.5" /></button>
-        <button onClick={onDown} className="rounded p-1 text-white/45 hover:text-white" title="Move down"><ChevronDown className="h-3.5 w-3.5" /></button>
+        <GripVertical className="h-3.5 w-3.5 text-foreground/25" />
+        <span className="min-w-0 flex-1 truncate text-xs font-medium text-foreground/80">{title}</span>
+        <button onClick={onUp} className="rounded p-1 text-foreground/45 hover:text-foreground" title="Move up"><ChevronUp className="h-3.5 w-3.5" /></button>
+        <button onClick={onDown} className="rounded p-1 text-foreground/45 hover:text-foreground" title="Move down"><ChevronDown className="h-3.5 w-3.5" /></button>
         {onDuplicate && (
-          <button onClick={onDuplicate} className="rounded p-1 text-white/45 hover:text-white" title="Duplicate"><Copy className="h-3.5 w-3.5" /></button>
+          <button onClick={onDuplicate} className="rounded p-1 text-foreground/45 hover:text-foreground" title="Duplicate"><Copy className="h-3.5 w-3.5" /></button>
         )}
-        <button onClick={onDelete} className="rounded p-1 text-white/45 hover:text-red-300" title="Delete"><Trash2 className="h-3.5 w-3.5" /></button>
+        <button onClick={onDelete} className="rounded p-1 text-foreground/45 hover:text-red-300" title="Delete"><Trash2 className="h-3.5 w-3.5" /></button>
       </div>
       <div className="grid gap-3 sm:grid-cols-2">{children}</div>
     </div>
@@ -80,7 +80,7 @@ function AddBtn({ onClick, label }: { onClick: () => void; label: string }) {
   return (
     <button
       onClick={onClick}
-      className="inline-flex items-center gap-2 rounded-lg border border-white/10 bg-white/[0.04] px-3 py-1.5 text-xs font-medium text-white/80 hover:bg-white/[0.08] hover:text-white"
+      className="inline-flex items-center gap-2 rounded-lg border border-foreground/10 bg-foreground/[0.04] px-3 py-1.5 text-xs font-medium text-foreground/80 hover:bg-foreground/[0.08] hover:text-foreground"
     >
       <Plus className="h-3.5 w-3.5" /> {label}
     </button>
@@ -276,8 +276,8 @@ export function ResumeEditor({
           {OPTIONAL_SECTIONS.map((s) => {
             const sec = data.optional[s.key];
             return (
-              <div key={s.key} className="rounded-xl border border-white/5 bg-white/[0.02] p-3">
-                <label className="flex items-center gap-2 text-sm text-white">
+              <div key={s.key} className="rounded-xl border border-foreground/5 bg-foreground/[0.02] p-3">
+                <label className="flex items-center gap-2 text-sm text-foreground">
                   <input
                     type="checkbox"
                     checked={!!sec.enabled}

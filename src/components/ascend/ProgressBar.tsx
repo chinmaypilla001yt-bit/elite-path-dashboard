@@ -18,11 +18,11 @@ export function ProgressBar({
     <div>
       {(label || right) && (
         <div className="mb-1.5 flex items-center justify-between text-xs">
-          <span className="text-white/70">{label}</span>
-          <span className="font-mono text-white/60">{right ?? `${Math.round(value)}%`}</span>
+          <span className="text-foreground/70">{label}</span>
+          <span className="font-mono text-foreground/60">{right ?? `${Math.round(value)}%`}</span>
         </div>
       )}
-      <div className="relative h-2 w-full overflow-hidden rounded-full bg-white/5">
+      <div className="relative h-2 w-full overflow-hidden rounded-full bg-foreground/5">
         <motion.div
           initial={{ width: 0 }}
           animate={{ width: `${Math.min(100, Math.max(0, value))}%` }}

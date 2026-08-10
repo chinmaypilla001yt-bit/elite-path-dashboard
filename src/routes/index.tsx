@@ -89,20 +89,20 @@ function Dashboard() {
 
         <div className="relative grid gap-8 lg:grid-cols-[1fr_auto] lg:items-center">
           <div>
-            <div className="flex flex-wrap items-center gap-x-3 gap-y-1 font-mono text-[11px] uppercase tracking-[0.28em] text-white/60">
+            <div className="flex flex-wrap items-center gap-x-3 gap-y-1 font-mono text-[11px] uppercase tracking-[0.28em] text-foreground/60">
               <span className="inline-flex items-center gap-2">
                 <span className="inline-block h-1.5 w-1.5 animate-pulse rounded-full bg-emerald-400" />
                 {now.toLocaleDateString(undefined, { weekday: "long", month: "short", day: "numeric", year: "numeric" })}
               </span>
-              <span className="text-white/40">·</span>
-              <span className="text-white/80">
+              <span className="text-foreground/40">·</span>
+              <span className="text-foreground/80">
                 {now.toLocaleTimeString(undefined, { hour: "2-digit", minute: "2-digit", second: "2-digit" })}
               </span>
             </div>
-            <h1 className="mt-3 text-4xl font-semibold tracking-tight text-white sm:text-5xl lg:text-6xl">
+            <h1 className="mt-3 text-4xl font-semibold tracking-tight text-foreground sm:text-5xl lg:text-6xl">
               {greeting}, <span className="text-gradient">{displayName}</span>
             </h1>
-            <p className="mt-3 max-w-xl text-sm text-white/60">
+            <p className="mt-3 max-w-xl text-sm text-foreground/60">
               Every task you finish, every minute you focus, every milestone you hit — it all compounds here.
             </p>
 
@@ -116,7 +116,7 @@ function Dashboard() {
 
             {/* XP → Level progress */}
             <div className="mt-6 max-w-xl">
-              <div className="mb-1.5 flex items-center justify-between font-mono text-[10px] uppercase tracking-widest text-white/50">
+              <div className="mb-1.5 flex items-center justify-between font-mono text-[10px] uppercase tracking-widest text-foreground/50">
                 <span>Level {stats.level} → {stats.level + 1}</span>
                 <span>{stats.into} / {stats.span} XP · {stats.remaining} to go</span>
               </div>
@@ -124,10 +124,10 @@ function Dashboard() {
             </div>
 
             <div className="mt-6 flex flex-wrap gap-2">
-              <Link to="/tasks" className="inline-flex items-center gap-2 rounded-lg bg-[image:var(--gradient-cyber)] px-4 py-2 text-sm font-semibold text-white shadow-[var(--shadow-glow)] transition hover:opacity-90">
+              <Link to="/tasks" className="inline-flex items-center gap-2 rounded-lg bg-[image:var(--gradient-cyber)] px-4 py-2 text-sm font-semibold text-foreground shadow-[var(--shadow-glow)] transition hover:opacity-90">
                 <Plus className="h-4 w-4" /> Add a task
               </Link>
-              <Link to="/study" className="inline-flex items-center gap-2 rounded-lg border border-white/10 bg-white/[0.03] px-4 py-2 text-sm text-white/80 transition hover:bg-white/[0.06] hover:text-white">
+              <Link to="/study" className="inline-flex items-center gap-2 rounded-lg border border-foreground/10 bg-foreground/[0.03] px-4 py-2 text-sm text-foreground/80 transition hover:bg-foreground/[0.06] hover:text-foreground">
                 <Sparkles className="h-4 w-4" /> Start a timer
               </Link>
             </div>
@@ -228,7 +228,7 @@ function Dashboard() {
       <div className="grid gap-6 lg:grid-cols-3">
         <div className="space-y-6 lg:col-span-2">
           <GlassCard glow="purple">
-            <CardHeader eyebrow="Focus queue" title="Next up" right={<Link to="/tasks" className="font-mono text-[10px] uppercase tracking-widest text-white/50 hover:text-white">Open →</Link>} />
+            <CardHeader eyebrow="Focus queue" title="Next up" right={<Link to="/tasks" className="font-mono text-[10px] uppercase tracking-widest text-foreground/50 hover:text-foreground">Open →</Link>} />
             {upcomingTasks.length === 0 ? (
               <EmptyRow to="/tasks" cta="Add your first task" />
             ) : (
@@ -239,11 +239,11 @@ function Dashboard() {
                     initial={{ opacity: 0, x: -6 }}
                     animate={{ opacity: 1, x: 0 }}
                     transition={{ delay: 0.05 * i }}
-                    className="flex items-center justify-between rounded-lg border border-white/5 bg-white/[0.03] p-3"
+                    className="flex items-center justify-between rounded-lg border border-foreground/5 bg-foreground/[0.03] p-3"
                   >
                     <div>
-                      <div className="text-sm text-white">{t.title}</div>
-                      <div className="font-mono text-[10px] uppercase tracking-widest text-white/40">
+                      <div className="text-sm text-foreground">{t.title}</div>
+                      <div className="font-mono text-[10px] uppercase tracking-widest text-foreground/40">
                         {t.estimatedMinutes ? `${t.estimatedMinutes}m` : ""}{t.tag ? ` · ${t.tag}` : ""}
                       </div>
                     </div>
@@ -260,17 +260,17 @@ function Dashboard() {
             <CardHeader
               eyebrow="Upcoming"
               title="Events"
-              right={<Link to="/calendar" className="font-mono text-[10px] uppercase tracking-widest text-white/50 hover:text-white">Open →</Link>}
+              right={<Link to="/calendar" className="font-mono text-[10px] uppercase tracking-widest text-foreground/50 hover:text-foreground">Open →</Link>}
             />
             {upcomingEvents.length === 0 ? (
               <EmptyRow to="/calendar" cta="Add an event" />
             ) : (
               <ul className="space-y-2">
                 {upcomingEvents.map((e) => (
-                  <li key={e.id} className="flex items-center justify-between gap-2 rounded-md border border-white/5 bg-white/[0.03] px-3 py-2">
+                  <li key={e.id} className="flex items-center justify-between gap-2 rounded-md border border-foreground/5 bg-foreground/[0.03] px-3 py-2">
                     <div className="min-w-0">
-                      <div className="truncate text-sm text-white">{e.title}</div>
-                      <div className="font-mono text-[10px] uppercase tracking-widest text-white/45">
+                      <div className="truncate text-sm text-foreground">{e.title}</div>
+                      <div className="font-mono text-[10px] uppercase tracking-widest text-foreground/45">
                         <CalendarDays className="mr-1 inline-block h-3 w-3" />
                         {e.date}
                       </div>
@@ -283,7 +283,7 @@ function Dashboard() {
           </GlassCard>
 
           <GlassCard glow="emerald">
-            <CardHeader eyebrow="Goals" title="Progress" right={<Link to="/goals" className="font-mono text-[10px] uppercase tracking-widest text-white/50 hover:text-white">Open →</Link>} />
+            <CardHeader eyebrow="Goals" title="Progress" right={<Link to="/goals" className="font-mono text-[10px] uppercase tracking-widest text-foreground/50 hover:text-foreground">Open →</Link>} />
             {goals.length === 0 ? (
               <EmptyRow to="/goals" cta="Set a goal" />
             ) : (
@@ -311,8 +311,8 @@ function ChartCard({
   return (
     <GlassCard glow={color} className="p-5">
       <div className="mb-3">
-        <div className="font-mono text-[10px] uppercase tracking-[0.24em] text-white/45">{eyebrow}</div>
-        <div className="mt-1 text-lg font-semibold text-white">{title}</div>
+        <div className="font-mono text-[10px] uppercase tracking-[0.24em] text-foreground/45">{eyebrow}</div>
+        <div className="mt-1 text-lg font-semibold text-foreground">{title}</div>
       </div>
       <div className="h-56">{children}</div>
     </GlassCard>
@@ -322,11 +322,11 @@ function ChartCard({
 function ChartTip(props: { active?: boolean; payload?: Array<{ value: number; name: string }>; label?: string }) {
   if (!props.active || !props.payload?.length) return null;
   return (
-    <div className="rounded-lg border border-white/10 bg-[#0b1024]/95 px-3 py-2 text-xs shadow-xl backdrop-blur">
-      <div className="font-mono text-[10px] uppercase tracking-widest text-white/50">{props.label}</div>
+    <div className="rounded-lg border border-foreground/10 bg-[#0b1024]/95 px-3 py-2 text-xs shadow-xl backdrop-blur">
+      <div className="font-mono text-[10px] uppercase tracking-widest text-foreground/50">{props.label}</div>
       {props.payload.map((p) => (
-        <div key={p.name} className="mt-1 flex items-center gap-2 text-white">
-          <span className="capitalize text-white/60">{p.name}</span>
+        <div key={p.name} className="mt-1 flex items-center gap-2 text-foreground">
+          <span className="capitalize text-foreground/60">{p.name}</span>
           <span className="font-mono">{Number(p.value).toFixed(p.name === "hours" ? 1 : 0)}</span>
         </div>
       ))}
@@ -378,8 +378,8 @@ function CardHeader({ eyebrow, title, right }: { eyebrow: string; title: string;
   return (
     <div className="mb-4 flex items-end justify-between">
       <div>
-        <div className="font-mono text-[10px] uppercase tracking-[0.24em] text-white/45">{eyebrow}</div>
-        <div className="mt-1 text-lg font-semibold text-white">{title}</div>
+        <div className="font-mono text-[10px] uppercase tracking-[0.24em] text-foreground/45">{eyebrow}</div>
+        <div className="mt-1 text-lg font-semibold text-foreground">{title}</div>
       </div>
       {right}
     </div>
@@ -388,7 +388,7 @@ function CardHeader({ eyebrow, title, right }: { eyebrow: string; title: string;
 
 function EmptyRow({ to, cta }: { to: string; cta: string }) {
   return (
-    <Link to={to as never} className="flex items-center justify-center rounded-lg border border-dashed border-white/10 bg-white/[0.02] px-4 py-6 text-sm text-white/60 transition hover:border-white/20 hover:text-white">
+    <Link to={to as never} className="flex items-center justify-center rounded-lg border border-dashed border-foreground/10 bg-foreground/[0.02] px-4 py-6 text-sm text-foreground/60 transition hover:border-foreground/20 hover:text-foreground">
       <Plus className="mr-2 h-4 w-4" /> {cta}
     </Link>
   );
@@ -405,10 +405,10 @@ function Pill({
     emerald: "text-[oklch(0.8_0.16_155)]",
   };
   return (
-    <div className="flex items-center gap-2 rounded-full border border-white/10 bg-white/[0.04] py-1.5 pl-2 pr-3">
+    <div className="flex items-center gap-2 rounded-full border border-foreground/10 bg-foreground/[0.04] py-1.5 pl-2 pr-3">
       <Icon className={`h-3.5 w-3.5 ${map[tone]}`} />
-      <span className="font-mono text-[10px] uppercase tracking-widest text-white/45">{label}</span>
-      <span className="text-xs font-medium text-white">{value}</span>
+      <span className="font-mono text-[10px] uppercase tracking-widest text-foreground/45">{label}</span>
+      <span className="text-xs font-medium text-foreground">{value}</span>
     </div>
   );
 }

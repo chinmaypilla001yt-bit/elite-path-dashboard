@@ -28,14 +28,14 @@ export function RingProgress({
         />
       </svg>
       <div className="absolute inset-0 flex flex-col items-center justify-center">
-        <div className="font-mono text-[10px] uppercase tracking-[0.24em] text-white/50">
+        <div className="font-mono text-[10px] uppercase tracking-[0.24em] text-foreground/50">
           {label ?? "Progress"}
         </div>
-        <div className="mt-1 text-4xl font-semibold tracking-tight text-white">
+        <div className="mt-1 text-4xl font-semibold tracking-tight text-foreground">
           {Math.round(value)}
-          <span className="text-lg text-white/50">%</span>
+          <span className="text-lg text-foreground/50">%</span>
         </div>
-        {sub && <div className="mt-1 text-xs text-white/50">{sub}</div>}
+        {sub && <div className="mt-1 text-xs text-foreground/50">{sub}</div>}
       </div>
     </div>
   );

@@ -41,9 +41,9 @@ function AnalyticsPage() {
         <StatCard icon={Trophy} label="Achievements" value={achievements.length.toString()} hint="wins" accent="gold" />
       </div>
       <GlassCard className="mt-8 p-6">
-        <div className="font-mono text-[10px] uppercase tracking-[0.24em] text-white/45">Total XP</div>
+        <div className="font-mono text-[10px] uppercase tracking-[0.24em] text-foreground/45">Total XP</div>
         <div className="mt-2 text-4xl font-semibold text-gradient">{xp}</div>
-        <p className="mt-2 text-sm text-white/60">Earned from completing tasks. Keep shipping.</p>
+        <p className="mt-2 text-sm text-foreground/60">Earned from completing tasks. Keep shipping.</p>
       </GlassCard>
     </AppShell>
   );

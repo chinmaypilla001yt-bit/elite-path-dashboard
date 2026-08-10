@@ -29,13 +29,13 @@ export function StatCard({
     >
       <div className="flex items-start justify-between">
         <div>
-          <div className="font-mono text-[10px] uppercase tracking-[0.2em] text-white/50">
+          <div className="font-mono text-[10px] uppercase tracking-[0.2em] text-foreground/50">
             {label}
           </div>
-          <div className="mt-2 text-3xl font-semibold tracking-tight text-white">
+          <div className="mt-2 text-3xl font-semibold tracking-tight text-foreground">
             {value}
           </div>
-          {hint && <div className="mt-1 text-xs text-white/50">{hint}</div>}
+          {hint && <div className="mt-1 text-xs text-foreground/50">{hint}</div>}
         </div>
         <div
           className={cn(
@@ -43,7 +43,7 @@ export function StatCard({
             map[accent],
           )}
         >
-          <Icon className="h-5 w-5 text-white" />
+          <Icon className="h-5 w-5 text-foreground" />
         </div>
       </div>
       <div className="pointer-events-none absolute -bottom-16 -right-16 h-40 w-40 rounded-full bg-[image:var(--gradient-cyber)] opacity-10 blur-2xl" />

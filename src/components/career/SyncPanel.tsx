@@ -115,7 +115,7 @@ export function SyncPanel({ edit }: { edit: (fn: (prev: ResumeData) => ResumeDat
   const group = (label: string, entries: { key: string; text: string }[]) =>
     entries.length ? (
       <div className="mb-3">
-        <div className="mb-1 font-mono text-[10px] uppercase tracking-widest text-white/45">{label}</div>
+        <div className="mb-1 font-mono text-[10px] uppercase tracking-widest text-foreground/45">{label}</div>
         <div className="flex flex-wrap gap-2">
           {entries.map((e) => (
             <button
@@ -123,8 +123,8 @@ export function SyncPanel({ edit }: { edit: (fn: (prev: ResumeData) => ResumeDat
               onClick={() => toggle(e.key)}
               className={`rounded-full border px-3 py-1 text-xs transition ${
                 picked[e.key]
-                  ? "border-white/25 bg-white/[0.12] text-white"
-                  : "border-white/10 bg-white/[0.03] text-white/65 hover:text-white"
+                  ? "border-foreground/25 bg-foreground/[0.12] text-foreground"
+                  : "border-foreground/10 bg-foreground/[0.03] text-foreground/65 hover:text-foreground"
               }`}
             >
               {picked[e.key] && <Check className="mr-1 inline h-3 w-3" />}
@@ -142,19 +142,19 @@ export function SyncPanel({ edit }: { edit: (fn: (prev: ResumeData) => ResumeDat
     <GlassCard glow="cyan" className="p-5">
       <div className="mb-3 flex items-center justify-between gap-3">
         <div>
-          <div className="font-mono text-[10px] uppercase tracking-[0.24em] text-white/45">Smart auto sync</div>
-          <div className="mt-1 text-sm font-semibold text-white">Import from Ascend</div>
+          <div className="font-mono text-[10px] uppercase tracking-[0.24em] text-foreground/45">Smart auto sync</div>
+          <div className="mt-1 text-sm font-semibold text-foreground">Import from Ascend</div>
         </div>
         <button
           onClick={apply}
-          className="inline-flex items-center gap-2 rounded-lg bg-[image:var(--gradient-cyber)] px-3 py-1.5 text-xs font-semibold text-white shadow-[var(--shadow-glow)] hover:opacity-90"
+          className="inline-flex items-center gap-2 rounded-lg bg-[image:var(--gradient-cyber)] px-3 py-1.5 text-xs font-semibold text-foreground shadow-[var(--shadow-glow)] hover:opacity-90"
         >
           <RefreshCw className="h-3.5 w-3.5" /> Import selected
         </button>
       </div>
 
       {!anything ? (
-        <p className="text-xs text-white/55">
+        <p className="text-xs text-foreground/55">
           Add projects, categories, certifications, or achievements elsewhere in Ascend and they'll show up here to import.
         </p>
       ) : (

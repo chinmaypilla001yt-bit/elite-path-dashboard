@@ -117,7 +117,7 @@ export function CategorySelect({
         <select
           value={value ?? ""}
           onChange={(e) => onChange(e.target.value)}
-          className="min-w-0 flex-1 rounded-lg border border-white/10 bg-white/[0.03] px-3 py-2 text-sm text-white focus:border-white/30 focus:outline-none"
+          className="min-w-0 flex-1 rounded-lg border border-foreground/10 bg-foreground/[0.03] px-3 py-2 text-sm text-foreground focus:border-foreground/30 focus:outline-none"
         >
           <option value="" className="bg-[#0b1024]">{placeholder}</option>
           {categories.map((c) => (
@@ -129,7 +129,7 @@ export function CategorySelect({
           onClick={() => setOpen((v) => !v)}
           title="Manage categories"
           aria-label="Manage categories"
-          className="shrink-0 rounded-lg border border-white/10 bg-white/[0.03] px-2 text-white/60 transition hover:bg-white/[0.07] hover:text-white"
+          className="shrink-0 rounded-lg border border-foreground/10 bg-foreground/[0.03] px-2 text-foreground/60 transition hover:bg-foreground/[0.07] hover:text-foreground"
         >
           <Settings2 className="h-4 w-4" />
         </button>
@@ -141,9 +141,9 @@ export function CategorySelect({
             initial={{ opacity: 0, y: -4 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -4 }}
-            className="absolute right-0 z-50 mt-2 w-[min(22rem,80vw)] rounded-xl border border-white/10 bg-[#0b1024]/95 p-3 shadow-2xl backdrop-blur-xl"
+            className="absolute right-0 z-50 mt-2 w-[min(22rem,80vw)] rounded-xl border border-foreground/10 bg-[#0b1024]/95 p-3 shadow-2xl backdrop-blur-xl"
           >
-            <div className="font-mono text-[10px] uppercase tracking-[0.24em] text-white/45">
+            <div className="font-mono text-[10px] uppercase tracking-[0.24em] text-foreground/45">
               Categories · shared everywhere
             </div>
 
@@ -153,12 +153,12 @@ export function CategorySelect({
                 onChange={(e) => setNewTitle(e.target.value)}
                 onKeyDown={(e) => e.key === "Enter" && handleAdd()}
                 placeholder="New category"
-                className="min-w-0 flex-1 rounded-lg border border-white/10 bg-white/[0.03] px-2 py-1.5 text-sm text-white placeholder:text-white/30 focus:border-white/30 focus:outline-none"
+                className="min-w-0 flex-1 rounded-lg border border-foreground/10 bg-foreground/[0.03] px-2 py-1.5 text-sm text-foreground placeholder:text-foreground/30 focus:border-foreground/30 focus:outline-none"
               />
               <select
                 value={newIcon}
                 onChange={(e) => setNewIcon(e.target.value)}
-                className="w-20 rounded-lg border border-white/10 bg-white/[0.03] px-1 py-1.5 text-xs text-white focus:outline-none"
+                className="w-20 rounded-lg border border-foreground/10 bg-foreground/[0.03] px-1 py-1.5 text-xs text-foreground focus:outline-none"
               >
                 {CATEGORY_ICONS.map((i) => (
                   <option key={i} value={i} className="bg-[#0b1024]">{i}</option>
@@ -168,7 +168,7 @@ export function CategorySelect({
                 type="button"
                 onClick={handleAdd}
                 disabled={busy}
-                className="rounded-lg bg-[image:var(--gradient-cyber)] px-2 text-white disabled:opacity-60"
+                className="rounded-lg bg-[image:var(--gradient-cyber)] px-2 text-foreground disabled:opacity-60"
                 aria-label="Add category"
               >
                 {busy ? <Loader2 className="h-4 w-4 animate-spin" /> : <Plus className="h-4 w-4" />}
@@ -180,7 +180,7 @@ export function CategorySelect({
                   key={c}
                   type="button"
                   onClick={() => setNewColor(c)}
-                  className={`h-3.5 w-3.5 rounded-full ${newColor === c ? "ring-2 ring-white/70" : ""}`}
+                  className={`h-3.5 w-3.5 rounded-full ${newColor === c ? "ring-2 ring-foreground/70" : ""}`}
                   style={{ background: c }}
                   aria-label="color"
                 />
@@ -189,7 +189,7 @@ export function CategorySelect({
 
             <div className="mt-3 max-h-64 space-y-1.5 overflow-y-auto pr-1">
               {hydrated && categories.length === 0 && (
-                <p className="py-2 text-center text-xs text-white/45">
+                <p className="py-2 text-center text-xs text-foreground/45">
                   No categories yet — add one above.
                 </p>
               )}
@@ -200,9 +200,9 @@ export function CategorySelect({
                   onDragStart={() => setDragId(c.id)}
                   onDragOver={(e) => e.preventDefault()}
                   onDrop={() => handleDrop(c)}
-                  className="flex items-center gap-2 rounded-lg border border-white/5 bg-white/[0.03] px-2 py-1.5"
+                  className="flex items-center gap-2 rounded-lg border border-foreground/5 bg-foreground/[0.03] px-2 py-1.5"
                 >
-                  <GripVertical className="h-3.5 w-3.5 shrink-0 cursor-grab text-white/30" />
+                  <GripVertical className="h-3.5 w-3.5 shrink-0 cursor-grab text-foreground/30" />
                   <span
                     className="flex h-6 w-6 shrink-0 items-center justify-center rounded-md"
                     style={{ background: `color-mix(in oklch, ${c.color} 25%, transparent)` }}
@@ -216,13 +216,13 @@ export function CategorySelect({
                       autoFocus
                       onChange={(e) => setEditTitle(e.target.value)}
                       onKeyDown={(e) => e.key === "Enter" && saveRename(c)}
-                      className="min-w-0 flex-1 rounded-md border border-white/10 bg-white/[0.04] px-2 py-0.5 text-sm text-white focus:outline-none"
+                      className="min-w-0 flex-1 rounded-md border border-foreground/10 bg-foreground/[0.04] px-2 py-0.5 text-sm text-foreground focus:outline-none"
                     />
                   ) : (
                     <button
                       type="button"
                       onClick={() => { onChange(c.title); setOpen(false); }}
-                      className="min-w-0 flex-1 truncate text-left text-sm text-white/85 hover:text-white"
+                      className="min-w-0 flex-1 truncate text-left text-sm text-foreground/85 hover:text-foreground"
                     >
                       {c.title}
                     </button>
@@ -231,7 +231,7 @@ export function CategorySelect({
                   <select
                     value={c.icon}
                     onChange={(e) => update(c.id, { icon: e.target.value })}
-                    className="w-14 rounded-md border border-white/10 bg-white/[0.03] px-1 py-0.5 text-[10px] text-white/70 focus:outline-none"
+                    className="w-14 rounded-md border border-foreground/10 bg-foreground/[0.03] px-1 py-0.5 text-[10px] text-foreground/70 focus:outline-none"
                     aria-label="icon"
                   >
                     {CATEGORY_ICONS.map((i) => (
@@ -244,7 +244,7 @@ export function CategorySelect({
                         key={col2}
                         type="button"
                         onClick={() => update(c.id, { color: col2 })}
-                        className={`h-2.5 w-2.5 rounded-full ${c.color === col2 ? "ring-2 ring-white/70" : ""}`}
+                        className={`h-2.5 w-2.5 rounded-full ${c.color === col2 ? "ring-2 ring-foreground/70" : ""}`}
                         style={{ background: col2 }}
                         aria-label="color"
                       />
@@ -253,10 +253,10 @@ export function CategorySelect({
 
                   {editingId === c.id ? (
                     <>
-                      <button type="button" onClick={() => saveRename(c)} className="p-1 text-white/60 hover:text-white">
+                      <button type="button" onClick={() => saveRename(c)} className="p-1 text-foreground/60 hover:text-foreground">
                         <Check className="h-3.5 w-3.5" />
                       </button>
-                      <button type="button" onClick={() => setEditingId(null)} className="p-1 text-white/60 hover:text-white">
+                      <button type="button" onClick={() => setEditingId(null)} className="p-1 text-foreground/60 hover:text-foreground">
                         <X className="h-3.5 w-3.5" />
                       </button>
                     </>
@@ -265,14 +265,14 @@ export function CategorySelect({
                       <button
                         type="button"
                         onClick={() => { setEditingId(c.id); setEditTitle(c.title); }}
-                        className="p-1 text-white/50 hover:text-white"
+                        className="p-1 text-foreground/50 hover:text-foreground"
                       >
                         <Pencil className="h-3.5 w-3.5" />
                       </button>
                       <button
                         type="button"
                         onClick={() => handleRemove(c)}
-                        className="p-1 text-white/50 hover:text-red-300"
+                        className="p-1 text-foreground/50 hover:text-red-300"
                       >
                         <Trash2 className="h-3.5 w-3.5" />
                       </button>

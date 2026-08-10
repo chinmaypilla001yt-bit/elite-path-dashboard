@@ -80,7 +80,7 @@ function RoadmapPage() {
         actions={
           <button
             onClick={openNew}
-            className="inline-flex items-center gap-2 rounded-lg bg-[image:var(--gradient-cyber)] px-4 py-2 text-sm font-semibold text-white shadow-[var(--shadow-glow)] transition hover:opacity-90"
+            className="inline-flex items-center gap-2 rounded-lg bg-[image:var(--gradient-cyber)] px-4 py-2 text-sm font-semibold text-foreground shadow-[var(--shadow-glow)] transition hover:opacity-90"
           >
             <Plus className="h-4 w-4" /> Add year
           </button>
@@ -92,28 +92,28 @@ function RoadmapPage() {
           <motion.div initial={{ opacity: 0, y: -8 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -8 }} className="mb-6">
             <GlassCard glow="purple" className="p-5">
               <div className="mb-4 flex items-center justify-between">
-                <div className="font-mono text-[10px] uppercase tracking-[0.24em] text-white/50">
+                <div className="font-mono text-[10px] uppercase tracking-[0.24em] text-foreground/50">
                   {editingId ? "Edit year" : "New year"}
                 </div>
-                <button onClick={() => setShowForm(false)} className="rounded-md p-1 text-white/50 hover:bg-white/[0.06] hover:text-white">
+                <button onClick={() => setShowForm(false)} className="rounded-md p-1 text-foreground/50 hover:bg-foreground/[0.06] hover:text-foreground">
                   <X className="h-4 w-4" />
                 </button>
               </div>
               <div className="grid gap-3 sm:grid-cols-3">
                 <input
-                  className="rounded-lg border border-white/10 bg-white/[0.03] px-3 py-2 text-sm text-white placeholder:text-white/30 focus:border-white/30 focus:outline-none"
+                  className="rounded-lg border border-foreground/10 bg-foreground/[0.03] px-3 py-2 text-sm text-foreground placeholder:text-foreground/30 focus:border-foreground/30 focus:outline-none"
                   placeholder="Year 1"
                   value={draft.year}
                   onChange={(e) => setDraft({ ...draft, year: e.target.value })}
                 />
                 <input
-                  className="rounded-lg border border-white/10 bg-white/[0.03] px-3 py-2 text-sm text-white placeholder:text-white/30 focus:border-white/30 focus:outline-none"
+                  className="rounded-lg border border-foreground/10 bg-foreground/[0.03] px-3 py-2 text-sm text-foreground placeholder:text-foreground/30 focus:border-foreground/30 focus:outline-none"
                   placeholder="Chapter tag (e.g. Foundations)"
                   value={draft.tag}
                   onChange={(e) => setDraft({ ...draft, tag: e.target.value })}
                 />
                 <select
-                  className="rounded-lg border border-white/10 bg-white/[0.03] px-3 py-2 text-sm text-white focus:border-white/30 focus:outline-none"
+                  className="rounded-lg border border-foreground/10 bg-foreground/[0.03] px-3 py-2 text-sm text-foreground focus:border-foreground/30 focus:outline-none"
                   value={draft.accent}
                   onChange={(e) => setDraft({ ...draft, accent: e.target.value as Year["accent"] })}
                 >
@@ -121,7 +121,7 @@ function RoadmapPage() {
                 </select>
               </div>
               <div className="mt-4 flex justify-end">
-                <button onClick={saveYear} className="inline-flex items-center gap-2 rounded-lg bg-[image:var(--gradient-cyber)] px-4 py-2 text-sm font-semibold text-white shadow-[var(--shadow-glow)]">
+                <button onClick={saveYear} className="inline-flex items-center gap-2 rounded-lg bg-[image:var(--gradient-cyber)] px-4 py-2 text-sm font-semibold text-foreground shadow-[var(--shadow-glow)]">
                   <Check className="h-4 w-4" /> Save
                 </button>
               </div>
@@ -132,9 +132,9 @@ function RoadmapPage() {
 
       {hydrated && items.length === 0 ? (
         <GlassCard glow="purple" className="flex flex-col items-center justify-center p-16 text-center">
-          <Milestone className="h-8 w-8 text-white/60" />
-          <div className="mt-4 text-lg font-semibold text-white">Your ascent is unwritten</div>
-          <p className="mt-2 max-w-md text-sm text-white/60">
+          <Milestone className="h-8 w-8 text-foreground/60" />
+          <div className="mt-4 text-lg font-semibold text-foreground">Your ascent is unwritten</div>
+          <p className="mt-2 max-w-md text-sm text-foreground/60">
             Add your first year to start mapping the journey. Each year holds its own milestones.
           </p>
         </GlassCard>
@@ -160,17 +160,17 @@ function RoadmapPage() {
                     <GlassCard glow={y.accent} className="group p-6">
                       <div className="flex items-center gap-3">
                         <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-[image:var(--gradient-cyber)]">
-                          <Icon className="h-5 w-5 text-white" />
+                          <Icon className="h-5 w-5 text-foreground" />
                         </div>
                         <div className="flex-1">
-                          <div className="font-mono text-[10px] uppercase tracking-[0.24em] text-white/50">{y.tag || "chapter"}</div>
-                          <div className="text-xl font-semibold text-white">{y.year}</div>
+                          <div className="font-mono text-[10px] uppercase tracking-[0.24em] text-foreground/50">{y.tag || "chapter"}</div>
+                          <div className="text-xl font-semibold text-foreground">{y.year}</div>
                         </div>
                         <div className="flex gap-1 opacity-0 transition group-hover:opacity-100">
-                          <button onClick={() => openEdit(y)} className="rounded-md p-1.5 text-white/50 hover:bg-white/[0.06] hover:text-white">
+                          <button onClick={() => openEdit(y)} className="rounded-md p-1.5 text-foreground/50 hover:bg-foreground/[0.06] hover:text-foreground">
                             <Pencil className="h-3.5 w-3.5" />
                           </button>
-                          <button onClick={() => remove(y.id)} className="rounded-md p-1.5 text-white/50 hover:bg-white/[0.06] hover:text-red-300">
+                          <button onClick={() => remove(y.id)} className="rounded-md p-1.5 text-foreground/50 hover:bg-foreground/[0.06] hover:text-red-300">
                             <Trash2 className="h-3.5 w-3.5" />
                           </button>
                         </div>
@@ -188,20 +188,20 @@ function RoadmapPage() {
                               initial={{ opacity: 0, x: -4 }}
                               animate={{ opacity: 1, x: 0 }}
                               exit={{ opacity: 0 }}
-                              className="group/topic flex items-center gap-2 rounded-md border border-white/5 bg-white/[0.03] px-2.5 py-1.5"
+                              className="group/topic flex items-center gap-2 rounded-md border border-foreground/5 bg-foreground/[0.03] px-2.5 py-1.5"
                             >
                               <button
                                 onClick={() => toggleTopic(y, t.id)}
                                 className={`flex h-4 w-4 items-center justify-center rounded border ${
-                                  t.done ? "border-emerald-400/60 bg-emerald-400/20 text-emerald-300" : "border-white/20 hover:border-white/50"
+                                  t.done ? "border-emerald-400/60 bg-emerald-400/20 text-emerald-300" : "border-foreground/20 hover:border-foreground/50"
                                 }`}
                               >
                                 {t.done && <Check className="h-2.5 w-2.5" />}
                               </button>
-                              <span className={`flex-1 text-xs ${t.done ? "text-white/50 line-through" : "text-white/85"}`}>{t.label}</span>
+                              <span className={`flex-1 text-xs ${t.done ? "text-foreground/50 line-through" : "text-foreground/85"}`}>{t.label}</span>
                               <button
                                 onClick={() => removeTopic(y, t.id)}
-                                className="opacity-0 transition group-hover/topic:opacity-100 text-white/40 hover:text-red-300"
+                                className="opacity-0 transition group-hover/topic:opacity-100 text-foreground/40 hover:text-red-300"
                               >
                                 <X className="h-3 w-3" />
                               </button>
@@ -216,11 +216,11 @@ function RoadmapPage() {
                           onChange={(e) => setTopicDraft((d) => ({ ...d, [y.id]: e.target.value }))}
                           onKeyDown={(e) => e.key === "Enter" && addTopic(y)}
                           placeholder="Add a topic or milestone…"
-                          className="flex-1 rounded-md border border-white/10 bg-white/[0.03] px-3 py-1.5 text-xs text-white placeholder:text-white/30 focus:border-white/30 focus:outline-none"
+                          className="flex-1 rounded-md border border-foreground/10 bg-foreground/[0.03] px-3 py-1.5 text-xs text-foreground placeholder:text-foreground/30 focus:border-foreground/30 focus:outline-none"
                         />
                         <button
                           onClick={() => addTopic(y)}
-                          className="rounded-md border border-white/10 bg-white/[0.03] px-2 text-white/70 hover:bg-white/[0.06] hover:text-white"
+                          className="rounded-md border border-foreground/10 bg-foreground/[0.03] px-2 text-foreground/70 hover:bg-foreground/[0.06] hover:text-foreground"
                         >
                           <Plus className="h-3.5 w-3.5" />
                         </button>
@@ -229,7 +229,7 @@ function RoadmapPage() {
                   </div>
 
                   <div className="absolute left-4 top-6 -translate-x-1/2 md:left-1/2">
-                    <div className="h-3 w-3 rounded-full bg-white shadow-[0_0_12px_oklch(0.72_0.2_255)]" />
+                    <div className="h-3 w-3 rounded-full bg-foreground shadow-[0_0_12px_oklch(0.72_0.2_255)]" />
                   </div>
                 </motion.div>
               );

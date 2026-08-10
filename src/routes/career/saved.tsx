@@ -27,12 +27,12 @@ function SavedResumes() {
   if (resumes.length === 0) {
     return (
       <GlassCard glow="gold" className="flex flex-col items-center p-16 text-center">
-        <FileText className="h-8 w-8 text-white/40" />
-        <div className="mt-3 text-lg font-semibold text-white">No saved resumes</div>
-        <p className="mt-2 text-sm text-white/60">Create one and it will appear here.</p>
+        <FileText className="h-8 w-8 text-foreground/40" />
+        <div className="mt-3 text-lg font-semibold text-foreground">No saved resumes</div>
+        <p className="mt-2 text-sm text-foreground/60">Create one and it will appear here.</p>
         <button
           onClick={() => void create("General Resume").then(() => toast.success("Resume created"))}
-          className="mt-5 inline-flex items-center gap-2 rounded-lg bg-[image:var(--gradient-cyber)] px-4 py-2 text-sm font-semibold text-white shadow-[var(--shadow-glow)] hover:opacity-90"
+          className="mt-5 inline-flex items-center gap-2 rounded-lg bg-[image:var(--gradient-cyber)] px-4 py-2 text-sm font-semibold text-foreground shadow-[var(--shadow-glow)] hover:opacity-90"
         >
           <Plus className="h-4 w-4" /> New resume
         </button>
@@ -50,32 +50,32 @@ function SavedResumes() {
                 value={title}
                 autoFocus
                 onChange={(e) => setTitle(e.target.value)}
-                className="min-w-0 flex-1 rounded-md border border-white/10 bg-white/[0.04] px-2 py-1 text-sm text-white focus:outline-none"
+                className="min-w-0 flex-1 rounded-md border border-foreground/10 bg-foreground/[0.04] px-2 py-1 text-sm text-foreground focus:outline-none"
               />
-              <button onClick={() => void rename(r.id, title).then(() => setEditing(null))} className="p-1 text-white/70 hover:text-white">
+              <button onClick={() => void rename(r.id, title).then(() => setEditing(null))} className="p-1 text-foreground/70 hover:text-foreground">
                 <Check className="h-4 w-4" />
               </button>
-              <button onClick={() => setEditing(null)} className="p-1 text-white/70 hover:text-white">
+              <button onClick={() => setEditing(null)} className="p-1 text-foreground/70 hover:text-foreground">
                 <X className="h-4 w-4" />
               </button>
             </div>
           ) : (
-            <div className="text-lg font-semibold text-white">{r.title}</div>
+            <div className="text-lg font-semibold text-foreground">{r.title}</div>
           )}
-          <div className="mt-1 font-mono text-[10px] uppercase tracking-widest text-white/45">
+          <div className="mt-1 font-mono text-[10px] uppercase tracking-widest text-foreground/45">
             {r.updatedAt ? `Updated ${new Date(r.updatedAt).toLocaleDateString()}` : "New"}
           </div>
-          <div className="mt-3 text-xs text-white/60">
+          <div className="mt-3 text-xs text-foreground/60">
             {r.data.experience.length} experience · {r.data.projects.length} projects · {r.data.skills.length} skill groups
           </div>
           <div className="mt-4 flex gap-2">
-            <button onClick={() => { setEditing(r.id); setTitle(r.title); }} className="rounded-md p-1.5 text-white/55 hover:bg-white/[0.06] hover:text-white" title="Rename">
+            <button onClick={() => { setEditing(r.id); setTitle(r.title); }} className="rounded-md p-1.5 text-foreground/55 hover:bg-foreground/[0.06] hover:text-foreground" title="Rename">
               <Pencil className="h-3.5 w-3.5" />
             </button>
-            <button onClick={() => void duplicate(r.id).then(() => toast.success("Duplicated"))} className="rounded-md p-1.5 text-white/55 hover:bg-white/[0.06] hover:text-white" title="Duplicate">
+            <button onClick={() => void duplicate(r.id).then(() => toast.success("Duplicated"))} className="rounded-md p-1.5 text-foreground/55 hover:bg-foreground/[0.06] hover:text-foreground" title="Duplicate">
               <Copy className="h-3.5 w-3.5" />
             </button>
-            <button onClick={() => void remove(r.id).then(() => toast.success("Deleted"))} className="rounded-md p-1.5 text-white/55 hover:bg-white/[0.06] hover:text-red-300" title="Delete">
+            <button onClick={() => void remove(r.id).then(() => toast.success("Deleted"))} className="rounded-md p-1.5 text-foreground/55 hover:bg-foreground/[0.06] hover:text-red-300" title="Delete">
               <Trash2 className="h-3.5 w-3.5" />
             </button>
           </div>

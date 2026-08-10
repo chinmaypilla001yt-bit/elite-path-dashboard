@@ -25,13 +25,13 @@ export const Route = createFileRoute("/math")({
       ]}
       renderItem={(m) => (
         <>
-          <div className="font-mono text-[10px] uppercase tracking-widest text-white/45">{(m.area as string) || "topic"}</div>
-          <div className="mt-1 text-lg font-semibold text-white">{m.topic as string}</div>
+          <div className="font-mono text-[10px] uppercase tracking-widest text-foreground/45">{(m.area as string) || "topic"}</div>
+          <div className="mt-1 text-lg font-semibold text-foreground">{m.topic as string}</div>
           <div className="mt-3 flex flex-wrap gap-2 text-xs">
-            {m.problems_solved ? <span className="rounded-full border border-white/10 bg-white/[0.04] px-3 py-1 text-white/80">{m.problems_solved as number} problems</span> : null}
-            {m.progress ? <span className="rounded-full border border-white/10 bg-white/[0.04] px-3 py-1 text-white/80">{m.progress as number}%</span> : null}
+            {m.problems_solved ? <span className="rounded-full border border-foreground/10 bg-foreground/[0.04] px-3 py-1 text-foreground/80">{m.problems_solved as number} problems</span> : null}
+            {m.progress ? <span className="rounded-full border border-foreground/10 bg-foreground/[0.04] px-3 py-1 text-foreground/80">{m.progress as number}%</span> : null}
           </div>
-          {m.notes ? <p className="mt-2 text-sm text-white/60">{m.notes as string}</p> : null}
+          {m.notes ? <p className="mt-2 text-sm text-foreground/60">{m.notes as string}</p> : null}
         </>
       )}
     />

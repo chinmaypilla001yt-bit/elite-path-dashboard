@@ -98,26 +98,26 @@ function LeaderboardPage() {
 
       <div className="mb-6 grid gap-4 md:grid-cols-3">
         <GlassCard glow="gold" className="p-5">
-          <div className="flex items-center gap-2 font-mono text-[10px] uppercase tracking-widest text-white/50">
+          <div className="flex items-center gap-2 font-mono text-[10px] uppercase tracking-widest text-foreground/50">
             <Trophy className="h-3.5 w-3.5" /> Your rank
           </div>
-          <div className="mt-2 text-3xl font-semibold text-white">
+          <div className="mt-2 text-3xl font-semibold text-foreground">
             {myIndex >= 0 ? `#${myIndex + 1}` : "—"}
           </div>
-          <div className="mt-1 text-xs text-white/50">
+          <div className="mt-1 text-xs text-foreground/50">
             of {sorted.length} {tab === "xp" ? "by XP" : `by ${timeframe} study`}
           </div>
         </GlassCard>
         <GlassCard glow="blue" className="p-5">
-          <div className="flex items-center gap-2 font-mono text-[10px] uppercase tracking-widest text-white/50">
+          <div className="flex items-center gap-2 font-mono text-[10px] uppercase tracking-widest text-foreground/50">
             <Zap className="h-3.5 w-3.5" /> Progress to next rank
           </div>
           {nextUp ? (
             <>
-              <div className="mt-2 text-sm text-white">
+              <div className="mt-2 text-sm text-foreground">
                 Catch <span className="font-semibold">{displayNameOf(nextUp)}</span>
               </div>
-              <div className="mt-2 text-xs text-white/50">
+              <div className="mt-2 text-xs text-foreground/50">
                 {tab === "xp"
                   ? `${(Number(nextUp.xp) || 0) - (Number(myRow?.xp) || 0)} XP to go`
                   : `${((Number(currentStudy(nextUp, timeframe)) || 0) - (Number(currentStudy(myRow, timeframe)) || 0)).toFixed(1)}h to go`}
@@ -137,18 +137,18 @@ function LeaderboardPage() {
               </div>
             </>
           ) : (
-            <div className="mt-2 text-sm text-white/60">
+            <div className="mt-2 text-sm text-foreground/60">
               {myIndex === 0 ? "You're #1 — keep climbing." : "Start logging to enter the ranks."}
             </div>
           )}
         </GlassCard>
         <GlassCard glow="purple" className="p-5">
-          <div className="flex items-center gap-2 font-mono text-[10px] uppercase tracking-widest text-white/50">
+          <div className="flex items-center gap-2 font-mono text-[10px] uppercase tracking-widest text-foreground/50">
             <Sparkles className="h-3.5 w-3.5" /> Your level
           </div>
-          <div className="mt-2 text-3xl font-semibold text-white">Lv {myStats.level}</div>
+          <div className="mt-2 text-3xl font-semibold text-foreground">Lv {myStats.level}</div>
           <div className="mt-3"><ProgressBar value={myStats.progress} /></div>
-          <div className="mt-1 text-xs text-white/50">
+          <div className="mt-1 text-xs text-foreground/50">
             {myStats.remaining} XP to Lv {myStats.level + 1}
           </div>
         </GlassCard>
@@ -156,7 +156,7 @@ function LeaderboardPage() {
 
       {/* Controls */}
       <div className="mb-4 flex flex-wrap items-center gap-2">
-        <div className="inline-flex rounded-lg border border-white/10 bg-white/[0.03] p-1">
+        <div className="inline-flex rounded-lg border border-foreground/10 bg-foreground/[0.03] p-1">
           <TabBtn active={tab === "xp"} onClick={() => setTab("xp")}>
             <Zap className="h-3.5 w-3.5" /> XP
           </TabBtn>
@@ -166,7 +166,7 @@ function LeaderboardPage() {
         </div>
 
         {tab === "study" && (
-          <div className="inline-flex rounded-lg border border-white/10 bg-white/[0.03] p-1">
+          <div className="inline-flex rounded-lg border border-foreground/10 bg-foreground/[0.03] p-1">
             {(["all", "month", "week"] as const).map((t) => (
               <TabBtn key={t} active={timeframe === t} onClick={() => setTimeframe(t)}>
                 {t === "all" ? "All time" : t === "month" ? "This month" : "This week"}
@@ -175,7 +175,7 @@ function LeaderboardPage() {
           </div>
         )}
 
-        <div className="inline-flex rounded-lg border border-white/10 bg-white/[0.03] p-1">
+        <div className="inline-flex rounded-lg border border-foreground/10 bg-foreground/[0.03] p-1">
           {(["global", "friends", "college"] as const).map((s) => (
             <TabBtn
               key={s}
@@ -190,19 +190,19 @@ function LeaderboardPage() {
         </div>
 
         <div className="ml-auto relative">
-          <Search className="pointer-events-none absolute left-3 top-1/2 h-3.5 w-3.5 -translate-y-1/2 text-white/40" />
+          <Search className="pointer-events-none absolute left-3 top-1/2 h-3.5 w-3.5 -translate-y-1/2 text-foreground/40" />
           <input
             value={q}
             onChange={(e) => setQ(e.target.value)}
             placeholder="Search users…"
-            className="w-56 rounded-lg border border-white/10 bg-white/[0.03] py-2 pl-9 pr-3 text-sm text-white placeholder:text-white/30 focus:border-white/30 focus:outline-none"
+            className="w-56 rounded-lg border border-foreground/10 bg-foreground/[0.03] py-2 pl-9 pr-3 text-sm text-foreground placeholder:text-foreground/30 focus:border-foreground/30 focus:outline-none"
           />
         </div>
       </div>
 
       {scope !== "global" && (
         <GlassCard className="mb-4 p-4">
-          <div className="text-sm text-white/70">
+          <div className="text-sm text-foreground/70">
             {scope === "friends" ? "Friends" : "College"} leaderboards are coming soon. Showing global for now.
           </div>
         </GlassCard>
@@ -210,11 +210,11 @@ function LeaderboardPage() {
 
       <GlassCard glow="blue" className="p-0 overflow-hidden">
         {loading ? (
-          <div className="p-10 text-center text-sm text-white/50">Loading rankings…</div>
+          <div className="p-10 text-center text-sm text-foreground/50">Loading rankings…</div>
         ) : sorted.length === 0 ? (
-          <div className="p-10 text-center text-sm text-white/50">No users yet.</div>
+          <div className="p-10 text-center text-sm text-foreground/50">No users yet.</div>
         ) : (
-          <ul className="divide-y divide-white/5">
+          <ul className="divide-y divide-foreground/5">
             <AnimatePresence initial={false}>
               {sorted.map((r, i) => {
                 const rank = i + 1;
@@ -233,23 +233,23 @@ function LeaderboardPage() {
                     animate={{ opacity: 1, y: 0 }}
                     className={cn(
                       "flex items-center gap-4 px-4 py-3 sm:px-5",
-                      isMe && "bg-[image:linear-gradient(90deg,oklch(0.72_0.2_255/0.14),transparent_70%)] ring-1 ring-inset ring-white/10",
+                      isMe && "bg-[image:linear-gradient(90deg,oklch(0.72_0.2_255/0.14),transparent_70%)] ring-1 ring-inset ring-foreground/10",
                     )}
                   >
                     <RankBadge rank={rank} />
                     <Avatar user={r} />
                     <div className="min-w-0 flex-1">
                       <div className="flex items-center gap-2">
-                        <div className="truncate text-sm font-medium text-white">
+                        <div className="truncate text-sm font-medium text-foreground">
                           {displayNameOf(r)}
                         </div>
                         {isMe && (
-                          <span className="rounded bg-white/10 px-1.5 py-0.5 font-mono text-[9px] uppercase tracking-widest text-white/70">
+                          <span className="rounded bg-foreground/10 px-1.5 py-0.5 font-mono text-[9px] uppercase tracking-widest text-foreground/70">
                             You
                           </span>
                         )}
                       </div>
-                      <div className="mt-0.5 font-mono text-[10px] uppercase tracking-widest text-white/45">
+                      <div className="mt-0.5 font-mono text-[10px] uppercase tracking-widest text-foreground/45">
                         Lv {lv}
                         {tab === "study" && r.weeklyStudyHours != null && (
                           <> · {r.weeklyStudyHours.toFixed(1)}h this week</>
@@ -259,7 +259,7 @@ function LeaderboardPage() {
                         )}
                       </div>
                     </div>
-                    <div className="text-right text-sm font-semibold text-white">
+                    <div className="text-right text-sm font-semibold text-foreground">
                       {value}
                     </div>
                   </motion.li>
@@ -294,7 +294,7 @@ function TabBtn({
       {...rest}
       className={cn(
         "inline-flex items-center gap-1.5 rounded-md px-3 py-1.5 text-xs font-medium transition",
-        active ? "bg-white/10 text-white" : "text-white/60 hover:text-white",
+        active ? "bg-foreground/10 text-foreground" : "text-foreground/60 hover:text-foreground",
       )}
     >
       {children}
@@ -311,23 +311,23 @@ function RankBadge({ rank }: { rank: number }) {
         className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-[radial-gradient(circle_at_30%_20%,oklch(0.93_0.16_85),oklch(0.7_0.18_60))] text-lg shadow-[0_0_18px_oklch(0.83_0.16_85/0.6)]"
         title="Gold — Rank #1"
       >
-        <Trophy className="h-4 w-4 text-white" />
+        <Trophy className="h-4 w-4 text-foreground" />
       </motion.div>
     );
   if (rank === 2)
     return (
       <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-[radial-gradient(circle_at_30%_20%,oklch(0.9_0.02_260),oklch(0.68_0.02_260))] shadow-[0_0_12px_oklch(0.8_0.02_260/0.5)]">
-        <Medal className="h-4 w-4 text-white" />
+        <Medal className="h-4 w-4 text-foreground" />
       </div>
     );
   if (rank === 3)
     return (
       <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-[radial-gradient(circle_at_30%_20%,oklch(0.75_0.14_50),oklch(0.55_0.12_45))] shadow-[0_0_12px_oklch(0.65_0.14_50/0.5)]">
-        <Medal className="h-4 w-4 text-white" />
+        <Medal className="h-4 w-4 text-foreground" />
       </div>
     );
   return (
-    <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full border border-white/10 bg-white/[0.03] font-mono text-xs text-white/60">
+    <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full border border-foreground/10 bg-foreground/[0.03] font-mono text-xs text-foreground/60">
       {rank}
     </div>
   );
