@@ -424,11 +424,12 @@ html[data-theme-switching] * {
   border-radius: var(--radius-2xl);
 }
 @utility glass-strong {
-  background: linear-gradient(180deg, color-mix(in oklab, var(--glass-1) 100%, transparent), var(--glass-1));
-  border: 1px solid color-mix(in oklab, var(--glass-border) 160%, transparent);
+  background: linear-gradient(180deg, var(--glass-1), var(--glass-1));
+  border: 1px solid var(--input);
   backdrop-filter: blur(24px) saturate(160%);
   border-radius: var(--radius-2xl);
 }
+
 @utility text-gradient {
   background: var(--gradient-cyber);
   -webkit-background-clip: text;
