@@ -7,7 +7,7 @@ import { PageHeader } from "@/components/ascend/PageHeader";
 import { GlassCard } from "@/components/ascend/GlassCard";
 import { useLocalCollection } from "@/hooks/use-local-collection";
 import { toast } from "sonner";
-import { CategorySelect } from "@/components/ascend/CategorySelect";
+
 
 export const Route = createFileRoute("/study")({
   head: () => ({
@@ -171,10 +171,15 @@ function StudyPage() {
           <motion.div initial={{ opacity: 0, y: -8 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -8 }} className="mb-6">
             <GlassCard glow="blue" className="p-5">
               <div className="grid gap-3 sm:grid-cols-[1fr_auto_auto]">
-                <CategorySelect
-                  placeholder="Subject / category…"
+                <input
+                  type="text"
+                  className="rounded-lg border border-foreground/10 bg-foreground/[0.03] px-3 py-2 text-sm text-foreground placeholder:text-foreground/30 focus:border-foreground/30 focus:outline-none"
+                  placeholder="Timer name…"
                   value={draft.subject}
-                  onChange={(v) => setDraft({ ...draft, subject: v })}
+                  onChange={(e) => setDraft({ ...draft, subject: e.target.value })}
+                  onKeyDown={(e) => {
+                    if (e.key === "Enter") newTimer();
+                  }}
                 />
                 <input
                   type="number"
