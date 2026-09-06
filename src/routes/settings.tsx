@@ -148,7 +148,8 @@ function SettingsPage() {
 }
 
 function NotificationSettingsCard() {
-  const { settings, updateSettings, permission, requestPermission } = useNotifications();
+  const { settings, updateSettings, permission, requestPermission, inIframe, sendTest } =
+    useNotifications();
   const [newTime, setNewTime] = useState("");
 
   const toggle = (key: keyof NotifSettings) => (e: React.ChangeEvent<HTMLInputElement>) => {
