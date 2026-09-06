@@ -308,7 +308,7 @@ export function useNotifications() {
   return ctx;
 }
 
-type Task = { id: string; title: string; done?: boolean; createdAt?: number };
+type Task = { id: string; title: string; done?: boolean; _createdAt?: number };
 type Event = { id: string; title: string; date?: string; time?: string };
 type Session = { id: string; subject?: string; minutes?: number; date?: string };
 
@@ -380,7 +380,7 @@ function ReminderEngine() {
     if (settings.task && mins >= firstTime) {
       const pending = tasks.filter((t) => !t.done);
       const stale = pending.filter(
-        (t) => t.createdAt && now.getTime() - t.createdAt > 2 * 24 * 60 * 60 * 1000,
+        (t) => t._createdAt && now.getTime() - t._createdAt > 2 * 24 * 60 * 60 * 1000,
       );
       if (pending.length > 0) {
         void pushOnce(`task-${day}`, {
