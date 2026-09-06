@@ -18,8 +18,10 @@ export const Route = createFileRoute("/notifications")({
 });
 
 function NotificationsPage() {
-  const { items, unread, markRead, markAllRead, remove, clearAll, permission, requestPermission } =
-    useNotifications();
+  const {
+    items, unread, markRead, markAllRead, remove, clearAll, permission, requestPermission,
+    inIframe, sendTest,
+  } = useNotifications();
 
   return (
     <AppShell>
