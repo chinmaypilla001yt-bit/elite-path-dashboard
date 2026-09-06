@@ -54,12 +54,15 @@ const DEFAULT_SETTINGS: NotifSettings = {
 
 type Ctx = {
   permission: NotificationPermission | "unsupported";
+  inIframe: boolean;
   requestPermission: () => Promise<NotificationPermission | "unsupported">;
   settings: NotifSettings;
   updateSettings: (patch: Partial<NotifSettings>) => Promise<void>;
   items: NotifItem[];
   unread: number;
   push: (n: Omit<NotifItem, "id" | "createdAt" | "read">) => Promise<void>;
+  pushOnce: (key: string, n: Omit<NotifItem, "id" | "createdAt" | "read">) => Promise<void>;
+  sendTest: () => Promise<void>;
   markRead: (id: string) => Promise<void>;
   markAllRead: () => Promise<void>;
   remove: (id: string) => Promise<void>;
