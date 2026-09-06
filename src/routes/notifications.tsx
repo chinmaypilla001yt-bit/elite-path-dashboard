@@ -6,6 +6,7 @@ import { PageHeader } from "@/components/ascend/PageHeader";
 import { GlassCard } from "@/components/ascend/GlassCard";
 import { useNotifications } from "@/hooks/use-notifications";
 import { cn } from "@/lib/utils";
+import { toast } from "sonner";
 
 export const Route = createFileRoute("/notifications")({
   head: () => ({
@@ -18,8 +19,10 @@ export const Route = createFileRoute("/notifications")({
 });
 
 function NotificationsPage() {
-  const { items, unread, markRead, markAllRead, remove, clearAll, permission, requestPermission } =
-    useNotifications();
+  const {
+    items, unread, markRead, markAllRead, remove, clearAll, permission, requestPermission,
+    inIframe, sendTest,
+  } = useNotifications();
 
   return (
     <AppShell>
@@ -31,12 +34,27 @@ function NotificationsPage() {
           <div className="flex flex-wrap gap-2">
             {permission !== "granted" && (
               <button
-                onClick={() => void requestPermission()}
+                onClick={async () => {
+                  if (inIframe) {
+                    toast.error("Open Ascend in its own browser tab to allow alerts.");
+                    return;
+                  }
+                  const p = await requestPermission();
+                  if (p === "granted") toast.success("Browser alerts enabled");
+                  else if (p === "denied") toast.error("Blocked — allow alerts in site settings.");
+                }}
                 className="inline-flex items-center gap-1.5 rounded-lg border border-foreground/10 bg-foreground/[0.03] px-3 py-1.5 text-xs text-foreground/80 hover:bg-foreground/[0.06] hover:text-foreground"
               >
                 <Bell className="h-3.5 w-3.5" /> Enable browser alerts
               </button>
             )}
+            <button
+              onClick={() => void sendTest()}
+              className="inline-flex items-center gap-1.5 rounded-lg border border-foreground/10 bg-foreground/[0.03] px-3 py-1.5 text-xs text-foreground/80 hover:bg-foreground/[0.06] hover:text-foreground"
+            >
+              <Bell className="h-3.5 w-3.5" /> Send test
+            </button>
+
             <button
               onClick={() => void markAllRead()}
               disabled={unread === 0}
