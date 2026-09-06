@@ -190,23 +190,51 @@ function NotificationSettingsCard() {
       </p>
 
       <div className="mt-4 rounded-lg border border-foreground/5 bg-foreground/[0.03] p-3">
-        <div className="flex items-center justify-between text-sm">
+        <div className="flex flex-wrap items-center justify-between gap-2 text-sm">
           <div>
             <div className="text-foreground">Browser permission</div>
             <div className="mt-0.5 font-mono text-[10px] uppercase tracking-widest text-foreground/45">
               {permission}
             </div>
           </div>
-          {permission !== "granted" && permission !== "unsupported" && (
+          <div className="flex flex-wrap gap-2">
+            {permission !== "granted" && permission !== "unsupported" && (
+              <button
+                onClick={async () => {
+                  if (inIframe) {
+                    toast.error("Open Ascend in its own browser tab to allow alerts.");
+                    return;
+                  }
+                  const p = await requestPermission();
+                  if (p === "granted") toast.success("Browser alerts enabled");
+                  else if (p === "denied") toast.error("Blocked — allow alerts in site settings.");
+                }}
+                className="rounded-lg border border-foreground/10 bg-foreground/[0.03] px-3 py-1.5 text-xs text-foreground/80 hover:bg-foreground/[0.06] hover:text-foreground"
+              >
+                Request
+              </button>
+            )}
             <button
-              onClick={() => void requestPermission()}
-              className="rounded-lg border border-foreground/10 bg-foreground/[0.03] px-3 py-1.5 text-xs text-foreground/80 hover:bg-foreground/[0.06] hover:text-foreground"
+              onClick={async () => {
+                await sendTest();
+                toast.success(
+                  permission === "granted"
+                    ? "Test notification sent"
+                    : "Added to your Notification Center",
+                );
+              }}
+              className="rounded-lg border border-foreground/10 bg-foreground/[0.06] px-3 py-1.5 text-xs text-foreground hover:bg-foreground/[0.1]"
             >
-              Request
+              Send test notification
             </button>
-          )}
+          </div>
         </div>
+        <p className="mt-2 text-xs text-foreground/50">
+          Reminders are checked while Ascend is open in a tab, and catch up on anything missed the
+          next time you open it. Alerts when the app is fully closed aren't supported.
+        </p>
       </div>
+
 
       <div className="mt-4 grid gap-2 sm:grid-cols-2">
         {items.map((it) => (
