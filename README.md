@@ -688,7 +688,7 @@ React Query
 
 Backend
 
-Supabase
+Firebase
 
 Authentication
 
@@ -702,7 +702,7 @@ PostgreSQL
 
 Storage
 
-Supabase Storage
+Firebase Storage
 
 Deployment
 
@@ -746,17 +746,7 @@ The dashboard should constantly remind me of my long-term goals, visualize my pr
 
 Every interaction should feel polished, motivating, and premium, with a futuristic interface that encourages deep work and continuous improvement.
 
-This project was built with [Lovable](https://lovable.dev).
 
-**Live app**: https://ascend-missioncontrol.lovable.app
-
-## Build with Lovable
-
-Continue developing this project in the [Lovable editor](https://lovable.dev/projects/c3f535be-f0c4-402c-8d4e-ed153340502c).
-
-- **Ship faster**: describe what you want to build and Lovable handles the code.
-- **Stay in sync**: every change made in Lovable is committed straight to this repository.
-- **Full ownership**: this code is yours. Push to `main` on GitHub and your changes sync back into Lovable, ready for your next prompt.
 
 ## Development
 
